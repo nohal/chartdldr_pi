@@ -235,6 +235,7 @@ void chartdldr_pi::OnToolbarToolCallback(int id)
             SaveConfig();
       }
       dialog->Close();
+      dialog->Destroy();
       wxDELETE(dialog);
 }
 
@@ -259,6 +260,7 @@ void chartdldr_pi::ShowPreferencesDialog( wxWindow* parent )
             SaveConfig();
       }
       dialog->Close();
+      dialog->Destroy();
       wxDELETE(dialog);
 }
 
@@ -452,16 +454,25 @@ void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
 {
       if (m_clCharts->GetCheckedItemCount() == 0)
             return;
+      int downloading = 0;
+      DlProgressDialog *dialog = new DlProgressDialog(this);
+      dialog->m_gTotalProgress->SetRange(m_clCharts->GetCheckedItemCount());
+      dialog->Show();
       for (int i = 0; i < m_clCharts->GetItemCount(); i++)
       {
             if(m_clCharts->IsChecked(i))
             {
+                  dialog->m_gTotalProgress->SetValue(downloading);
+                  downloading++;
                   //download
                   wxURL * url = new wxURL(pPlugIn->m_pChartCatalog->charts->Item(i).zipfile_location);
                   if (url->GetError() != wxURL_NOERR) 
                   {
                         wxMessageBox(_("Error, the URL to the chart data seems wrong."), _("Error"));
                         wxDELETE(url);
+                        dialog->Close();
+                        dialog->Destroy();
+                        wxDELETE(dialog);
                         return;
                   }
                   wxInputStream *in_stream;
@@ -483,18 +494,18 @@ void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
                   int done = 0;
                   if (url->GetError() == wxPROTO_NOERR)
                   {
-                        wxProgressDialog prog(_("Downloading..."), _("Downloading chart..."), in_stream->GetSize() + 1);
-                        prog.Show();
                         wxFileOutputStream out_stream(path);
                         char * buffer = new char[8192];
                         size_t read;
+                        dialog->m_gChartProgress->SetValue(0);
+                        dialog->m_gChartProgress->SetRange(in_stream->GetSize());
                         do
                         {
                               in_stream->Read(buffer, 8191);
                               read = in_stream->LastRead();
                               out_stream.Write(buffer, read);
                               done += read;
-                              prog.Update(done);
+                              dialog->m_gChartProgress->SetValue(done);
                               
                         } while (!in_stream->Eof());
                         delete[] buffer;
@@ -504,6 +515,9 @@ void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
                         wxMessageBox(_("Unable to connect."), _("Error"));
                         wxDELETE(in_stream);
                         wxDELETE(url);
+                        dialog->Close();
+                        dialog->Destroy();
+                        wxDELETE(dialog);
                         return;
                   }
                   //unpack
@@ -511,6 +525,9 @@ void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
                   wxRemoveFile(path);
             }
       }
+      dialog->Close();
+      dialog->Destroy();
+      wxDELETE(dialog);
       ChartSource *cs = pPlugIn->m_chartSources->Item(m_cbChartSources->GetSelection());
       CleanForm();
       FillFromFile(cs->GetUrl(), cs->GetDir());
@@ -567,6 +584,7 @@ void ChartDldrPrefsDialogImpl::AddSource( wxCommandEvent& event )
             pPlugIn->SaveConfig();
       }
       dialog->Close();
+      dialog->Destroy();
       wxDELETE(dialog);
       event.Skip(); 
 }

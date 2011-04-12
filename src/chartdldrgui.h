@@ -82,13 +82,13 @@ class DlProgressDialog : public wxDialog
 	
 	protected:
 		wxStaticText* m_staticText5;
-		wxGauge* m_gTotalProgress;
 		wxStaticText* m_staticText6;
-		wxGauge* m_gChartProgress;
 		wxStdDialogButtonSizer* m_sdbSizer2;
 		wxButton* m_sdbSizer2Cancel;
 	
 	public:
+		wxGauge* m_gTotalProgress;
+		wxGauge* m_gChartProgress;
 		
 		DlProgressDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Download progress"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 458,215 ), long style = wxDEFAULT_DIALOG_STYLE ); 
 		~DlProgressDialog();
