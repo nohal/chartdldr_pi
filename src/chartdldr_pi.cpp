@@ -245,9 +245,16 @@ void ChartDldrPrefsDialogImpl::OnSourceSelected( wxCommandEvent& event )
       m_dpChartDirectory->SetPath(cs->GetDir());
       
       pPlugIn->m_pChartSource = cs;
+      CleanForm();
       FillFromFile(cs->GetUrl(), cs->GetDir());
 
       event.Skip();
+}
+
+void ChartDldrPrefsDialogImpl::CleanForm()
+{
+      m_tChartSourceInfo->SetValue(wxEmptyString);
+      m_clCharts->DeleteAllItems();
 }
 
 void ChartDldrPrefsDialogImpl::FillFromFile(wxString url, wxString dir)
@@ -394,7 +401,7 @@ void ChartDldrPrefsDialogImpl::UpdateChartList( wxCommandEvent& event )
       txt.AddLine(res);
       txt.Write();
       txt.Close();
-      FillFromFile(url->GetPath(), fn.GetFullName());
+      FillFromFile(url->GetPath(), fn.GetPath());
       //clean up
       wxDELETE(in_stream);
       wxDELETE(url);
@@ -412,6 +419,13 @@ wxArrayString ChartSource::GetLocalFiles()
 void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
 {
 // TODO: Implement DownloadCharts
+}
+
+void ChartDldrPrefsDialogImpl::OnLocalDirCahnged( wxFileDirPickerEvent& event )
+{
+      pPlugIn->m_chartSources->Item(m_cbChartSources->GetSelection())->SetDir(m_dpChartDirectory->GetPath());
+      pPlugIn->SaveConfig();
+      event.Skip(); 
 }
 
 ChartDldrPrefsDialogImpl::~ChartDldrPrefsDialogImpl()

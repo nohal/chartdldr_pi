@@ -45,7 +45,76 @@
 #define     MY_API_VERSION_MAJOR    1
 #define     MY_API_VERSION_MINOR    4
 
-#define     NOAA_CHART_SOURCES "NOAA ENC|http://www.charts.noaa.gov/ENCs/ENCProdCat.xml|.|NOAA RNC|http://www.charts.noaa.gov/RNCs/RNCProdCat.xml|."
+#define     NOAA_CHART_SOURCES "NOAA ENC - all charts - (too) big!|http://www.charts.noaa.gov/ENCs/ENCProdCat.xml|.|\
+NOAA RNC - all charts - (too) big!|http://www.charts.noaa.gov/RNCs/RNCProdCat.xml|.|\
+NOAA RNC AK|http://www.charts.noaa.gov/RNCs/AK_RNCProdCat.xml|.|\
+NOAA RNC AL|http://www.charts.noaa.gov/RNCs/AL_RNCProdCat.xml|.|\
+NOAA RNC CA|http://www.charts.noaa.gov/RNCs/CA_RNCProdCat.xml|.|\
+NOAA RNC CT|http://www.charts.noaa.gov/RNCs/CT_RNCProdCat.xml|.|\
+NOAA RNC DE|http://www.charts.noaa.gov/RNCs/DE_RNCProdCat.xml|.|\
+NOAA RNC FL|http://www.charts.noaa.gov/RNCs/FL_RNCProdCat.xml|.|\
+NOAA RNC GA|http://www.charts.noaa.gov/RNCs/GA_RNCProdCat.xml|.|\
+NOAA RNC HI|http://www.charts.noaa.gov/RNCs/HI_RNCProdCat.xml|.|\
+NOAA RNC ID|http://www.charts.noaa.gov/RNCs/ID_RNCProdCat.xml|.|\
+NOAA RNC IL|http://www.charts.noaa.gov/RNCs/IL_RNCProdCat.xml|.|\
+NOAA RNC IN|http://www.charts.noaa.gov/RNCs/IN_RNCProdCat.xml|.|\
+NOAA RNC LA|http://www.charts.noaa.gov/RNCs/LA_RNCProdCat.xml|.|\
+NOAA RNC MA|http://www.charts.noaa.gov/RNCs/MA_RNCProdCat.xml|.|\
+NOAA RNC MD|http://www.charts.noaa.gov/RNCs/MD_RNCProdCat.xml|.|\
+NOAA RNC ME|http://www.charts.noaa.gov/RNCs/ME_RNCProdCat.xml|.|\
+NOAA RNC MI|http://www.charts.noaa.gov/RNCs/MI_RNCProdCat.xml|.|\
+NOAA RNC MN|http://www.charts.noaa.gov/RNCs/MN_RNCProdCat.xml|.|\
+NOAA RNC MS|http://www.charts.noaa.gov/RNCs/MS_RNCProdCat.xml|.|\
+NOAA RNC NC|http://www.charts.noaa.gov/RNCs/NC_RNCProdCat.xml|.|\
+NOAA RNC NH|http://www.charts.noaa.gov/RNCs/NH_RNCProdCat.xml|.|\
+NOAA RNC NJ|http://www.charts.noaa.gov/RNCs/NJ_RNCProdCat.xml|.|\
+NOAA RNC NV|http://www.charts.noaa.gov/RNCs/NV_RNCProdCat.xml|.|\
+NOAA RNC NY|http://www.charts.noaa.gov/RNCs/NY_RNCProdCat.xml|.|\
+NOAA RNC OH|http://www.charts.noaa.gov/RNCs/OH_RNCProdCat.xml|.|\
+NOAA RNC OR|http://www.charts.noaa.gov/RNCs/OR_RNCProdCat.xml|.|\
+NOAA RNC PA|http://www.charts.noaa.gov/RNCs/PA_RNCProdCat.xml|.|\
+NOAA RNC PO (Pacific ocean)|http://www.charts.noaa.gov/RNCs/PO_RNCProdCat.xml|.|\
+NOAA RNC PR|http://www.charts.noaa.gov/RNCs/PR_RNCProdCat.xml|.|\
+NOAA RNC RI|http://www.charts.noaa.gov/RNCs/RI_RNCProdCat.xml|.|\
+NOAA RNC SC|http://www.charts.noaa.gov/RNCs/SC_RNCProdCat.xml|.|\
+NOAA RNC TX|http://www.charts.noaa.gov/RNCs/TX_RNCProdCat.xml|.|\
+NOAA RNC VA|http://www.charts.noaa.gov/RNCs/VA_RNCProdCat.xml|.|\
+NOAA RNC VT|http://www.charts.noaa.gov/RNCs/VT_RNCProdCat.xml|.|\
+NOAA RNC WA|http://www.charts.noaa.gov/RNCs/WA_RNCProdCat.xml|.|\
+NOAA RNC WI|http://www.charts.noaa.gov/RNCs/WI_RNCProdCat.xml|.|\
+NOAA ENC AK|http://www.charts.noaa.gov/ENCs/AK_ENCProdCat.xml|.|\
+NOAA ENC AL|http://www.charts.noaa.gov/ENCs/AL_ENCProdCat.xml|.|\
+NOAA ENC CA|http://www.charts.noaa.gov/ENCs/CA_ENCProdCat.xml|.|\
+NOAA ENC CT|http://www.charts.noaa.gov/ENCs/CT_ENCProdCat.xml|.|\
+NOAA ENC DE|http://www.charts.noaa.gov/ENCs/DE_ENCProdCat.xml|.|\
+NOAA ENC FL|http://www.charts.noaa.gov/ENCs/FL_ENCProdCat.xml|.|\
+NOAA ENC GA|http://www.charts.noaa.gov/ENCs/GA_ENCProdCat.xml|.|\
+NOAA ENC HI|http://www.charts.noaa.gov/ENCs/HI_ENCProdCat.xml|.|\
+NOAA ENC ID|http://www.charts.noaa.gov/ENCs/ID_ENCProdCat.xml|.|\
+NOAA ENC IL|http://www.charts.noaa.gov/ENCs/IL_ENCProdCat.xml|.|\
+NOAA ENC IN|http://www.charts.noaa.gov/ENCs/IN_ENCProdCat.xml|.|\
+NOAA ENC LA|http://www.charts.noaa.gov/ENCs/LA_ENCProdCat.xml|.|\
+NOAA ENC MA|http://www.charts.noaa.gov/ENCs/MA_ENCProdCat.xml|.|\
+NOAA ENC MD|http://www.charts.noaa.gov/ENCs/MD_ENCProdCat.xml|.|\
+NOAA ENC ME|http://www.charts.noaa.gov/ENCs/ME_ENCProdCat.xml|.|\
+NOAA ENC MI|http://www.charts.noaa.gov/ENCs/MI_ENCProdCat.xml|.|\
+NOAA ENC MN|http://www.charts.noaa.gov/ENCs/MN_ENCProdCat.xml|.|\
+NOAA ENC MS|http://www.charts.noaa.gov/ENCs/MS_ENCProdCat.xml|.|\
+NOAA ENC NC|http://www.charts.noaa.gov/ENCs/NC_ENCProdCat.xml|.|\
+NOAA ENC NH|http://www.charts.noaa.gov/ENCs/NH_ENCProdCat.xml|.|\
+NOAA ENC NJ|http://www.charts.noaa.gov/ENCs/NJ_ENCProdCat.xml|.|\
+NOAA ENC NY|http://www.charts.noaa.gov/ENCs/NY_ENCProdCat.xml|.|\
+NOAA ENC OH|http://www.charts.noaa.gov/ENCs/OH_ENCProdCat.xml|.|\
+NOAA ENC OR|http://www.charts.noaa.gov/ENCs/OR_ENCProdCat.xml|.|\
+NOAA ENC PA|http://www.charts.noaa.gov/ENCs/PA_ENCProdCat.xml|.|\
+NOAA ENC PO (Pacific ocean)|http://www.charts.noaa.gov/ENCs/PO_ENCProdCat.xml|.|\
+NOAA ENC PR|http://www.charts.noaa.gov/ENCs/PR_ENCProdCat.xml|.|\
+NOAA ENC RI|http://www.charts.noaa.gov/ENCs/RI_ENCProdCat.xml|.|\
+NOAA ENC SC|http://www.charts.noaa.gov/ENCs/SC_ENCProdCat.xml|.|\
+NOAA ENC TX|http://www.charts.noaa.gov/ENCs/TX_ENCProdCat.xml|.|\
+NOAA ENC VA|http://www.charts.noaa.gov/ENCs/VA_ENCProdCat.xml|.|\
+NOAA ENC WA|http://www.charts.noaa.gov/ENCs/WA_ENCProdCat.xml|.|\
+NOAA ENC WI|http://www.charts.noaa.gov/ENCs/WI_ENCProdCat.xml|.|"
 
 #include "../../../include/ocpn_plugin.h"
 
@@ -112,6 +181,7 @@ public:
       wxString GetName() { return m_name; }
       wxString GetUrl() { return m_url; }
       wxString GetDir() { return m_dir; }
+      void SetDir(wxString dir) { m_dir = dir; }
       bool ExistsLocaly(wxString filename);
       bool IsNewerThanLocal(wxString filename);
 private:
@@ -132,7 +202,9 @@ protected:
 	void DeleteSource( wxCommandEvent& event );
 	void UpdateChartList( wxCommandEvent& event );
 	void DownloadCharts( wxCommandEvent& event );
+      void OnLocalDirCahnged( wxFileDirPickerEvent& event );
       
+      void CleanForm();
       void FillFromFile(wxString url, wxString dir);
 public:
       ~ChartDldrPrefsDialogImpl();
