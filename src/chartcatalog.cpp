@@ -135,7 +135,7 @@ bool ChartCatalog::ParseNoaaHeader(TiXmlElement * xmldata)
 
 wxString ChartCatalog::GetDescription()
 {
-      return wxString::Format(_("Title: %s\nValid from: %s"), title.c_Str(), dt_valid.Format().c_str());
+      return wxString::Format(_("Title: %s\nValid from: %s"), title.c_str(), dt_valid.Format().c_str());
 }
 
 ChartCatalog::~ChartCatalog()
