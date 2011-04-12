@@ -157,6 +157,7 @@ public:
 
 //    Other public methods
       bool              SaveConfig(void);
+      bool              ExtractZipFiles(const wxString& aZipFile, const wxString& aTargetDir, bool aStripPath = true);
 
 //    Public properties
       wxArrayOfChartSources *m_chartSources;
@@ -202,7 +203,7 @@ protected:
 	void DeleteSource( wxCommandEvent& event );
 	void UpdateChartList( wxCommandEvent& event );
 	void DownloadCharts( wxCommandEvent& event );
-      void OnLocalDirCahnged( wxFileDirPickerEvent& event );
+      void OnLocalDirChanged( wxFileDirPickerEvent& event );
       
       void CleanForm();
       void FillFromFile(wxString url, wxString dir);

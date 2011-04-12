@@ -109,7 +109,7 @@ ChartDldrPrefsDialog::ChartDldrPrefsDialog( wxWindow* parent, wxWindowID id, con
 	// Connect Events
 	m_cbShowToolbarIcon->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ChartDldrPrefsDialog::ShowHideToolbarIcon ), NULL, this );
 	m_cbChartSources->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( ChartDldrPrefsDialog::OnSourceSelected ), NULL, this );
-	m_dpChartDirectory->Connect( wxEVT_COMMAND_DIRPICKER_CHANGED, wxFileDirPickerEventHandler( ChartDldrPrefsDialog::OnLocalDirCahnged ), NULL, this );
+	m_dpChartDirectory->Connect( wxEVT_COMMAND_DIRPICKER_CHANGED, wxFileDirPickerEventHandler( ChartDldrPrefsDialog::OnLocalDirChanged ), NULL, this );
 	m_bAddSource->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDialog::AddSource ), NULL, this );
 	m_bDeleteSource->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDialog::DeleteSource ), NULL, this );
 	m_bUpdateChartList->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDialog::UpdateChartList ), NULL, this );
@@ -121,7 +121,7 @@ ChartDldrPrefsDialog::~ChartDldrPrefsDialog()
 	// Disconnect Events
 	m_cbShowToolbarIcon->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ChartDldrPrefsDialog::ShowHideToolbarIcon ), NULL, this );
 	m_cbChartSources->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( ChartDldrPrefsDialog::OnSourceSelected ), NULL, this );
-	m_dpChartDirectory->Disconnect( wxEVT_COMMAND_DIRPICKER_CHANGED, wxFileDirPickerEventHandler( ChartDldrPrefsDialog::OnLocalDirCahnged ), NULL, this );
+	m_dpChartDirectory->Disconnect( wxEVT_COMMAND_DIRPICKER_CHANGED, wxFileDirPickerEventHandler( ChartDldrPrefsDialog::OnLocalDirChanged ), NULL, this );
 	m_bAddSource->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDialog::AddSource ), NULL, this );
 	m_bDeleteSource->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDialog::DeleteSource ), NULL, this );
 	m_bUpdateChartList->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDialog::UpdateChartList ), NULL, this );

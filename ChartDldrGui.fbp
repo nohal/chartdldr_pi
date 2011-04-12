@@ -740,7 +740,7 @@
                                         <property name="window_name"></property>
                                         <property name="window_style"></property>
                                         <event name="OnChar"></event>
-                                        <event name="OnDirChanged">OnLocalDirCahnged</event>
+                                        <event name="OnDirChanged">OnLocalDirChanged</event>
                                         <event name="OnEnterWindow"></event>
                                         <event name="OnEraseBackground"></event>
                                         <event name="OnKeyDown"></event>

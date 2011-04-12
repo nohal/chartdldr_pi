@@ -37,9 +37,14 @@
 #include <wx/url.h>
 #include <wx/progdlg.h>
 #include <wx/sstream.h>
+#include <wx/wfstream.h>
 #include <wx/filename.h>
 #include <wx/listctrl.h>
 #include <wx/dir.h>
+#include <wx/filesys.h>
+#include <wx/zipstrm.h>
+#include <wx/wfstream.h>
+#include <memory>
 
 #include <wx/arrimpl.cpp>
     WX_DEFINE_OBJARRAY(wxArrayOfChartSources);
@@ -418,14 +423,74 @@ wxArrayString ChartSource::GetLocalFiles()
 
 void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
 {
-// TODO: Implement DownloadCharts
+      if (m_clCharts->GetCheckedItemCount() == 0)
+            return;
+      for (int i = 0; i < m_clCharts->GetItemCount(); i++)
+      {
+            if(m_clCharts->IsChecked(i))
+            {
+                  //TODO: download, unpack, set time
+                  wxURL * url = new wxURL(pPlugIn->m_pChartCatalog->charts->Item(i).zipfile_location);
+                  if (url->GetError() != wxURL_NOERR) 
+                  {
+                        wxMessageBox(_("Error, the URL to the chart data seems wrong."), _("Error"));
+                        wxDELETE(url);
+                        return;
+                  }
+                  wxInputStream *in_stream;
+                  in_stream = url->GetInputStream();
+                  //construct local zipfile path
+                  wxStringTokenizer tk(url->GetPath(), _T("/"));
+                  wxString file;
+                  do
+                  {
+                        file = tk.GetNextToken();
+                  } while(tk.HasMoreTokens());
+                  wxFileName fn;
+                  fn.SetFullName(file);
+                  fn.SetPath(m_dpChartDirectory->GetPath());
+                  wxString path = fn.GetFullPath();
+                  if (wxFileExists(path))
+                        wxRemoveFile(path);
+                  //download
+                  int done = 0;
+                  if (url->GetError() == wxPROTO_NOERR)
+                  {
+                        wxProgressDialog prog(_("Downloading..."), _("Downloading chart..."), in_stream->GetSize() + 1);
+                        prog.Show();
+                        wxFileOutputStream out_stream(path);
+                        char * buffer = new char[8192];
+                        size_t read;
+                        do
+                        {
+                              in_stream->Read(buffer, 8191);
+                              read = in_stream->LastRead();
+                              out_stream.Write(buffer, read);
+                              done += read;
+                              prog.Update(done);
+                              
+                        } while (!in_stream->Eof());
+                        delete[] buffer;
+                  }
+                  else
+                  {
+                        wxMessageBox(_("Unable to connect."), _("Error"));
+                        wxDELETE(in_stream);
+                        wxDELETE(url);
+                        return;
+                  }
+                  //unpack
+                  pPlugIn->ExtractZipFiles(path, fn.GetPath());
+                  wxRemoveFile(path);
+            }
+      }
 }
 
-void ChartDldrPrefsDialogImpl::OnLocalDirCahnged( wxFileDirPickerEvent& event )
+void ChartDldrPrefsDialogImpl::OnLocalDirChanged( wxFileDirPickerEvent& event )
 {
       pPlugIn->m_chartSources->Item(m_cbChartSources->GetSelection())->SetDir(m_dpChartDirectory->GetPath());
       pPlugIn->SaveConfig();
-      event.Skip(); 
+      event.Skip();
 }
 
 ChartDldrPrefsDialogImpl::~ChartDldrPrefsDialogImpl()
@@ -474,4 +539,62 @@ void ChartDldrPrefsDialogImpl::AddSource( wxCommandEvent& event )
       dialog->Close();
       wxDELETE(dialog);
       event.Skip(); 
+}
+
+bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTargetDir, bool aStripPath) {
+      bool ret = true;
+
+      std::auto_ptr<wxZipEntry> entry(new wxZipEntry());
+
+      do {  
+
+            wxFileInputStream in(aZipFile);
+
+            if (!in) {
+                  wxLogError(_T("Can not open file '")+aZipFile+_T("'."));
+                  ret = false;
+                  break;
+            }
+            wxZipInputStream zip(in);
+
+            while (entry.reset(zip.GetNextEntry()), entry.get() != NULL) {
+                  // access meta-data
+                  wxString name = entry->GetName();
+                  name = aTargetDir + wxFileName::GetPathSeparator() + name;
+
+                  // read 'zip' to access the entry's data
+                  if (entry->IsDir()) {
+                        int perm = entry->GetMode();
+                        wxFileName::Mkdir(name, perm, wxPATH_MKDIR_FULL);
+                  } else {
+                        zip.OpenEntry(*entry.get());
+                        if (!zip.CanRead()) {
+                              wxLogError(_T("Can not read zip entry '") + entry->GetName() + _T("'."));
+                              ret = false;
+                              break;
+                        }
+
+                        if (aStripPath)
+                        {
+                              wxFileName fn(name);
+                              fn.SetPath(aTargetDir);
+                              name = fn.GetFullPath();
+                        }
+
+                        wxFileOutputStream file(name);
+
+                        if (!file) {
+                              wxLogError(_T("Can not create file '")+name+_T("'."));
+                              ret = false;
+                              break;
+                        }
+                        zip.Read(file);
+
+                  }
+
+            }
+
+      } while(false);
+
+      return ret;
 }

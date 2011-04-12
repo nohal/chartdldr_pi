@@ -55,7 +55,7 @@ class ChartDldrPrefsDialog : public wxDialog
 		// Virtual event handlers, overide them in your derived class
 		virtual void ShowHideToolbarIcon( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSourceSelected( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnLocalDirCahnged( wxFileDirPickerEvent& event ) { event.Skip(); }
+		virtual void OnLocalDirChanged( wxFileDirPickerEvent& event ) { event.Skip(); }
 		virtual void AddSource( wxCommandEvent& event ) { event.Skip(); }
 		virtual void DeleteSource( wxCommandEvent& event ) { event.Skip(); }
 		virtual void UpdateChartList( wxCommandEvent& event ) { event.Skip(); }
