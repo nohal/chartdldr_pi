@@ -1,0 +1,170 @@
+# Localization file for the OpenCPN chart downloader plugin.
+# Copyright (C) 2011 Pavel Kalian
+# This file is distributed under the same license as the OpenCPN package.
+# Pavel Kalian <pavel@kalian.cz>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: chartdldr_pi 2.4.324\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-04-12 16:43+0200\n"
+"PO-Revision-Date: 2011-04-12 16:52+0100\n"
+"Last-Translator: Pavel Kalian <pavel@kalian.cz>\n"
+"Language-Team: Pavel Kalian <pavel@kalian.cz>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Czech\n"
+"X-Poedit-Country: CZECH REPUBLIC\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: src/chartcatalog.cpp:151
+#, c-format
+msgid ""
+"Title: %s\n"
+"Valid from: %s"
+msgstr ""
+"Název: %s\n"
+"Platí od: %s"
+
+#: src/chartdldr_pi.cpp:115
+#: src/chartdldr_pi.cpp:218
+#: src/chartdldr_pi.cpp:244
+msgid "Chart Downloader"
+msgstr "Manažer map"
+
+#: src/chartdldr_pi.cpp:162
+msgid "ChartDownloader"
+msgstr "Správce map"
+
+#: src/chartdldr_pi.cpp:168
+msgid "Chart Downloader PlugIn for OpenCPN"
+msgstr "Doplněk Manažer map pro OpenCPN"
+
+#: src/chartdldr_pi.cpp:173
+msgid ""
+"Chart Downloader PlugIn for OpenCPN\n"
+"Manages chart downloads and updates from sources supporting\n"
+"NOAA Chart Catalog format"
+msgstr ""
+"Doplněk Manažer map pro OpenCPN\n"
+"Umožňuje stahování a správu map ze zdrojů, které podporují\n"
+"NOAA Chart Catalog format"
+
+#: src/chartdldr_pi.cpp:328
+msgid "New"
+msgstr "Nová"
+
+#: src/chartdldr_pi.cpp:334
+msgid "Update available"
+msgstr "Má aktualizaci"
+
+#: src/chartdldr_pi.cpp:338
+msgid "Up to date"
+msgstr "Aktuální"
+
+#: src/chartdldr_pi.cpp:387
+msgid "Error, the URL to the chart source data seems wrong."
+msgstr "Chyba, URL zdroje map vypadá chybně."
+
+#: src/chartdldr_pi.cpp:387
+#: src/chartdldr_pi.cpp:415
+#: src/chartdldr_pi.cpp:472
+#: src/chartdldr_pi.cpp:526
+msgid "Error"
+msgstr "Chyba"
+
+#: src/chartdldr_pi.cpp:397
+msgid "Downloading..."
+msgstr "Stahování..."
+
+#: src/chartdldr_pi.cpp:397
+msgid "Downloading chart list..."
+msgstr "Stahování seznamu map..."
+
+#: src/chartdldr_pi.cpp:415
+#: src/chartdldr_pi.cpp:526
+msgid "Unable to connect."
+msgstr "Nelze se připojit."
+
+#: src/chartdldr_pi.cpp:472
+msgid "Error, the URL to the chart data seems wrong."
+msgstr "Chyba, URL zdroje map vypadá chybně."
+
+#: src/chartdldr_pi.cpp:567
+msgid "Title"
+msgstr "Název"
+
+#: src/chartdldr_pi.cpp:572
+msgid "Status"
+msgstr "Stav"
+
+#: src/chartdldrgui.cpp:20
+msgid "Show in Toolbar (Takes effect on next restart of the application)"
+msgstr "Zobrazit v nástrojové liště (po restartu aplikace)"
+
+#: src/chartdldrgui.cpp:24
+msgid "Charts source"
+msgstr "Zdroje map"
+
+#: src/chartdldrgui.cpp:32
+#: src/chartdldrgui.cpp:189
+msgid "Chart source"
+msgstr "Zdroj map"
+
+#: src/chartdldrgui.cpp:41
+#: src/chartdldrgui.cpp:196
+msgid "URL"
+msgstr "URL"
+
+#: src/chartdldrgui.cpp:48
+#: src/chartdldrgui.cpp:203
+msgid "Chart directory"
+msgstr "Složka map"
+
+#: src/chartdldrgui.cpp:52
+#: src/chartdldrgui.cpp:207
+msgid "Select a folder"
+msgstr "Vyber složku"
+
+#: src/chartdldrgui.cpp:60
+msgid "Add new source"
+msgstr "Přidej zdroj map"
+
+#: src/chartdldrgui.cpp:63
+msgid "Delete source"
+msgstr "Smaž zdroj"
+
+#: src/chartdldrgui.cpp:66
+msgid "Update chart list"
+msgstr "Aktualizuj seznam map"
+
+#: src/chartdldrgui.cpp:75
+msgid "Chart source info"
+msgstr "Informace o zdroji map"
+
+#: src/chartdldrgui.cpp:83
+msgid "Charts"
+msgstr "MApy"
+
+#: src/chartdldrgui.cpp:91
+msgid "Download selected charts"
+msgstr "Stáhni vybrané mapy"
+
+#: src/chartdldrgui.cpp:141
+#: src/chartdldrgui.h:93
+msgid "Download progress"
+msgstr "Průběh stahování"
+
+#: src/chartdldrgui.cpp:143
+msgid "Total"
+msgstr "Celkem"
+
+#: src/chartdldrgui.cpp:150
+msgid "Current chart"
+msgstr "Tato mapa"
+
+#: src/chartdldrgui.h:118
+msgid "New chart source"
+msgstr "Nový zdroj map"
+
