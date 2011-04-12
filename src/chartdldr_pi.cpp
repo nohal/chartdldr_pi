@@ -276,7 +276,7 @@ void ChartDldrPrefsDialogImpl::OnSourceSelected( wxCommandEvent& event )
       ChartSource *cs = pPlugIn->m_chartSources->Item(m_cbChartSources->GetSelection());
       m_tChartSourceUrl->SetValue(cs->GetUrl());
       m_dpChartDirectory->SetPath(cs->GetDir());
-      
+
       pPlugIn->m_pChartSource = cs;
       CleanForm();
       FillFromFile(cs->GetUrl(), cs->GetDir());
@@ -382,7 +382,7 @@ void ChartDldrPrefsDialogImpl::UpdateChartList( wxCommandEvent& event )
             return;
       ChartSource *cs = pPlugIn->m_chartSources->Item(m_cbChartSources->GetSelection());
       wxURL * url = new wxURL(cs->GetUrl());
-      if (url->GetError() != wxURL_NOERR) 
+      if (url->GetError() != wxURL_NOERR)
       {
             wxMessageBox(_("Error, the URL to the chart source data seems wrong."), _("Error"));
             wxDELETE(url);
@@ -406,7 +406,7 @@ void ChartDldrPrefsDialogImpl::UpdateChartList( wxCommandEvent& event )
                   out_stream.Write(buffer, read);
                   done += read;
                   prog.Update(done);
-                  
+
             } while (!in_stream->Eof());
             delete[] buffer;
       }
@@ -466,7 +466,7 @@ void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
                   downloading++;
                   //download
                   wxURL * url = new wxURL(pPlugIn->m_pChartCatalog->charts->Item(i).zipfile_location);
-                  if (url->GetError() != wxURL_NOERR) 
+                  if (url->GetError() != wxURL_NOERR)
                   {
                         wxMessageBox(_("Error, the URL to the chart data seems wrong."), _("Error"));
                         wxDELETE(url);
@@ -553,7 +553,7 @@ ChartDldrPrefsDialogImpl::~ChartDldrPrefsDialogImpl()
       ((wxListCtrl *)m_clCharts)->DeleteAllItems();
 }
 
-ChartDldrPrefsDialogImpl::ChartDldrPrefsDialogImpl( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) 
+ChartDldrPrefsDialogImpl::ChartDldrPrefsDialogImpl( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style )
             : ChartDldrPrefsDialog( parent, id, title, pos, size, style )
 {
       // Add columns
@@ -565,10 +565,11 @@ ChartDldrPrefsDialogImpl::ChartDldrPrefsDialogImpl( wxWindow* parent, wxWindowID
       wxListItem col1;
       col1.SetId(1);
       col1.SetText( _("Status") );
+      col1.SetWidth(100);
       ((wxListCtrl *)m_clCharts)->InsertColumn(1, col1);
 }
 
-void ChartDldrPrefsDialogImpl::DeleteSource( wxCommandEvent& event ) 
+void ChartDldrPrefsDialogImpl::DeleteSource( wxCommandEvent& event )
 {
       pPlugIn->m_chartSources->RemoveAt(m_cbChartSources->GetSelection());
       ((wxItemContainer*)m_cbChartSources)->Delete(m_cbChartSources->GetSelection());
@@ -576,10 +577,10 @@ void ChartDldrPrefsDialogImpl::DeleteSource( wxCommandEvent& event )
       m_tChartSourceUrl->SetValue(wxEmptyString);
       m_dpChartDirectory->SetPath(wxEmptyString);
       pPlugIn->SaveConfig();
-      event.Skip(); 
+      event.Skip();
 }
 
-void ChartDldrPrefsDialogImpl::AddSource( wxCommandEvent& event ) 
+void ChartDldrPrefsDialogImpl::AddSource( wxCommandEvent& event )
 {
       AddSourceDlg *dialog = new AddSourceDlg(pPlugIn->m_parent_window);
       if(dialog->ShowModal() == wxID_OK)
@@ -594,7 +595,7 @@ void ChartDldrPrefsDialogImpl::AddSource( wxCommandEvent& event )
       dialog->Close();
       dialog->Destroy();
       wxDELETE(dialog);
-      event.Skip(); 
+      event.Skip();
 }
 
 bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTargetDir, bool aStripPath, wxDateTime aMTime) {
@@ -602,7 +603,7 @@ bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTa
 
       std::auto_ptr<wxZipEntry> entry(new wxZipEntry());
 
-      do {  
+      do {
 
             wxFileInputStream in(aZipFile);
 
@@ -629,7 +630,7 @@ bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTa
                               ret = false;
                               break;
                         }
-                              
+
                         wxFileName fn(name);
                         if (aStripPath)
                         {
