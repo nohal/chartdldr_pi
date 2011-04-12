@@ -335,9 +335,9 @@ bool ChartSource::IsNewerThanLocal(wxString filename, wxDateTime validDate)
       wxString file = tk.GetNextToken();
       for (size_t i = 0; i < lf.Count(); i++)
       {
-            if(lf.Item(i).StartsWith(file))
+            wxFileName fn(lf.Item(i));
+            if(fn.GetName().StartsWith(file))
             {
-                  wxFileName fn(GetDir(), lf.Item(i));
                   wxDateTime ct, mt, at;
                   fn.GetTimes(&at, &mt, &ct);
                   if (validDate.IsLaterThan(ct))
@@ -485,6 +485,9 @@ void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
                   wxRemoveFile(path);
             }
       }
+      ChartSource *cs = pPlugIn->m_chartSources->Item(m_cbChartSources->GetSelection());
+      CleanForm();
+      FillFromFile(cs->GetUrl(), cs->GetDir());
 }
 
 void ChartDldrPrefsDialogImpl::OnLocalDirChanged( wxFileDirPickerEvent& event )
