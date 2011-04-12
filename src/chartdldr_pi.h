@@ -157,7 +157,7 @@ public:
 
 //    Other public methods
       bool              SaveConfig(void);
-      bool              ExtractZipFiles(const wxString& aZipFile, const wxString& aTargetDir, bool aStripPath = true);
+      bool              ExtractZipFiles(const wxString& aZipFile, const wxString& aTargetDir, bool aStripPath = true, wxDateTime aMTime = wxDateTime::Now());
 
 //    Public properties
       wxArrayOfChartSources *m_chartSources;
@@ -184,7 +184,7 @@ public:
       wxString GetDir() { return m_dir; }
       void SetDir(wxString dir) { m_dir = dir; }
       bool ExistsLocaly(wxString filename);
-      bool IsNewerThanLocal(wxString filename);
+      bool IsNewerThanLocal(wxString filename, wxDateTime validDate);
 private:
       wxArrayString GetLocalFiles();
       wxString m_name;

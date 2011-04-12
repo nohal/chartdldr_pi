@@ -86,9 +86,9 @@ public:
       wxArrayString *states;
       wxArrayString *regions;
       wxString zipfile_location;
-      wxString zipfile_datetime;
-      wxString zipfile_datetime_iso8601;
-      wxString zipfile_size;
+      wxDateTime zipfile_datetime;
+      wxDateTime zipfile_datetime_iso8601;
+      int zipfile_size;
 
       NoticeToMariners *nm;
       NoticeToMariners *lnm;

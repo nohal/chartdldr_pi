@@ -27,6 +27,7 @@
  */
 
 #include "chartcatalog.h"
+#include <wx/tokenzr.h>
 
 #include <wx/arrimpl.cpp>
     //WX_DEFINE_OBJARRAY(wxArrayOfNoticeToMariners);
@@ -125,7 +126,9 @@ bool ChartCatalog::ParseNoaaHeader(TiXmlElement * xmldata)
             }
             if (s == _T("dt_valid"))
             {
-                  dt_valid.ParseDateTime(wxString::FromUTF8(child->FirstChild()->Value()));
+                  wxStringTokenizer tk(wxString::FromUTF8(child->FirstChild()->Value()), _T("TZ"));
+                  dt_valid.ParseDate(tk.GetNextToken());
+                  dt_valid.ParseTime(tk.GetNextToken());
             }
             if (s == _T("ref_spec"))
             {
@@ -208,15 +211,17 @@ Chart::Chart(TiXmlNode * xmldata)
             }
             if (s == _T("zipfile_datetime"))
             {
-                  zipfile_datetime = wxString::FromUTF8(child->FirstChild()->Value());
+                  zipfile_datetime.ParseDateTime(wxString::FromUTF8(child->FirstChild()->Value()));
             }
             if (s == _T("zipfile_datetime_iso8601"))
             {
-                  zipfile_datetime_iso8601 = wxString::FromUTF8(child->FirstChild()->Value());
+                  wxStringTokenizer tk(wxString::FromUTF8(child->FirstChild()->Value()), _T("TZ"));
+                  zipfile_datetime_iso8601.ParseDate(tk.GetNextToken());
+                  zipfile_datetime_iso8601.ParseTime(tk.GetNextToken());
             }
             if (s == _T("zipfile_size"))
             {
-                  zipfile_size = wxString::FromUTF8(child->FirstChild()->Value());
+                  zipfile_size = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
             }
             if (s == _T("nm"))
             {

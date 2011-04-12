@@ -301,7 +301,7 @@ void ChartDldrPrefsDialogImpl::FillFromFile(wxString url, wxString dir)
                   }
                   else
                   {
-                        if(pPlugIn->m_pChartSource->IsNewerThanLocal(file))
+                        if(pPlugIn->m_pChartSource->IsNewerThanLocal(file, pPlugIn->m_pChartCatalog->charts->Item(i).zipfile_datetime_iso8601))
                         {
                               m_clCharts->SetItem(i, 1, _("Update available"));
                         }
@@ -321,13 +321,14 @@ bool ChartSource::ExistsLocaly(wxString filename)
       wxString file = tk.GetNextToken();
       for (size_t i = 0; i < lf.Count(); i++)
       {
-            if(lf.Item(i).StartsWith(file))
+            wxFileName fn(lf.Item(i));
+            if(fn.GetName().StartsWith(file))
                   return true;
       }
       return false;
 }
 
-bool ChartSource::IsNewerThanLocal(wxString filename)
+bool ChartSource::IsNewerThanLocal(wxString filename, wxDateTime validDate)
 {
       wxArrayString lf = GetLocalFiles();
       wxStringTokenizer tk(filename, _T("."));
@@ -339,7 +340,7 @@ bool ChartSource::IsNewerThanLocal(wxString filename)
                   wxFileName fn(GetDir(), lf.Item(i));
                   wxDateTime ct, mt, at;
                   fn.GetTimes(&at, &mt, &ct);
-                  if (mt.IsLaterThan(ct)) //FIXME: not ct, but chart issue date
+                  if (validDate.IsLaterThan(ct))
                         return true;
             }
       }
@@ -429,7 +430,7 @@ void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
       {
             if(m_clCharts->IsChecked(i))
             {
-                  //TODO: download, unpack, set time
+                  //download
                   wxURL * url = new wxURL(pPlugIn->m_pChartCatalog->charts->Item(i).zipfile_location);
                   if (url->GetError() != wxURL_NOERR) 
                   {
@@ -480,7 +481,7 @@ void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
                         return;
                   }
                   //unpack
-                  pPlugIn->ExtractZipFiles(path, fn.GetPath());
+                  pPlugIn->ExtractZipFiles(path, fn.GetPath(), true, pPlugIn->m_pChartCatalog->charts->Item(i).zipfile_datetime_iso8601);
                   wxRemoveFile(path);
             }
       }
@@ -541,7 +542,7 @@ void ChartDldrPrefsDialogImpl::AddSource( wxCommandEvent& event )
       event.Skip(); 
 }
 
-bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTargetDir, bool aStripPath) {
+bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTargetDir, bool aStripPath, wxDateTime aMTime) {
       bool ret = true;
 
       std::auto_ptr<wxZipEntry> entry(new wxZipEntry());
@@ -573,10 +574,10 @@ bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTa
                               ret = false;
                               break;
                         }
-
+                              
+                        wxFileName fn(name);
                         if (aStripPath)
                         {
-                              wxFileName fn(name);
                               fn.SetPath(aTargetDir);
                               name = fn.GetFullPath();
                         }
@@ -589,6 +590,7 @@ bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTa
                               break;
                         }
                         zip.Read(file);
+                        fn.SetTimes(&aMTime, &aMTime, &aMTime);
 
                   }
 
