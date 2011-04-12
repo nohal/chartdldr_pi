@@ -39,7 +39,6 @@ class ChartDldrPrefsDialog : public wxDialog
 	private:
 	
 	protected:
-		wxCheckBox* m_cbShowToolbarIcon;
 		wxStaticText* m_staticText1;
 		wxStaticText* m_staticText2;
 		wxStaticText* m_staticText4;
@@ -63,6 +62,7 @@ class ChartDldrPrefsDialog : public wxDialog
 		
 	
 	public:
+		wxCheckBox* m_cbShowToolbarIcon;
 		wxChoice* m_cbChartSources;
 		wxTextCtrl* m_tChartSourceUrl;
 		wxDirPickerCtrl* m_dpChartDirectory;

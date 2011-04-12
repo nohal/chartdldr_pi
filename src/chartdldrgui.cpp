@@ -17,7 +17,7 @@ ChartDldrPrefsDialog::ChartDldrPrefsDialog( wxWindow* parent, wxWindowID id, con
 	bSizer1 = new wxBoxSizer( wxVERTICAL );
 	
 	bSizer1->SetMinSize( wxSize( 500,-1 ) ); 
-	m_cbShowToolbarIcon = new wxCheckBox( this, wxID_ANY, _("Show in Toolbar"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_cbShowToolbarIcon = new wxCheckBox( this, wxID_ANY, _("Show in Toolbar (Takes effect on next restart of the application)"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer1->Add( m_cbShowToolbarIcon, 0, wxALL, 5 );
 	
 	wxStaticBoxSizer* sbSchartsource;

@@ -43,7 +43,7 @@
 #define     PLUGIN_VERSION_MINOR    1
 
 #define     MY_API_VERSION_MAJOR    1
-#define     MY_API_VERSION_MINOR    2
+#define     MY_API_VERSION_MINOR    4
 
 #define     NOAA_CHART_SOURCES "NOAA ENC - all charts - (too) big!|http://www.charts.noaa.gov/ENCs/ENCProdCat.xml|.|\
 NOAA RNC - all charts - (too) big!|http://www.charts.noaa.gov/RNCs/RNCProdCat.xml|.|\
@@ -153,6 +153,7 @@ public:
       void ShowPreferencesDialog( wxWindow* parent );
 
 //    Optional plugin overrides
+      void OnToolbarToolCallback(int id);
       
 
 //    Other public methods

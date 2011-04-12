@@ -152,7 +152,7 @@
                         <property name="gripper">0</property>
                         <property name="hidden">0</property>
                         <property name="id">wxID_ANY</property>
-                        <property name="label">Show in Toolbar</property>
+                        <property name="label">Show in Toolbar (Takes effect on next restart of the application)</property>
                         <property name="layer"></property>
                         <property name="max_size"></property>
                         <property name="maximize_button">0</property>
@@ -165,7 +165,7 @@
                         <property name="pane_border">1</property>
                         <property name="pane_position"></property>
                         <property name="pane_size"></property>
-                        <property name="permission">protected</property>
+                        <property name="permission">public</property>
                         <property name="pin_button">1</property>
                         <property name="pos"></property>
                         <property name="position"></property>

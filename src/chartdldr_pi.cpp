@@ -213,6 +213,31 @@ bool chartdldr_pi::SaveConfig(void)
             return false;
 }
 
+void chartdldr_pi::OnToolbarToolCallback(int id)
+{
+      ChartDldrPrefsDialogImpl *dialog = new ChartDldrPrefsDialogImpl( m_parent_window, wxID_ANY, _("Chart Downloader"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE );
+      dialog->m_cbShowToolbarIcon->Hide();
+      dialog->pPlugIn = this;
+      dialog->Fit();
+      wxColour cl;
+      GetGlobalColor(_T("DILG1"), &cl);
+      dialog->SetBackgroundColour(cl);
+
+      for (size_t i = 0; i < m_chartSources->GetCount(); i++)
+      {
+            ((wxItemContainer*)dialog->m_cbChartSources)->Append(m_chartSources->Item(i)->GetName());
+      }
+      dialog->m_cbShowToolbarIcon->SetValue(m_bChartDldrShowIcon);
+
+      if(dialog->ShowModal() == wxID_OK)
+      {
+            m_bChartDldrShowIcon = dialog->m_cbShowToolbarIcon->IsChecked();
+            SaveConfig();
+      }
+      dialog->Close();
+      wxDELETE(dialog);
+}
+
 void chartdldr_pi::ShowPreferencesDialog( wxWindow* parent )
 {
       ChartDldrPrefsDialogImpl *dialog = new ChartDldrPrefsDialogImpl( parent, wxID_ANY, _("Chart Downloader"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE );
@@ -226,10 +251,11 @@ void chartdldr_pi::ShowPreferencesDialog( wxWindow* parent )
       {
             ((wxItemContainer*)dialog->m_cbChartSources)->Append(m_chartSources->Item(i)->GetName());
       }
+      dialog->m_cbShowToolbarIcon->SetValue(m_bChartDldrShowIcon);
 
       if(dialog->ShowModal() == wxID_OK)
       {
-            //TODO: prepare stuff
+            m_bChartDldrShowIcon = dialog->m_cbShowToolbarIcon->IsChecked();
             SaveConfig();
       }
       dialog->Close();
