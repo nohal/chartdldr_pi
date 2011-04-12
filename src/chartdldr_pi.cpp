@@ -356,13 +356,18 @@ void ChartDldrPrefsDialogImpl::UpdateChartList( wxCommandEvent& event )
             wxProgressDialog prog(_("Downloading..."), _("Downloading chart list..."), in_stream->GetSize() + 1);
             prog.Show();
             wxStringOutputStream out_stream(&res);
+            char * buffer = new char[8192];
+            size_t read;
             do
             {
-                  out_stream.PutC(in_stream->GetC());
-                  done++;
+                  in_stream->Read(buffer, 8191);
+                  read = in_stream->LastRead();
+                  out_stream.Write(buffer, read);
+                  done += read;
                   prog.Update(done);
                   
             } while (!in_stream->Eof());
+            delete[] buffer;
       }
       else
       {

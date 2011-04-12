@@ -164,6 +164,11 @@ Chart::~Chart()
 
 Chart::Chart(TiXmlNode * xmldata)
 {
+      coast_guard_districts = new wxArrayString();
+      states = new wxArrayString();
+      regions = new wxArrayString();
+      nm = NULL;
+      lnm = NULL;
       coverage = new wxArrayOfPanels();
       TiXmlNode *child;
       for ( child = xmldata->FirstChild(); child != 0; child = child->NextSibling())
@@ -175,7 +180,6 @@ Chart::Chart(TiXmlNode * xmldata)
             }
             if (s == _T("coast_guard_districts"))
             {
-                  coast_guard_districts = new wxArrayString();
                   TiXmlNode *mychild;
                   for ( mychild = child->FirstChild(); mychild != 0; mychild = mychild->NextSibling())
                   {
@@ -184,7 +188,6 @@ Chart::Chart(TiXmlNode * xmldata)
             }
             if (s == _T("states"))
             {
-                  states = new wxArrayString();
                   TiXmlNode *mychild;
                   for ( mychild = child->FirstChild(); mychild != 0; mychild = mychild->NextSibling())
                   {
@@ -193,7 +196,6 @@ Chart::Chart(TiXmlNode * xmldata)
             }
             if (s == _T("regions"))
             {
-                  regions = new wxArrayString();
                   TiXmlNode *mychild;
                   for ( mychild = child->FirstChild(); mychild != 0; mychild = mychild->NextSibling())
                   {
