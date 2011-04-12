@@ -501,12 +501,20 @@ void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
                         dialog->m_gChartProgress->SetRange(in_stream->GetSize());
                         do
                         {
+                              if(!dialog->IsShown())
+                              {
+                                    wxDELETE(in_stream);
+                                    wxDELETE(url);
+                                    dialog->Close();
+                                    dialog->Destroy();
+                                    wxDELETE(dialog);
+                                    return;
+                              }
                               in_stream->Read(buffer, 8191);
                               read = in_stream->LastRead();
                               out_stream.Write(buffer, read);
                               done += read;
                               dialog->m_gChartProgress->SetValue(done);
-                              
                         } while (!in_stream->Eof());
                         delete[] buffer;
                   }
