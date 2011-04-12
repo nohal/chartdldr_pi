@@ -458,6 +458,7 @@ void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
       DlProgressDialog *dialog = new DlProgressDialog(this);
       dialog->m_gTotalProgress->SetRange(m_clCharts->GetCheckedItemCount());
       dialog->Show();
+      this->Disable();
       for (int i = 0; i < m_clCharts->GetItemCount(); i++)
       {
             if(m_clCharts->IsChecked(i))
@@ -470,6 +471,7 @@ void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
                   {
                         wxMessageBox(_("Error, the URL to the chart data seems wrong."), _("Error"));
                         wxDELETE(url);
+                        this->Enable();
                         dialog->Close();
                         dialog->Destroy();
                         wxDELETE(dialog);
@@ -505,6 +507,7 @@ void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
                               {
                                     wxDELETE(in_stream);
                                     wxDELETE(url);
+                                    this->Enable();
                                     dialog->Close();
                                     dialog->Destroy();
                                     wxDELETE(dialog);
@@ -523,6 +526,7 @@ void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
                         wxMessageBox(_("Unable to connect."), _("Error"));
                         wxDELETE(in_stream);
                         wxDELETE(url);
+                        this->Enable();
                         dialog->Close();
                         dialog->Destroy();
                         wxDELETE(dialog);
@@ -533,6 +537,7 @@ void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
                   wxRemoveFile(path);
             }
       }
+      this->Enable();
       dialog->Close();
       dialog->Destroy();
       wxDELETE(dialog);
