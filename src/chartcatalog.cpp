@@ -55,6 +55,12 @@ ChartCatalog::ChartCatalog()
       charts = new wxArrayOfCharts();
 }
 
+ChartCatalog::~ChartCatalog()
+{
+      charts->Clear();
+      wxDELETE(charts);
+}
+
 bool ChartCatalog::LoadFromXml(TiXmlDocument * doc)
 {
       TiXmlElement * root = doc->RootElement();
@@ -63,7 +69,9 @@ bool ChartCatalog::LoadFromXml(TiXmlDocument * doc)
       if (rootName.StartsWith(_T("RncProductCatalog")))
       {
             if (!ParseNoaaHeader(root->FirstChildElement()))
+            {
                   return false;
+            }
             TiXmlNode *child;
             for ( child = root->FirstChildElement()->NextSibling(); child != 0; child = child->NextSibling())
             {
@@ -73,7 +81,9 @@ bool ChartCatalog::LoadFromXml(TiXmlDocument * doc)
       else if (rootName.StartsWith(_T("EncProductCatalog")))
       {
             if (!ParseNoaaHeader(root->FirstChildElement()))
+            {
                   return false;
+            }
             TiXmlNode *child;
             for ( child = root->FirstChildElement()->NextSibling(); child != 0; child = child->NextSibling())
             {
@@ -82,7 +92,7 @@ bool ChartCatalog::LoadFromXml(TiXmlDocument * doc)
       }
       else
       {
-                  return false;
+            return false;
       }
       return true;
 }
@@ -138,23 +148,23 @@ wxString ChartCatalog::GetDescription()
       return wxString::Format(_("Title: %s\nValid from: %s"), title.c_str(), dt_valid.Format().c_str());
 }
 
-ChartCatalog::~ChartCatalog()
-{
-      wxDELETE(charts);
-}
-
 Chart::~Chart()
 {
+      coast_guard_districts->Clear();
       wxDELETE(coast_guard_districts);
+      states->Clear();
       wxDELETE(states);
+      regions->Clear();
       wxDELETE(regions);
       wxDELETE(nm);
       wxDELETE(lnm);
+      coverage->Clear();
       wxDELETE(coverage);
 }
 
 Chart::Chart(TiXmlNode * xmldata)
 {
+      coverage = new wxArrayOfPanels();
       TiXmlNode *child;
       for ( child = xmldata->FirstChild(); child != 0; child = child->NextSibling())
       {
@@ -214,9 +224,8 @@ Chart::Chart(TiXmlNode * xmldata)
             {
                   lnm = new NoticeToMariners(child);
             }
-            if (s == _T("coverage"))
+            if (s == _T("cov"))
             {
-                  coverage = new wxArrayOfPanels();
                   TiXmlNode *mychild;
                   for ( mychild = child->FirstChild(); mychild != 0; mychild = mychild->NextSibling())
                   {
@@ -354,6 +363,7 @@ Panel::Panel(TiXmlNode * xmldata)
 
 Panel::~Panel()
 {
+      vertexes->Clear();
       wxDELETE(vertexes);
 }
 

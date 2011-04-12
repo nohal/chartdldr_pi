@@ -121,8 +121,9 @@ int chartdldr_pi::Init(void)
 bool chartdldr_pi::DeInit(void)
 {
       m_chartSources->Clear();
-      delete m_chartSources;
+      wxDELETE(m_chartSources);
       wxDELETE(m_pChartCatalog);
+      wxDELETE(m_pChartSource);
       return true;
 }
 
@@ -226,6 +227,8 @@ void chartdldr_pi::ShowPreferencesDialog( wxWindow* parent )
             //TODO: prepare stuff
             SaveConfig();
       }
+      dialog->Close();
+      wxDELETE(dialog);
 }
 
 ChartSource::ChartSource(wxString name, wxString url, wxString localdir)
@@ -270,10 +273,10 @@ void ChartDldrPrefsDialogImpl::FillFromFile(wxString url, wxString dir)
             {
                   wxListItem li;
                   li.SetId(i);
-                  li.SetText(pPlugIn->m_pChartCatalog->charts->Item(i)->title);
+                  li.SetText(pPlugIn->m_pChartCatalog->charts->Item(i).title);
                   m_clCharts->InsertItem(li);
-                  m_clCharts->SetItem(i, 0, pPlugIn->m_pChartCatalog->charts->Item(i)->title);
-                  wxURL u(pPlugIn->m_pChartCatalog->charts->Item(i)->zipfile_location);
+                  m_clCharts->SetItem(i, 0, pPlugIn->m_pChartCatalog->charts->Item(i).title);
+                  wxURL u(pPlugIn->m_pChartCatalog->charts->Item(i).zipfile_location);
                   wxStringTokenizer tk(u.GetPath(), _T("/"));
                   wxString file;
                   do
@@ -406,6 +409,11 @@ void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
 // TODO: Implement DownloadCharts
 }
 
+ChartDldrPrefsDialogImpl::~ChartDldrPrefsDialogImpl()
+{
+      ((wxListCtrl *)m_clCharts)->DeleteAllItems();
+}
+
 ChartDldrPrefsDialogImpl::ChartDldrPrefsDialogImpl( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) 
             : ChartDldrPrefsDialog( parent, id, title, pos, size, style )
 {
@@ -444,6 +452,7 @@ void ChartDldrPrefsDialogImpl::AddSource( wxCommandEvent& event )
             m_dpChartDirectory->SetPath(dialog->m_dpChartDirectory->GetPath());*/
             pPlugIn->SaveConfig();
       }
-      dialog->Destroy();
+      dialog->Close();
+      wxDELETE(dialog);
       event.Skip(); 
 }

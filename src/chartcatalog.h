@@ -43,9 +43,9 @@ class Vertex;
 class Panel;
 class Chart;
 //WX_DECLARE_OBJARRAY(NoticeToMariners *, wxArrayOfNoticeToMariners);
-WX_DECLARE_OBJARRAY(Vertex *, wxArrayOfVertexes);
-WX_DECLARE_OBJARRAY(Panel *, wxArrayOfPanels);
-WX_DECLARE_OBJARRAY(Chart *, wxArrayOfCharts);
+WX_DECLARE_OBJARRAY(Vertex, wxArrayOfVertexes);
+WX_DECLARE_OBJARRAY(Panel, wxArrayOfPanels);
+WX_DECLARE_OBJARRAY(Chart, wxArrayOfCharts);
 
 //Declarations
 class ChartCatalog
