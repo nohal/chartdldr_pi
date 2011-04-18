@@ -47,6 +47,7 @@
 
 #define     NOAA_CHART_SOURCES "NOAA ENC - all charts - (too) big!|http://www.charts.noaa.gov/ENCs/ENCProdCat.xml|.|\
 NOAA RNC - all charts - (too) big!|http://www.charts.noaa.gov/RNCs/RNCProdCat.xml|.|\
+USACE IENC charts|http://crunch.tec.army.mil/enc/echarts/catalog/iencproductscatalog.xml|.|\
 NOAA RNC AK|http://www.charts.noaa.gov/RNCs/AK_RNCProdCat.xml|.|\
 NOAA RNC AL|http://www.charts.noaa.gov/RNCs/AL_RNCProdCat.xml|.|\
 NOAA RNC CA|http://www.charts.noaa.gov/RNCs/CA_RNCProdCat.xml|.|\
