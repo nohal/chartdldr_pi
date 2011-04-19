@@ -17,7 +17,7 @@
 #pragma interface "httpbuilder.h"
 #endif
 
-#define HTTPBUILDER_BASE64 // Use base 64 for HTTP Authentication
+//#define HTTPBUILDER_BASE64 // Use base 64 for HTTP Authentication
 #define HTTPBUILDER_BOUNDARY_LENGTH 40 // Boundary length for multipart posts
 #define HTTPBUILDER_VERSION wxT("1.2") // Version of wxHTTPBuilder
 
