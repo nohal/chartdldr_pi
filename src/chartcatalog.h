@@ -83,6 +83,10 @@ public:
       Chart(TiXmlNode * xmldata);
       ~Chart();
       // public methods
+      virtual wxString GetChartTitle() { return title; }
+      virtual wxString GetDownloadLocation() { return zipfile_location; }
+      virtual wxString GetChartFilename();
+      virtual wxDateTime GetUpdateDatetime() { return zipfile_datetime_iso8601; }
 
       // public properties
       wxString title; //RNC: <title>, ENC:<lname>
@@ -140,6 +144,10 @@ public:
       IEncCell(TiXmlNode * xmldata);
       ~IEncCell();
       // public methods
+      wxString GetChartTitle();
+      wxString GetDownloadLocation();
+      wxString GetChartFilename();
+      wxDateTime GetUpdateDatetime();
 
       //public properties
       wxString name;

@@ -254,6 +254,17 @@ Chart::Chart(TiXmlNode * xmldata)
       }
 }
 
+wxString Chart::GetChartFilename()
+{
+      wxString file;
+      wxStringTokenizer tk(zipfile_location, _T("/"));
+      do
+      {
+            file = tk.GetNextToken();
+      } while(tk.HasMoreTokens());
+      return file;
+}
+
 RasterChart::RasterChart(TiXmlNode * xmldata) : Chart(xmldata)
 {
       TiXmlNode *child;
@@ -393,6 +404,26 @@ IEncCell::~IEncCell()
       wxDELETE(shp_file);
       wxDELETE(s57_file);
       wxDELETE(kml_file);
+}
+
+wxString IEncCell::GetChartTitle()
+{
+      return wxString::Format(_("%s (%s to %s), river miles %3.1f - %3.1f"), river_name, location->from, location->to, river_miles->begin, river_miles->end);
+}
+
+wxString IEncCell::GetChartFilename()
+{
+      return name;
+}
+
+wxString IEncCell::GetDownloadLocation()
+{
+      return s57_file->location;
+}
+
+wxDateTime IEncCell::GetUpdateDatetime()
+{
+      return s57_file->date_posted;
 }
 
 File::File(TiXmlNode * xmldata)

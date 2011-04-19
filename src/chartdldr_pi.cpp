@@ -45,6 +45,8 @@
 #include <wx/zipstrm.h>
 #include <wx/wfstream.h>
 #include <memory>
+#include <wx/protocol/http.h>
+#include "httpbuilder.h"
 
 #include <wx/arrimpl.cpp>
     WX_DEFINE_OBJARRAY(wxArrayOfChartSources);
@@ -313,23 +315,17 @@ void ChartDldrPrefsDialogImpl::FillFromFile(wxString url, wxString dir)
             {
                   wxListItem li;
                   li.SetId(i);
-                  li.SetText(pPlugIn->m_pChartCatalog->charts->Item(i).title);
+                  li.SetText(pPlugIn->m_pChartCatalog->charts->Item(i).GetChartTitle());
                   m_clCharts->InsertItem(li);
-                  m_clCharts->SetItem(i, 0, pPlugIn->m_pChartCatalog->charts->Item(i).title);
-                  wxURL u(pPlugIn->m_pChartCatalog->charts->Item(i).zipfile_location);
-                  wxStringTokenizer tk(u.GetPath(), _T("/"));
-                  wxString file;
-                  do
-                  {
-                        file = tk.GetNextToken();
-                  } while(tk.HasMoreTokens());
+                  m_clCharts->SetItem(i, 0, pPlugIn->m_pChartCatalog->charts->Item(i).GetChartTitle());
+                  wxString file = pPlugIn->m_pChartCatalog->charts->Item(i).GetChartFilename();
                   if (!pPlugIn->m_pChartSource->ExistsLocaly(file))
                   {
                         m_clCharts->SetItem(i, 1, _("New"));
                   }
                   else
                   {
-                        if(pPlugIn->m_pChartSource->IsNewerThanLocal(file, pPlugIn->m_pChartCatalog->charts->Item(i).zipfile_datetime_iso8601))
+                        if(pPlugIn->m_pChartSource->IsNewerThanLocal(file, pPlugIn->m_pChartCatalog->charts->Item(i).GetUpdateDatetime()))
                         {
                               m_clCharts->SetItem(i, 1, _("Update available"));
                         }
@@ -466,7 +462,7 @@ void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
                   dialog->m_gTotalProgress->SetValue(downloading);
                   downloading++;
                   //download
-                  wxURL * url = new wxURL(pPlugIn->m_pChartCatalog->charts->Item(i).zipfile_location);
+                  wxURL * url = new wxURL(pPlugIn->m_pChartCatalog->charts->Item(i).GetDownloadLocation());
                   if (url->GetError() != wxURL_NOERR)
                   {
                         wxMessageBox(_("Error, the URL to the chart data seems wrong."), _("Error"));
@@ -477,15 +473,19 @@ void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
                         wxDELETE(dialog);
                         return;
                   }
+                  wxHTTPBuilder http;
+                  http.InitContentTypes();
+                  
                   wxInputStream *in_stream;
-                  in_stream = url->GetInputStream();
-                  //construct local zipfile path
-                  wxStringTokenizer tk(url->GetPath(), _T("/"));
-                  wxString file;
-                  do
+                  in_stream = http.GetInputStream(url->GetURL());
+                  int RetCode = http.GetResponse();
+                  if (RetCode > 300 && RetCode < 400) //Redirect - will not work if more than one...
                   {
-                        file = tk.GetNextToken();
-                  } while(tk.HasMoreTokens());
+                        in_stream = http.GetInputStream(http.GetHeader(wxT("Location")));
+                  }
+                  //in_stream = url->GetInputStream();
+                  //construct local zipfile path
+                  wxString file = pPlugIn->m_pChartCatalog->charts->Item(i).GetChartFilename();
                   wxFileName fn;
                   fn.SetFullName(file);
                   fn.SetPath(m_dpChartDirectory->GetPath());
@@ -518,7 +518,7 @@ void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
                               out_stream.Write(buffer, read);
                               done += read;
                               dialog->m_gChartProgress->SetValue(done);
-                        } while (!in_stream->Eof());
+                        } while (!in_stream->Eof() && read != 0);
                         delete[] buffer;
                   }
                   else
@@ -533,7 +533,7 @@ void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
                         return;
                   }
                   //unpack
-                  pPlugIn->ExtractZipFiles(path, fn.GetPath(), true, pPlugIn->m_pChartCatalog->charts->Item(i).zipfile_datetime_iso8601);
+                  pPlugIn->ExtractZipFiles(path, fn.GetPath(), true, pPlugIn->m_pChartCatalog->charts->Item(i).GetUpdateDatetime());
                   wxRemoveFile(path);
             }
       }

@@ -76,6 +76,9 @@ SET(SRC_CHARTDLDR
 	    src/chartdldrgui.cpp
 	    src/checkedlistctrl.cpp
     	    src/checkedlistctrl.h
+	    src/base64.h
+	    src/httpbuilder.cpp
+	    src/httpbuilder.h
 	    src/chartcatalog.cpp
 	    src/chartcatalog.h
 	    ../../include/tinyxml.h
