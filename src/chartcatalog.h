@@ -42,6 +42,10 @@ class NoticeToMariners;
 class Vertex;
 class Panel;
 class Chart;
+class Location;
+class RiverMiles;
+class Area;
+class File;
 //WX_DECLARE_OBJARRAY(NoticeToMariners *, wxArrayOfNoticeToMariners);
 WX_DECLARE_OBJARRAY(Vertex, wxArrayOfVertexes);
 WX_DECLARE_OBJARRAY(Panel, wxArrayOfPanels);
@@ -128,6 +132,73 @@ public:
       int updn;
       wxDateTime uadt;
       wxDateTime isdt;
+};
+
+class IEncCell : public Chart //<Cell>
+{
+public:
+      IEncCell(TiXmlNode * xmldata);
+      ~IEncCell();
+      // public methods
+
+      //public properties
+      wxString name;
+      Location *location;
+      wxString river_name;
+      RiverMiles *river_miles;
+      Area *area;
+      wxString edition;
+      File *shp_file;
+      File *s57_file;
+      File *kml_file;
+};
+
+class File
+{
+public:
+      File(TiXmlNode * xmldata);
+      // public methods
+
+      //public properties
+      wxString location;
+      wxDateTime date_posted;
+      wxDateTime time_posted;
+      int file_size;
+};
+
+class Location
+{
+public:
+      Location(TiXmlNode * xmldata);
+      // public methods
+
+      //public properties
+      wxString from;
+      wxString to;
+};
+
+class RiverMiles
+{
+public:
+      RiverMiles(TiXmlNode * xmldata);
+      // public methods
+
+      //public properties
+      double begin;
+      double end;
+};
+
+class Area
+{
+public:
+      Area(TiXmlNode * xmldata);
+      // public methods
+
+      //public properties
+      double north;
+      double south;
+      double east;
+      double west;
 };
 
 class NoticeToMariners //for <nm> and <lnm>

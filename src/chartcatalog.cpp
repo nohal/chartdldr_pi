@@ -91,6 +91,18 @@ bool ChartCatalog::LoadFromXml(TiXmlDocument * doc)
                   charts->Add(new EncCell(child));
             }
       }
+      else if (rootName.StartsWith(_T("IENCProductCatalog")))
+      {
+            if (!ParseNoaaHeader(root->FirstChildElement()))
+            {
+                  return false;
+            }
+            TiXmlNode *child;
+            for ( child = root->FirstChildElement()->NextSibling(); child != 0; child = child->NextSibling())
+            {
+                  charts->Add(new IEncCell(child));
+            }
+      }
       else
       {
             return false;
@@ -327,6 +339,152 @@ EncCell::EncCell(TiXmlNode * xmldata) : Chart(xmldata)
             }
       }
 }
+
+IEncCell::IEncCell(TiXmlNode * xmldata) : Chart(xmldata)
+{
+      TiXmlNode *child;
+      for ( child = xmldata->FirstChild(); child != 0; child = child->NextSibling())
+      {
+            wxString s = wxString::FromUTF8(child->Value());
+            if (s == _T("name"))
+            {
+                  name = wxString::FromUTF8(child->FirstChild()->Value());
+            }
+            if (s == _T("location"))
+            {
+                  location = new Location(child);
+            }
+            if (s == _T("river_name"))
+            {
+                  river_name = wxString::FromUTF8(child->FirstChild()->Value());
+            }
+            if (s == _T("river_miles"))
+            {
+                  river_miles = new RiverMiles(child);
+            }
+            if (s == _T("area"))
+            {
+                  area = new Area(child);
+            }
+            if (s == _T("edition"))
+            {
+                  edition = wxString::FromUTF8(child->FirstChild()->Value());
+            }
+            if (s == _T("shp_file"))
+            {
+                  shp_file = new File(child);
+            }
+            if (s == _T("s57_file"))
+            {
+                  s57_file = new File(child);
+            }
+            if (s == _T("kml_file"))
+            {
+                  kml_file = new File(child);
+            }
+      }
+}
+
+IEncCell::~IEncCell()
+{
+      wxDELETE(location);
+      wxDELETE(river_miles);
+      wxDELETE(area);
+      wxDELETE(shp_file);
+      wxDELETE(s57_file);
+      wxDELETE(kml_file);
+}
+
+File::File(TiXmlNode * xmldata)
+{
+      TiXmlNode *child;
+      for ( child = xmldata->FirstChild(); child != 0; child = child->NextSibling())
+      {
+            wxString s = wxString::FromUTF8(child->Value());
+            if (s == _T("location"))
+            {
+                  location = wxString::FromUTF8(child->FirstChild()->Value());
+            }
+            if (s == _T("date_posted"))
+            {
+                  date_posted.ParseDate(wxString::FromUTF8(child->FirstChild()->Value()));
+            }
+            if (s == _T("time_posted"))
+            {
+                  if (!child->NoChildren())
+                        time_posted.ParseTime(wxString::FromUTF8(child->FirstChild()->Value()));
+                  else
+                        time_posted.ParseTime(_T("00:00:00"));
+            }
+            if (s == _T("file_size"))
+            {
+                  if (!child->NoChildren())
+                        file_size = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
+                  else
+                        file_size = -1;
+            }
+      }
+}
+
+Area::Area(TiXmlNode * xmldata)
+{
+      TiXmlNode *child;
+      for ( child = xmldata->FirstChild(); child != 0; child = child->NextSibling())
+      {
+            wxString s = wxString::FromUTF8(child->Value());
+            if (s == _T("north"))
+            {
+                  north = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
+            }
+            if (s == _T("south"))
+            {
+                  south = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
+            }
+            if (s == _T("east"))
+            {
+                  east = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
+            }
+            if (s == _T("west"))
+            {
+                  west = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
+            }
+      }
+}
+
+RiverMiles::RiverMiles(TiXmlNode * xmldata)
+{
+      TiXmlNode *child;
+      for ( child = xmldata->FirstChild(); child != 0; child = child->NextSibling())
+      {
+            wxString s = wxString::FromUTF8(child->Value());
+            if (s == _T("begin"))
+            {
+                  begin = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
+            }
+            if (s == _T("end"))
+            {
+                  end = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
+            }
+      }
+}
+
+Location::Location(TiXmlNode * xmldata)
+{
+      TiXmlNode *child;
+      for ( child = xmldata->FirstChild(); child != 0; child = child->NextSibling())
+      {
+            wxString s = wxString::FromUTF8(child->Value());
+            if (s == _T("from"))
+            {
+                  from = wxString::FromUTF8(child->FirstChild()->Value());
+            }
+            if (s == _T("to"))
+            {
+                  to = wxString::FromUTF8(child->FirstChild()->Value());
+            }
+      }
+}
+
 
 NoticeToMariners::NoticeToMariners(TiXmlNode * xmldata)
 {
