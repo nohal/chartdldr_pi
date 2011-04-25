@@ -147,12 +147,15 @@ DlProgressDialog::DlProgressDialog( wxWindow* parent, wxWindowID id, const wxStr
 	m_gTotalProgress = new wxGauge( this, wxID_ANY, 100, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL );
 	sbSizer3->Add( m_gTotalProgress, 0, wxALL|wxEXPAND, 5 );
 	
-	m_staticText6 = new wxStaticText( this, wxID_ANY, _("Current chart"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText6->Wrap( -1 );
-	sbSizer3->Add( m_staticText6, 0, wxALL, 5 );
+	m_sCurrentChart = new wxStaticText( this, wxID_ANY, _("Current chart:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_sCurrentChart->Wrap( -1 );
+	sbSizer3->Add( m_sCurrentChart, 0, wxALL, 5 );
 	
-	m_gChartProgress = new wxGauge( this, wxID_ANY, 100, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL );
-	sbSizer3->Add( m_gChartProgress, 0, wxALL|wxEXPAND, 5 );
+	m_sBytesRead = new wxStaticText( this, wxID_ANY, _("Downloaded: bytes"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_sBytesRead->Wrap( -1 );
+	m_sBytesRead->Hide();
+	
+	sbSizer3->Add( m_sBytesRead, 0, wxALL, 5 );
 	
 	bSizer2->Add( sbSizer3, 1, wxEXPAND|wxFIXED_MINSIZE, 5 );
 	

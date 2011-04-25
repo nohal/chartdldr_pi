@@ -38,6 +38,8 @@
 #include <wx/fileconf.h>
 #include <wx/tokenzr.h>
 #include <wx/event.h>
+#include "httpbuilder.h"
+#include "httpbuilderthread.h"
 
 #define     PLUGIN_VERSION_MAJOR    0
 #define     PLUGIN_VERSION_MINOR    2
@@ -197,6 +199,14 @@ private:
 /** Implementing ChartDldrPrefsDialog */
 class ChartDldrPrefsDialogImpl : public ChartDldrPrefsDialog
 {
+private:
+      wxHTTPBuilder   *m_http;
+      wxHTTPBuilderThread *m_thread;
+      wxTimer *m_timer;
+      void DownloadChart(wxString url, wxString file);
+      wxMutex   m_mutexHTTPObj;
+      DlProgressDialog *dialog;
+
 protected:
       // Handlers for ChartDldrPrefsDialog events.
       void ShowHideToolbarIcon( wxCommandEvent& event ) { event.Skip(); }
@@ -209,11 +219,17 @@ protected:
       
       void CleanForm();
       void FillFromFile(wxString url, wxString dir);
+
+      void OnTimer( wxTimerEvent &event );
+
 public:
       ~ChartDldrPrefsDialogImpl();
       ChartDldrPrefsDialogImpl( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
 
       chartdldr_pi      *pPlugIn;
+      DECLARE_CLASS(ChartDldrPrefsDialogImpl)
+      // any class wishing to process wxWindows events must use this macro
+      DECLARE_EVENT_TABLE()
 };
 
 #endif
