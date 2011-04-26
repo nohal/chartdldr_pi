@@ -126,6 +126,8 @@ NOAA ENC WI|http://www.charts.noaa.gov/ENCs/WI_ENCProdCat.xml|.|"
 
 // forward declarations
 class ChartSource;
+class DlProgressDialogImpl;
+
 WX_DECLARE_OBJARRAY(ChartSource *, wxArrayOfChartSources);
 
 //----------------------------------------------------------------------------------------------------------
@@ -205,13 +207,14 @@ private:
       wxTimer *m_timer;
       void DownloadChart(wxString url, wxString file);
       wxMutex   m_mutexHTTPObj;
-      DlProgressDialog *dialog;
+      DlProgressDialogImpl *dialog;
       bool downloadInProgress;
       wxArrayString urls;
       wxArrayString localfiles;
       wxDateTimeArray filetimes;
       int to_download;
       int downloading;
+      bool cancelled;
 
       void OnPopupClick(wxCommandEvent &evt);
 
@@ -238,9 +241,21 @@ public:
       ChartDldrPrefsDialogImpl( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
 
       chartdldr_pi      *pPlugIn;
+
+      void CancelDownload();
+
       DECLARE_CLASS(ChartDldrPrefsDialogImpl)
       // any class wishing to process wxWindows events must use this macro
       DECLARE_EVENT_TABLE()
+};
+
+class DlProgressDialogImpl : public DlProgressDialog
+{
+public:
+      DlProgressDialogImpl( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Download progress"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,-1 ), long style = wxCAPTION )
+            : DlProgressDialog( parent, id, title, pos, size, style ) {}
+      void DlProgressDialogImpl::CancelDownload( wxCommandEvent& event );
+      ChartDldrPrefsDialogImpl *pParent;
 };
 
 #endif

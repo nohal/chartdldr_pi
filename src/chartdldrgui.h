@@ -95,7 +95,7 @@ class DlProgressDialog : public wxDialog
 		wxStaticText* m_sCurrentChart;
 		wxStaticText* m_sBytesRead;
 		
-		DlProgressDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Download progress"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,-1 ), long style = wxDEFAULT_DIALOG_STYLE ); 
+		DlProgressDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Download progress"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,-1 ), long style = wxCAPTION ); 
 		~DlProgressDialog();
 	
 };

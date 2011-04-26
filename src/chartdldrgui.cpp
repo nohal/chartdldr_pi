@@ -142,6 +142,7 @@ DlProgressDialog::DlProgressDialog( wxWindow* parent, wxWindowID id, const wxStr
 	wxStaticBoxSizer* sbSizer3;
 	sbSizer3 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Download progress") ), wxVERTICAL );
 	
+	sbSizer3->SetMinSize( wxSize( -1,200 ) ); 
 	m_staticText5 = new wxStaticText( this, wxID_ANY, _("Total"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText5->Wrap( -1 );
 	sbSizer3->Add( m_staticText5, 0, wxALL, 5 );
@@ -157,13 +158,13 @@ DlProgressDialog::DlProgressDialog( wxWindow* parent, wxWindowID id, const wxStr
 	m_sBytesRead->Wrap( -1 );
 	sbSizer3->Add( m_sBytesRead, 0, wxALL, 5 );
 	
-	bSizer2->Add( sbSizer3, 0, wxEXPAND|wxFIXED_MINSIZE, 5 );
+	bSizer2->Add( sbSizer3, 1, wxALL|wxEXPAND|wxFIXED_MINSIZE, 5 );
 	
 	m_sdbSizer2 = new wxStdDialogButtonSizer();
 	m_sdbSizer2Cancel = new wxButton( this, wxID_CANCEL );
 	m_sdbSizer2->AddButton( m_sdbSizer2Cancel );
 	m_sdbSizer2->Realize();
-	bSizer2->Add( m_sdbSizer2, 0, wxALL|wxEXPAND, 5 );
+	bSizer2->Add( m_sdbSizer2, 0, wxALL|wxEXPAND|wxFIXED_MINSIZE, 5 );
 	
 	this->SetSizer( bSizer2 );
 	this->Layout();
