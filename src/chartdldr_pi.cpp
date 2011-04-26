@@ -341,9 +341,6 @@ void ChartDldrPrefsDialogImpl::OnTimer( wxTimerEvent &event )
       if (!dialog->IsShown())
       {
             m_http->Stop();
-            m_timer->Stop();
-            wxDELETE(m_timer);
-            m_timer = NULL;
             this->Enable();
             dialog->Close();
             dialog->Destroy();
@@ -360,22 +357,15 @@ void ChartDldrPrefsDialogImpl::OnDownloadComplete(wxHTTPBuilderEvent &)
 
       wxMutexLocker lock( m_mutexHTTPObj);
 
-      int read = m_http->GetBytesRead();
-      int sent = m_http->GetBytesSent();
-
       if( m_http )
             delete m_http;
       m_http = NULL;
 
       //unpack
-      if (m_timer)
-            m_timer->Stop();
-      //dialog->m_sBytesRead->SetLabel(_("Extracting archive..."));
+      dialog->m_sBytesRead->SetLabel(_("Extracting archive..."));
       wxFileName fn(localfiles[downloading - 1]);
       pPlugIn->ExtractZipFiles(localfiles[downloading - 1], fn.GetPath(), true, filetimes[downloading - 1]);
       wxRemoveFile(localfiles[downloading - 1]);
-      if (m_timer)
-            m_timer->Start( 500, FALSE );
 
       downloadInProgress = false;
 
@@ -386,10 +376,6 @@ void ChartDldrPrefsDialogImpl::OnDownloadComplete(wxHTTPBuilderEvent &)
       }
       else
       {
-            if (m_timer)
-                  m_timer->Stop();
-            wxDELETE(m_timer);
-            m_timer = NULL;
             this->Enable();
             if(dialog)
             {
@@ -639,12 +625,14 @@ void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
                   wxHTTPBuilder http;
                   http.InitContentTypes();
                   wxString sUrl = url->GetURL();
+                  dialog->m_sCurrentChart->SetLabel(wxString::Format(_("Checking for redirect: %s"), sUrl));
                   wxInputStream *in_stream;
                   in_stream = http.GetInputStream(sUrl);
                   int RetCode = http.GetResponse();
                   if (RetCode > 300 && RetCode < 400) //Redirect - will not work if more than one...
                   {
                         sUrl = http.GetHeader(wxT("Location"));
+                        dialog->m_sCurrentChart->SetLabel(wxString::Format(_("Detected redirect to: %s"), sUrl));
                   }
                   http.Close();
                   wxDELETE(in_stream);
@@ -675,6 +663,10 @@ void ChartDldrPrefsDialogImpl::OnLocalDirChanged( wxFileDirPickerEvent& event )
 ChartDldrPrefsDialogImpl::~ChartDldrPrefsDialogImpl()
 {
       ((wxListCtrl *)m_clCharts)->DeleteAllItems();
+      if (m_timer)
+            m_timer->Stop();
+      wxDELETE(m_timer);
+      m_timer = NULL;
 }
 
 ChartDldrPrefsDialogImpl::ChartDldrPrefsDialogImpl( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style )
