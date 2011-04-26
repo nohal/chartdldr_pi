@@ -254,7 +254,7 @@ class DlProgressDialogImpl : public DlProgressDialog
 public:
       DlProgressDialogImpl( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Download progress"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,-1 ), long style = wxCAPTION )
             : DlProgressDialog( parent, id, title, pos, size, style ) {}
-      void DlProgressDialogImpl::CancelDownload( wxCommandEvent& event );
+      void CancelDownload( wxCommandEvent& event );
       ChartDldrPrefsDialogImpl *pParent;
 };
 

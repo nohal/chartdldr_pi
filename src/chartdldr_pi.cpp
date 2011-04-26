@@ -623,14 +623,14 @@ void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
                   wxHTTPBuilder http;
                   http.InitContentTypes();
                   wxString sUrl = url->GetURL();
-                  dialog->m_sCurrentChart->SetLabel(wxString::Format(_("Checking for redirect: %s"), sUrl));
+                  dialog->m_sCurrentChart->SetLabel(wxString::Format(_("Checking for redirect: %s"), sUrl.c_str()));
                   wxInputStream *in_stream;
                   in_stream = http.GetInputStream(sUrl);
                   int RetCode = http.GetResponse();
                   if (RetCode > 300 && RetCode < 400) //Redirect - will not work if more than one...
                   {
                         sUrl = http.GetHeader(wxT("Location"));
-                        dialog->m_sCurrentChart->SetLabel(wxString::Format(_("Detected redirect to: %s"), sUrl));
+                        dialog->m_sCurrentChart->SetLabel(wxString::Format(_("Detected redirect to: %s"), sUrl.c_str()));
                   }
                   http.Close();
                   wxDELETE(in_stream);
