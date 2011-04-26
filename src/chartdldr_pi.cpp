@@ -287,7 +287,6 @@ ChartSource::ChartSource(wxString name, wxString url, wxString localdir)
 
 void ChartDldrPrefsDialogImpl::OnPopupClick(wxCommandEvent &evt)
 {
-	void *data=static_cast<wxMenu *>(evt.GetEventObject())->GetClientData();
 	switch(evt.GetId()) {
 		case ID_MNU_SELALL:
                   m_clCharts->CheckAll(true);
@@ -374,13 +373,13 @@ void ChartDldrPrefsDialogImpl::OnDownloadComplete(wxHTTPBuilderEvent &)
                   dialog->Destroy();
             }
             wxDELETE(dialog);
-            ChartSource *cs = pPlugIn->m_chartSources->Item(m_cbChartSources->GetSelection());
-            CleanForm();
-            FillFromFile(cs->GetUrl(), cs->GetDir());
             m_timer->Stop();
             wxDELETE(m_timer);
             m_timer = NULL;
             cancelled = false;
+            ChartSource *cs = pPlugIn->m_chartSources->Item(m_cbChartSources->GetSelection());
+            CleanForm();
+            FillFromFile(cs->GetUrl(), cs->GetDir());
       }
 }
 
@@ -785,8 +784,8 @@ void ChartDldrPrefsDialogImpl::CancelDownload()
       Enable();
 }
 
-void DlProgressDialogImpl::CancelDownload( wxCommandEvent& event ) 
+void DlProgressDialogImpl::CancelDownload( wxCommandEvent& event )
 {
       pParent->CancelDownload();
-      event.Skip(); 
+      event.Skip();
 }

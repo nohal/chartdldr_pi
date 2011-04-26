@@ -408,7 +408,7 @@ IEncCell::~IEncCell()
 
 wxString IEncCell::GetChartTitle()
 {
-      return wxString::Format(_("%s (%s to %s), river miles %3.1f - %3.1f"), river_name, location->from, location->to, river_miles->begin, river_miles->end);
+      return wxString::Format(_("%s (%s to %s), river miles %3.1f - %3.1f"), river_name.c_str(), location->from.c_str(), location->to.c_str(), river_miles->begin, river_miles->end);
 }
 
 wxString IEncCell::GetChartFilename()
