@@ -58,6 +58,7 @@ class ChartDldrPrefsDialog : public wxDialog
 		virtual void AddSource( wxCommandEvent& event ) { event.Skip(); }
 		virtual void DeleteSource( wxCommandEvent& event ) { event.Skip(); }
 		virtual void UpdateChartList( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnContextMenu( wxMouseEvent& event ) { event.Skip(); }
 		virtual void DownloadCharts( wxCommandEvent& event ) { event.Skip(); }
 		
 	
@@ -84,6 +85,10 @@ class DlProgressDialog : public wxDialog
 		wxStaticText* m_staticText5;
 		wxStdDialogButtonSizer* m_sdbSizer2;
 		wxButton* m_sdbSizer2Cancel;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void CancelDownload( wxCommandEvent& event ) { event.Skip(); }
+		
 	
 	public:
 		wxGauge* m_gTotalProgress;

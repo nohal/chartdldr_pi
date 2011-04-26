@@ -113,6 +113,7 @@ ChartDldrPrefsDialog::ChartDldrPrefsDialog( wxWindow* parent, wxWindowID id, con
 	m_bAddSource->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDialog::AddSource ), NULL, this );
 	m_bDeleteSource->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDialog::DeleteSource ), NULL, this );
 	m_bUpdateChartList->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDialog::UpdateChartList ), NULL, this );
+	m_clCharts->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ChartDldrPrefsDialog::OnContextMenu ), NULL, this );
 	m_bDnldCharts->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDialog::DownloadCharts ), NULL, this );
 }
 
@@ -125,6 +126,7 @@ ChartDldrPrefsDialog::~ChartDldrPrefsDialog()
 	m_bAddSource->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDialog::AddSource ), NULL, this );
 	m_bDeleteSource->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDialog::DeleteSource ), NULL, this );
 	m_bUpdateChartList->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDialog::UpdateChartList ), NULL, this );
+	m_clCharts->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ChartDldrPrefsDialog::OnContextMenu ), NULL, this );
 	m_bDnldCharts->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDialog::DownloadCharts ), NULL, this );
 	
 }
@@ -151,13 +153,11 @@ DlProgressDialog::DlProgressDialog( wxWindow* parent, wxWindowID id, const wxStr
 	m_sCurrentChart->Wrap( -1 );
 	sbSizer3->Add( m_sCurrentChart, 0, wxALL, 5 );
 	
-	m_sBytesRead = new wxStaticText( this, wxID_ANY, _("Downloaded: bytes"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_sBytesRead = new wxStaticText( this, wxID_ANY, _("Downloaded: N/A"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_sBytesRead->Wrap( -1 );
-	m_sBytesRead->Hide();
-	
 	sbSizer3->Add( m_sBytesRead, 0, wxALL, 5 );
 	
-	bSizer2->Add( sbSizer3, 1, wxEXPAND|wxFIXED_MINSIZE, 5 );
+	bSizer2->Add( sbSizer3, 0, wxEXPAND|wxFIXED_MINSIZE, 5 );
 	
 	m_sdbSizer2 = new wxStdDialogButtonSizer();
 	m_sdbSizer2Cancel = new wxButton( this, wxID_CANCEL );
@@ -169,10 +169,16 @@ DlProgressDialog::DlProgressDialog( wxWindow* parent, wxWindowID id, const wxStr
 	this->Layout();
 	
 	this->Centre( wxBOTH );
+	
+	// Connect Events
+	m_sdbSizer2Cancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( DlProgressDialog::CancelDownload ), NULL, this );
 }
 
 DlProgressDialog::~DlProgressDialog()
 {
+	// Disconnect Events
+	m_sdbSizer2Cancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( DlProgressDialog::CancelDownload ), NULL, this );
+	
 }
 
 AddSourceDlg::AddSourceDlg( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )

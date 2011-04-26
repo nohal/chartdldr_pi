@@ -42,7 +42,7 @@
 #include "httpbuilderthread.h"
 
 #define     PLUGIN_VERSION_MAJOR    0
-#define     PLUGIN_VERSION_MINOR    2
+#define     PLUGIN_VERSION_MINOR    3
 
 #define     MY_API_VERSION_MAJOR    1
 #define     MY_API_VERSION_MINOR    4
@@ -206,6 +206,14 @@ private:
       void DownloadChart(wxString url, wxString file);
       wxMutex   m_mutexHTTPObj;
       DlProgressDialog *dialog;
+      bool downloadInProgress;
+      wxArrayString urls;
+      wxArrayString localfiles;
+      wxDateTimeArray filetimes;
+      int to_download;
+      int downloading;
+
+      void OnPopupClick(wxCommandEvent &evt);
 
 protected:
       // Handlers for ChartDldrPrefsDialog events.
@@ -218,9 +226,12 @@ protected:
       void OnLocalDirChanged( wxFileDirPickerEvent& event );
       
       void CleanForm();
-      void FillFromFile(wxString url, wxString dir);
+      void FillFromFile(wxString url, wxString dir, bool selnew = false, bool selupd = false);
 
       void OnTimer( wxTimerEvent &event );
+      void OnDownloadComplete(wxHTTPBuilderEvent &);
+
+      void OnContextMenu( wxMouseEvent& event );
 
 public:
       ~ChartDldrPrefsDialogImpl();
