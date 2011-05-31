@@ -328,6 +328,8 @@ bool wxHTTPBuilder::SendRequest(const wxString &path, const wxString& tempDirOrP
     request = wxT("POST");
     break;
   default:
+    delete streamPost;
+    streamPost = NULL;
     return false;
   }
 
