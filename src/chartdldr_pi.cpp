@@ -89,6 +89,15 @@ chartdldr_pi::chartdldr_pi(void *ppimgr)
 {
       // Create the PlugIn icons
       initialize_images();
+
+      m_chartSources = NULL;
+      m_parent_window = NULL;
+      m_pChartCatalog = NULL;
+      m_pChartSource = NULL;
+      m_pconfig = NULL;
+      m_leftclick_tool_id = -1;
+      m_bChartDldrShowIcon = false;
+      m_schartdldr_sources = wxEmptyString;
 }
 
 int chartdldr_pi::Init(void)
@@ -686,6 +695,10 @@ ChartDldrPrefsDialogImpl::ChartDldrPrefsDialogImpl( wxWindow* parent, wxWindowID
       m_timer = NULL;
       downloadInProgress = false;
       cancelled = false;
+      dialog = NULL;
+      to_download = -1;
+      downloading = -1;
+      pPlugIn = NULL;
 }
 
 void ChartDldrPrefsDialogImpl::DeleteSource( wxCommandEvent& event )

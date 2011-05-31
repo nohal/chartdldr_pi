@@ -613,4 +613,7 @@ Vertex::Vertex(TiXmlNode * xmldata)
                   wxString::FromUTF8(child->FirstChild()->Value()).ToDouble(&lon);
             }
       }
+      //Init properties
+      lat = 999.0;
+      lon = 999.0;
 }

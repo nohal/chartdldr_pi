@@ -45,7 +45,7 @@
 #define     PLUGIN_VERSION_MINOR    3
 
 #define     MY_API_VERSION_MAJOR    1
-#define     MY_API_VERSION_MINOR    4
+#define     MY_API_VERSION_MINOR    5
 
 #define     NOAA_CHART_SOURCES "NOAA ENC - all charts - (too) big!|http://www.charts.noaa.gov/ENCs/ENCProdCat.xml|.|\
 NOAA RNC - all charts - (too) big!|http://www.charts.noaa.gov/RNCs/RNCProdCat.xml|.|\
@@ -253,7 +253,7 @@ class DlProgressDialogImpl : public DlProgressDialog
 {
 public:
       DlProgressDialogImpl( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Download progress"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,-1 ), long style = wxCAPTION )
-            : DlProgressDialog( parent, id, title, pos, size, style ) {}
+            : DlProgressDialog( parent, id, title, pos, size, style ) { pParent = NULL; }
       void CancelDownload( wxCommandEvent& event );
       ChartDldrPrefsDialogImpl *pParent;
 };
