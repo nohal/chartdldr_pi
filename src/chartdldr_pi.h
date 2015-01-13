@@ -41,8 +41,7 @@
 #include "httpbuilder.h"
 #include "httpbuilderthread.h"
 
-#define     PLUGIN_VERSION_MAJOR    0
-#define     PLUGIN_VERSION_MINOR    3
+#include "version.h"
 
 #define     MY_API_VERSION_MAJOR    1
 #define     MY_API_VERSION_MINOR    5
@@ -119,7 +118,7 @@ NOAA ENC VA|http://www.charts.noaa.gov/ENCs/VA_ENCProdCat.xml|.|\
 NOAA ENC WA|http://www.charts.noaa.gov/ENCs/WA_ENCProdCat.xml|.|\
 NOAA ENC WI|http://www.charts.noaa.gov/ENCs/WI_ENCProdCat.xml|.|"
 
-#include "../../../include/ocpn_plugin.h"
+#include "ocpn_plugin.h"
 
 #include "chartdldrgui.h"
 #include "chartcatalog.h"
