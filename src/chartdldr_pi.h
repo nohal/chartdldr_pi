@@ -38,8 +38,7 @@
 #include <wx/fileconf.h>
 #include <wx/tokenzr.h>
 #include <wx/event.h>
-#include "httpbuilder.h"
-#include "httpbuilderthread.h"
+#include "wx/curl/dialog.h"
 
 #include "version.h"
 
@@ -175,6 +174,7 @@ private:
       int               m_leftclick_tool_id;
 
       wxString          m_schartdldr_sources;
+      wxString          m_chart_dir;
 };
 
 class ChartSource
@@ -198,21 +198,18 @@ private:
 class ChartDldrPanelImpl : public ChartDldrPanel
 {
 private:
-      wxHTTPBuilder   *m_http;
-      wxHTTPBuilderThread *m_thread;
-      wxTimer *m_timer;
-      void DownloadChart(wxString url, wxString file);
-      wxMutex   m_mutexHTTPObj;
-      DlProgressDialogImpl *dialog;
-      bool downloadInProgress;
-      wxArrayString urls;
-      wxArrayString localfiles;
-      wxDateTimeArray filetimes;
-      int to_download;
-      int downloading;
-      bool cancelled;
+    wxTimer *m_timer;
+    void DownloadChart(wxString url, wxString file);
+    wxMutex   m_mutexHTTPObj;
+    bool downloadInProgress;
+    wxArrayString urls;
+    wxArrayString localfiles;
+    wxDateTimeArray filetimes;
+    int to_download;
+    int downloading;
+    bool cancelled;
 
-      void OnPopupClick(wxCommandEvent &evt);
+    void OnPopupClick(wxCommandEvent &evt);
 
 protected:
       // Handlers for ChartDldrPanel events.
@@ -221,36 +218,20 @@ protected:
 	void DeleteSource( wxCommandEvent& event );
 	void UpdateChartList( wxCommandEvent& event );
 	void DownloadCharts( wxCommandEvent& event );
-      void OnLocalDirChanged( wxFileDirPickerEvent& event );
+    void OnLocalDirChanged( wxFileDirPickerEvent& event );
       
-      void CleanForm();
-      void FillFromFile(wxString url, wxString dir, bool selnew = false, bool selupd = false);
+    void CleanForm();
+    void FillFromFile(wxString url, wxString dir, bool selnew = false, bool selupd = false);
 
-      void OnTimer( wxTimerEvent &event );
-      void OnDownloadComplete(wxHTTPBuilderEvent &);
-
-      void OnContextMenu( wxMouseEvent& event );
+    void OnContextMenu( wxMouseEvent& event );
 
 public:
-      ~ChartDldrPanelImpl();
-      ChartDldrPanelImpl( wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+    ~ChartDldrPanelImpl();
+    ChartDldrPanelImpl( wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
 
-      chartdldr_pi      *pPlugIn;
+    chartdldr_pi      *pPlugIn;
 
-      void CancelDownload();
-
-      DECLARE_CLASS(ChartDldrPanelImpl)
-      // any class wishing to process wxWindows events must use this macro
-      DECLARE_EVENT_TABLE()
-};
-
-class DlProgressDialogImpl : public DlProgressDialog
-{
-public:
-      DlProgressDialogImpl( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Download progress"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,-1 ), long style = wxCAPTION )
-            : DlProgressDialog( parent, id, title, pos, size, style ) { pParent = NULL; }
-      void CancelDownload( wxCommandEvent& event );
-      ChartDldrPanelImpl *pParent;
+    void CancelDownload();
 };
 
 #endif

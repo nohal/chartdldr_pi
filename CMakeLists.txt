@@ -31,10 +31,6 @@ SET(SRC_CHARTDLDR
             src/checkedlistctrl.cpp
             src/checkedlistctrl.h
             src/base64.h
-            src/httpbuilder.cpp
-            src/httpbuilder.h
-            src/httpbuilderthread.cpp
-            src/httpbuilderthread.h
             src/chartcatalog.cpp
             src/chartcatalog.h
 

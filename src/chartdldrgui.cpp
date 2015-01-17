@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Jul  5 2013)
+// C++ code generated with wxFormBuilder (version Jun  6 2014)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -8,57 +8,6 @@
 #include "chartdldrgui.h"
 
 ///////////////////////////////////////////////////////////////////////////
-
-DlProgressDialog::DlProgressDialog( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
-{
-	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
-	this->SetExtraStyle( wxWS_EX_BLOCK_EVENTS|wxWS_EX_PROCESS_IDLE );
-	
-	wxBoxSizer* bSizer2;
-	bSizer2 = new wxBoxSizer( wxVERTICAL );
-	
-	wxStaticBoxSizer* sbSizer3;
-	sbSizer3 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Download progress") ), wxVERTICAL );
-	
-	sbSizer3->SetMinSize( wxSize( -1,200 ) ); 
-	m_staticText5 = new wxStaticText( this, wxID_ANY, _("Total"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText5->Wrap( -1 );
-	sbSizer3->Add( m_staticText5, 0, wxALL, 5 );
-	
-	m_gTotalProgress = new wxGauge( this, wxID_ANY, 100, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL );
-	sbSizer3->Add( m_gTotalProgress, 0, wxALL|wxEXPAND, 5 );
-	
-	m_sCurrentChart = new wxStaticText( this, wxID_ANY, _("Current chart:"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_sCurrentChart->Wrap( -1 );
-	sbSizer3->Add( m_sCurrentChart, 0, wxALL, 5 );
-	
-	m_sBytesRead = new wxStaticText( this, wxID_ANY, _("Downloaded: N/A"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_sBytesRead->Wrap( -1 );
-	sbSizer3->Add( m_sBytesRead, 0, wxALL, 5 );
-	
-	bSizer2->Add( sbSizer3, 1, wxALL|wxEXPAND|wxFIXED_MINSIZE, 5 );
-	
-	m_sdbSizer2 = new wxStdDialogButtonSizer();
-	m_sdbSizer2Cancel = new wxButton( this, wxID_CANCEL );
-	m_sdbSizer2->AddButton( m_sdbSizer2Cancel );
-	m_sdbSizer2->Realize();
-	bSizer2->Add( m_sdbSizer2, 0, wxALL|wxEXPAND|wxFIXED_MINSIZE, 5 );
-	
-	this->SetSizer( bSizer2 );
-	this->Layout();
-	
-	this->Centre( wxBOTH );
-	
-	// Connect Events
-	m_sdbSizer2Cancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( DlProgressDialog::CancelDownload ), NULL, this );
-}
-
-DlProgressDialog::~DlProgressDialog()
-{
-	// Disconnect Events
-	m_sdbSizer2Cancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( DlProgressDialog::CancelDownload ), NULL, this );
-	
-}
 
 AddSourceDlg::AddSourceDlg( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
 {
@@ -79,6 +28,7 @@ AddSourceDlg::AddSourceDlg( wxWindow* parent, wxWindowID id, const wxString& tit
 	fgSizer1->Add( m_staticText1, 0, wxALL, 5 );
 	
 	m_tSourceName = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_tSourceName->SetMaxLength( 0 ); 
 	fgSizer1->Add( m_tSourceName, 0, wxALL|wxEXPAND, 5 );
 	
 	m_staticText2 = new wxStaticText( this, wxID_ANY, _("URL"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -86,6 +36,7 @@ AddSourceDlg::AddSourceDlg( wxWindow* parent, wxWindowID id, const wxString& tit
 	fgSizer1->Add( m_staticText2, 0, wxALL, 5 );
 	
 	m_tChartSourceUrl = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( -1,-1 ), 0 );
+	m_tChartSourceUrl->SetMaxLength( 0 ); 
 	fgSizer1->Add( m_tChartSourceUrl, 0, wxALL|wxEXPAND, 5 );
 	
 	m_staticText4 = new wxStaticText( this, wxID_ANY, _("Chart directory"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -95,6 +46,7 @@ AddSourceDlg::AddSourceDlg( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_dpChartDirectory = new wxDirPickerCtrl( this, wxID_ANY, wxEmptyString, _("Select a folder"), wxDefaultPosition, wxDefaultSize, wxDIRP_DEFAULT_STYLE );
 	fgSizer1->Add( m_dpChartDirectory, 0, wxALL|wxEXPAND, 5 );
 	
+	
 	bSizer3->Add( fgSizer1, 1, wxALL|wxEXPAND, 5 );
 	
 	m_sdbSizer3 = new wxStdDialogButtonSizer();
@@ -103,7 +55,9 @@ AddSourceDlg::AddSourceDlg( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_sdbSizer3Cancel = new wxButton( this, wxID_CANCEL );
 	m_sdbSizer3->AddButton( m_sdbSizer3Cancel );
 	m_sdbSizer3->Realize();
+	
 	bSizer3->Add( m_sdbSizer3, 0, wxALL|wxEXPAND, 5 );
+	
 	
 	this->SetSizer( bSizer3 );
 	this->Layout();
@@ -118,10 +72,10 @@ AddSourceDlg::~AddSourceDlg()
 
 ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style ) : wxPanel( parent, id, pos, size, style )
 {
-	wxBoxSizer* bSizer1;
-	bSizer1 = new wxBoxSizer( wxVERTICAL );
+	wxBoxSizer* bSizerMain;
+	bSizerMain = new wxBoxSizer( wxVERTICAL );
 	
-	bSizer1->SetMinSize( wxSize( 500,-1 ) ); 
+	bSizerMain->SetMinSize( wxSize( 500,-1 ) ); 
 	wxStaticBoxSizer* sbSchartsource;
 	sbSchartsource = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Charts source") ), wxVERTICAL );
 	
@@ -145,6 +99,7 @@ ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& 
 	fgSizer1->Add( m_staticText2, 0, wxALL, 5 );
 	
 	m_tChartSourceUrl = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( -1,-1 ), wxTE_READONLY );
+	m_tChartSourceUrl->SetMaxLength( 0 ); 
 	fgSizer1->Add( m_tChartSourceUrl, 0, wxALL|wxEXPAND, 5 );
 	
 	m_staticText4 = new wxStaticText( this, wxID_ANY, _("Chart directory"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -153,6 +108,7 @@ ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& 
 	
 	m_dpChartDirectory = new wxDirPickerCtrl( this, wxID_ANY, wxEmptyString, _("Select a folder"), wxDefaultPosition, wxDefaultSize, wxDIRP_DEFAULT_STYLE );
 	fgSizer1->Add( m_dpChartDirectory, 0, wxALL|wxEXPAND, 5 );
+	
 	
 	sbSchartsource->Add( fgSizer1, 0, wxEXPAND, 5 );
 	
@@ -169,17 +125,21 @@ ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& 
 	m_bUpdateChartList->SetDefault(); 
 	bSizer4->Add( m_bUpdateChartList, 0, wxALIGN_RIGHT|wxALL, 5 );
 	
+	
 	sbSchartsource->Add( bSizer4, 1, wxEXPAND, 0 );
 	
-	bSizer1->Add( sbSchartsource, 0, wxALL|wxEXPAND, 5 );
+	
+	bSizerMain->Add( sbSchartsource, 0, wxALL|wxEXPAND, 5 );
 	
 	wxStaticBoxSizer* sbSSourceInfo;
 	sbSSourceInfo = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Chart source info") ), wxVERTICAL );
 	
 	m_tChartSourceInfo = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY|wxNO_BORDER );
+	m_tChartSourceInfo->SetMaxLength( 0 ); 
 	sbSSourceInfo->Add( m_tChartSourceInfo, 0, wxALL|wxEXPAND, 5 );
 	
-	bSizer1->Add( sbSSourceInfo, 0, wxALL|wxEXPAND, 5 );
+	
+	bSizerMain->Add( sbSSourceInfo, 0, wxALL|wxEXPAND, 5 );
 	
 	wxStaticBoxSizer* sbSCharts;
 	sbSCharts = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Charts") ), wxVERTICAL );
@@ -193,11 +153,13 @@ ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& 
 	m_bDnldCharts = new wxButton( this, wxID_ANY, _("Download selected charts"), wxDefaultPosition, wxDefaultSize, 0 );
 	sbSCharts->Add( m_bDnldCharts, 0, wxALIGN_CENTER|wxALL, 5 );
 	
-	bSizer1->Add( sbSCharts, 1, wxALL|wxEXPAND, 5 );
 	
-	this->SetSizer( bSizer1 );
+	bSizerMain->Add( sbSCharts, 1, wxALL|wxEXPAND, 5 );
+	
+	
+	this->SetSizer( bSizerMain );
 	this->Layout();
-	bSizer1->Fit( this );
+	bSizerMain->Fit( this );
 	
 	// Connect Events
 	m_cbChartSources->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( ChartDldrPanel::OnSourceSelected ), NULL, this );
