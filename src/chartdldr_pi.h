@@ -124,7 +124,7 @@ NOAA ENC WI|http://www.charts.noaa.gov/ENCs/WI_ENCProdCat.xml|.|"
 
 // forward declarations
 class ChartSource;
-class DlProgressDialogImpl;
+class ChartDldrPanelImpl;
 
 WX_DECLARE_OBJARRAY(ChartSource *, wxArrayOfChartSources);
 
@@ -165,6 +165,8 @@ public:
       wxWindow         *m_parent_window;
       ChartCatalog     *m_pChartCatalog;
       ChartSource      *m_pChartSource;
+      void              SetSourceId(int id) { m_selected_source = id; }
+      int               GetSourceId() { return m_selected_source; }
 
 private:
       wxFileConfig     *m_pconfig;
@@ -174,7 +176,9 @@ private:
       int               m_leftclick_tool_id;
 
       wxString          m_schartdldr_sources;
-      wxString          m_chart_dir;
+      int               m_selected_source;
+      
+      ChartDldrPanelImpl *m_dldrpanel;
 };
 
 class ChartSource
@@ -197,22 +201,20 @@ private:
 /** Implementing ChartDldrPanel */
 class ChartDldrPanelImpl : public ChartDldrPanel
 {
+friend class chartdldr_pi;
 private:
-    wxTimer *m_timer;
-    void DownloadChart(wxString url, wxString file);
-    wxMutex   m_mutexHTTPObj;
+    bool DownloadChart(wxString url, wxString file);
     bool downloadInProgress;
-    wxArrayString urls;
-    wxArrayString localfiles;
-    wxDateTimeArray filetimes;
     int to_download;
     int downloading;
     bool cancelled;
+    chartdldr_pi      *pPlugIn;
 
     void OnPopupClick(wxCommandEvent &evt);
 
 protected:
       // Handlers for ChartDldrPanel events.
+    void SetSource(int id);
 	void OnSourceSelected( wxCommandEvent& event );
 	void AddSource( wxCommandEvent& event );
 	void DeleteSource( wxCommandEvent& event );
@@ -227,11 +229,7 @@ protected:
 
 public:
     ~ChartDldrPanelImpl();
-    ChartDldrPanelImpl( wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
-
-    chartdldr_pi      *pPlugIn;
-
-    void CancelDownload();
+    ChartDldrPanelImpl( chartdldr_pi* plugin, wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
 };
 
 #endif

@@ -200,20 +200,22 @@ void chartdldr_pi::OnSetupOptions(void)
       m_pOptionsPage->SetSizer( sizer );
 
       /* TODO: Seth */
-      ChartDldrPanelImpl *dialog = new ChartDldrPanelImpl( m_pOptionsPage, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE );
-      dialog->pPlugIn = this;
+      m_dldrpanel = new ChartDldrPanelImpl( this, m_pOptionsPage, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE );
 
       for (size_t i = 0; i < m_chartSources->GetCount(); i++)
       {
-            ((wxItemContainer*)dialog->m_cbChartSources)->Append(m_chartSources->Item(i)->GetName());
+            ((wxItemContainer*)m_dldrpanel->m_cbChartSources)->Append(m_chartSources->Item(i)->GetName());
       }
 
-      sizer->Add( dialog, 0, wxALL | wxEXPAND );
+      sizer->Add( m_dldrpanel, 0, wxALL | wxEXPAND );
+      m_dldrpanel->m_cbChartSources->SetSelection(m_selected_source);
+      m_dldrpanel->SetSource(m_selected_source);
 }
 
 void chartdldr_pi::OnCloseToolboxPanel(int page_sel, int ok_apply_cancel)
 {
       /* TODO: Seth */
+      m_selected_source = m_dldrpanel->m_cbChartSources->GetSelection();
       SaveConfig();
 }
 
@@ -225,7 +227,7 @@ bool chartdldr_pi::LoadConfig(void)
       {
             pConf->SetPath ( _T ( "/Settings/ChartDnldr" ) );
             pConf->Read ( _T ( "Sources" ), &m_schartdldr_sources, _T(NOAA_CHART_SOURCES) );
-            pConf->Read ( _T ( "ChartDir" ), &m_chart_dir, wxEmptyString );
+            pConf->Read ( _T ( "Source" ), &m_selected_source, 0 );
             return true;
       }
       else
@@ -247,7 +249,7 @@ bool chartdldr_pi::SaveConfig(void)
       {
             pConf->SetPath ( _T ( "/Settings/ChartDnldr" ) );
             pConf->Write ( _T ( "Sources" ), m_schartdldr_sources );
-            pConf->Write ( _T ( "ChartDir" ), m_chart_dir );
+            pConf->Write ( _T ( "Source" ), m_selected_source );
 
             return true;
       }
@@ -313,51 +315,21 @@ void ChartDldrPanelImpl::OnContextMenu( wxMouseEvent& event )
       PopupMenu(&menu, p1.x + point.x, p1.y + point.y);
 }
 
-void OnDownloadComplete()
+void ChartDldrPanelImpl::SetSource(int id)
 {
-/*
-      //unpack
-      dialog->m_sBytesRead->SetLabel(_("Extracting archive..."));
-      wxFileName fn(localfiles[downloading - 1]);
-      pPlugIn->ExtractZipFiles(localfiles[downloading - 1], fn.GetPath(), true, filetimes[downloading - 1]);
-      wxRemoveFile(localfiles[downloading - 1]);
+    pPlugIn->SetSourceId( id );
+    ChartSource *cs = pPlugIn->m_chartSources->Item(pPlugIn->GetSourceId());
+    m_tChartSourceUrl->SetValue(cs->GetUrl());
+    m_dpChartDirectory->SetPath(cs->GetDir());
 
-      downloadInProgress = false;
-
-      if (!cancelled && downloading != to_download)
-      {
-            if (dialog)
-                  DownloadChart(urls[downloading], localfiles[downloading]);
-      }
-      else
-      {
-            this->Enable();
-            if(dialog)
-            {
-                  dialog->Close();
-                  dialog->Destroy();
-            }
-            wxDELETE(dialog);
-            m_timer->Stop();
-            wxDELETE(m_timer);
-            m_timer = NULL;
-            cancelled = false;
-            ChartSource *cs = pPlugIn->m_chartSources->Item(m_cbChartSources->GetSelection());
-            CleanForm();
-            FillFromFile(cs->GetUrl(), cs->GetDir());
-      }
-*/
+    pPlugIn->m_pChartSource = cs;
+    CleanForm();
+    FillFromFile(cs->GetUrl(), cs->GetDir());
 }
 
 void ChartDldrPanelImpl::OnSourceSelected( wxCommandEvent& event )
 {
-      ChartSource *cs = pPlugIn->m_chartSources->Item(m_cbChartSources->GetSelection());
-      m_tChartSourceUrl->SetValue(cs->GetUrl());
-      m_dpChartDirectory->SetPath(cs->GetDir());
-
-      pPlugIn->m_pChartSource = cs;
-      CleanForm();
-      FillFromFile(cs->GetUrl(), cs->GetDir());
+      SetSource(m_cbChartSources->GetSelection());
 
       event.Skip();
 }
@@ -507,10 +479,10 @@ wxArrayString ChartSource::GetLocalFiles()
       return r;
 }
 
-void ChartDldrPanelImpl::DownloadChart(wxString url, wxString file)
+bool ChartDldrPanelImpl::DownloadChart(wxString url, wxString file)
 {
     if (cancelled)
-        return;
+        return false;
     downloading++;
 
     downloadInProgress = true;
@@ -522,34 +494,34 @@ void ChartDldrPanelImpl::DownloadChart(wxString url, wxString file)
     switch(ddlg.RunModal())
     {
         case wxCDRF_SUCCESS:
-            break;
+            return true;
         case wxCDRF_FAILED:
         {
             wxMessageBox(wxString::Format( _("Failed to Download: %s \nVerify there is a working Internet connection."), url.c_str() ), 
             _("Chart Downloader"), wxOK | wxICON_ERROR);
             wxRemoveFile( file );
+            return false;
         }
         case wxCDRF_USER_ABORTED:
-            return;
+            wxRemoveFile( file );
+            cancelled = true;
+            return false;
     }
+    return false;
 }
 
 void ChartDldrPanelImpl::DownloadCharts( wxCommandEvent& event )
 {
-      urls.Clear();
-      localfiles.Clear();
-      filetimes.Clear();
+      cancelled = false;
       if (m_clCharts->GetCheckedItemCount() == 0)
             return;
       to_download = m_clCharts->GetCheckedItemCount();
-      downloading = 0;
       for (int i = 0; i < m_clCharts->GetItemCount(); i++)
       {
             //Prepare download queues
             if(m_clCharts->IsChecked(i))
             {
                   //download queue
-                  filetimes.Add(pPlugIn->m_pChartCatalog->charts->Item(i).GetUpdateDatetime());
                   wxURL url(pPlugIn->m_pChartCatalog->charts->Item(i).GetDownloadLocation());
                   if (url.GetError() != wxURL_NOERR)
                   {
@@ -557,7 +529,6 @@ void ChartDldrPanelImpl::DownloadCharts( wxCommandEvent& event )
                         this->Enable();
                         return;
                   }
-                  urls.Add(url.GetURL());
                   //construct local zipfile path
                   wxString file = pPlugIn->m_pChartCatalog->charts->Item(i).GetChartFilename();
                   wxFileName fn;
@@ -566,11 +537,16 @@ void ChartDldrPanelImpl::DownloadCharts( wxCommandEvent& event )
                   wxString path = fn.GetFullPath();
                   if (wxFileExists(path))
                         wxRemoveFile(path);
-                  localfiles.Add(path);
+
+                  if( DownloadChart(url.GetURL(), path) )
+                  {
+                        wxFileName fn(path);
+                        pPlugIn->ExtractZipFiles(path, fn.GetPath(), true, pPlugIn->m_pChartCatalog->charts->Item(i).GetUpdateDatetime());
+                        wxRemoveFile(path);
+                  }
             }
       }
-
-      DownloadChart(urls[downloading], localfiles[downloading]);
+      SetSource(m_cbChartSources->GetSelection());
 }
 
 void ChartDldrPanelImpl::OnLocalDirChanged( wxFileDirPickerEvent& event )
@@ -583,13 +559,9 @@ void ChartDldrPanelImpl::OnLocalDirChanged( wxFileDirPickerEvent& event )
 ChartDldrPanelImpl::~ChartDldrPanelImpl()
 {
       ((wxListCtrl *)m_clCharts)->DeleteAllItems();
-      if (m_timer)
-            m_timer->Stop();
-      wxDELETE(m_timer);
-      m_timer = NULL;
 }
 
-ChartDldrPanelImpl::ChartDldrPanelImpl( wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style )
+ChartDldrPanelImpl::ChartDldrPanelImpl( chartdldr_pi* plugin, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style )
             : ChartDldrPanel( parent, id, pos, size, style )
 {
       // Add columns
@@ -608,7 +580,7 @@ ChartDldrPanelImpl::ChartDldrPanelImpl( wxWindow* parent, wxWindowID id, const w
       cancelled = false;
       to_download = -1;
       downloading = -1;
-      pPlugIn = NULL;
+      pPlugIn = plugin;
 }
 
 void ChartDldrPanelImpl::DeleteSource( wxCommandEvent& event )
@@ -697,10 +669,4 @@ bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTa
       } while(false);
 
       return ret;
-}
-
-void ChartDldrPanelImpl::CancelDownload()
-{
-      cancelled = true;
-      Enable();
 }
