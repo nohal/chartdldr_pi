@@ -12,8 +12,8 @@ git clone git://github.com/nohal/chartdldr_pi.git
 
 ###Build:
 ```
-mkdir wmm_pi/build
-cd wmm_pi/build
+mkdir chartdldr_pi/build
+cd chartdldr_pi/build
 cmake ..
 cmake --build .
 ```
@@ -69,4 +69,4 @@ make create-pkg
 
 License
 =======
-The plugin code is licensed under the terms of the GPL v2 or, at your will, later. The WMM computational bits and data were put into the public domain by the U.S. govt. Many thanks for this sane policy...
+The plugin code is licensed under the terms of the GPL v2 or, at your will, later.

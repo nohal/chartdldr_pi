@@ -7,7 +7,7 @@
 # define minimum cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6.2)
 
-PROJECT(ac_pi)
+PROJECT(chartdldr_pi)
 
 SET(PACKAGE_NAME chartdldr_pi)
 SET(VERBOSE_NAME ChartDownloader)

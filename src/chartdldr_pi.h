@@ -26,8 +26,8 @@
  ***************************************************************************
  */
 
-#ifndef _WMMPI_H_
-#define _WMMPI_H_
+#ifndef _CHARTDLDRPI_H_
+#define _CHARTDLDRPI_H_
 
 #include "wx/wxprec.h"
 

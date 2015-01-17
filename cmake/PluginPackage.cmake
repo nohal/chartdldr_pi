@@ -152,7 +152,7 @@ IF(APPLE)
 
  #  Copy a bunch of files so the Packages installer builder can find them
  #  relative to ${CMAKE_CURRENT_BINARY_DIR}
- #  This avoids absolute paths in the wmm.pkgproj file
+ #  This avoids absolute paths in the chartdldr_pi.pkgproj file
 
 configure_file(${PROJECT_SOURCE_DIR}/cmake/gpl.txt
             ${CMAKE_CURRENT_BINARY_DIR}/license.txt COPYONLY)
