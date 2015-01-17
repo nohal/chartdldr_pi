@@ -64,10 +64,10 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 }
 
 //event table
-IMPLEMENT_CLASS(ChartDldrPrefsDialogImpl, ChartDldrPrefsDialog)
-BEGIN_EVENT_TABLE(ChartDldrPrefsDialogImpl, ChartDldrPrefsDialog)
-      EVT_HTTPBUILDER_FINISHED(wxID_ANY, ChartDldrPrefsDialogImpl::OnDownloadComplete)
-      EVT_TIMER(wxID_ANY, ChartDldrPrefsDialogImpl::OnTimer)
+IMPLEMENT_CLASS(ChartDldrPanelImpl, ChartDldrPanel)
+BEGIN_EVENT_TABLE(ChartDldrPanelImpl, ChartDldrPanel)
+      EVT_HTTPBUILDER_FINISHED(wxID_ANY, ChartDldrPanelImpl::OnDownloadComplete)
+      EVT_TIMER(wxID_ANY, ChartDldrPanelImpl::OnTimer)
 END_EVENT_TABLE()
 
 //---------------------------------------------------------------------------------------------------------
@@ -85,7 +85,7 @@ END_EVENT_TABLE()
 //---------------------------------------------------------------------------------------------------------
 
 chartdldr_pi::chartdldr_pi(void *ppimgr)
-      :opencpn_plugin(ppimgr)
+      :opencpn_plugin_19(ppimgr)
 {
       // Create the PlugIn icons
       initialize_images();
@@ -96,7 +96,6 @@ chartdldr_pi::chartdldr_pi(void *ppimgr)
       m_pChartSource = NULL;
       m_pconfig = NULL;
       m_leftclick_tool_id = -1;
-      m_bChartDldrShowIcon = false;
       m_schartdldr_sources = wxEmptyString;
 }
 
@@ -109,6 +108,7 @@ int chartdldr_pi::Init(void)
 
       //    Get a pointer to the opencpn configuration object
       m_pconfig = GetOCPNConfigObject();
+      m_pOptionsPage = NULL;
 
       m_chartSources = new wxArrayOfChartSources();
       m_pChartCatalog = new ChartCatalog;
@@ -126,17 +126,10 @@ int chartdldr_pi::Init(void)
             m_chartSources->Add(new ChartSource(s1, s2, s3));
       }
 
-      //    This PlugIn needs a toolbar icon, so request its insertion if enabled locally
-      if(m_bChartDldrShowIcon)
-            m_leftclick_tool_id  = InsertPlugInTool(_T(""), _img_chartdldr, _img_chartdldr, wxITEM_NORMAL,
-                  _("Chart Downloader"), _T(""), NULL,
-                   CHARTDLDR_TOOL_POSITION, 0, this);
-
       return (
               WANTS_PREFERENCES         |
               WANTS_CONFIG              |
-              WANTS_TOOLBAR_CALLBACK    |
-              INSTALLS_TOOLBAR_TOOL
+              INSTALLS_TOOLBOX_PAGE
            );
 }
 
@@ -146,6 +139,17 @@ bool chartdldr_pi::DeInit(void)
       wxDELETE(m_chartSources);
       wxDELETE(m_pChartCatalog);
       wxDELETE(m_pChartSource);
+      /* TODO: Seth */
+//      dialog->Close();
+//      dialog->Destroy();
+//      wxDELETE(dialog);
+      /* We must delete remaining page if the plugin is disabled while in Options dialog */
+      if ( m_pOptionsPage )
+      {
+            if ( DeleteOptionsPage( m_pOptionsPage ) )
+                  m_pOptionsPage = NULL;
+            // TODO: any other memory leak?
+      }
       return true;
 }
 
@@ -192,6 +196,34 @@ Manages chart downloads and updates from sources supporting\n\
 NOAA Chart Catalog format");
 }
 
+void chartdldr_pi::OnSetupOptions(void)
+{
+      m_pOptionsPage = AddOptionsPage( PI_OPTIONS_PARENT_CHARTS, _("Chart Downloader") );
+      if (! m_pOptionsPage) {
+            wxLogMessage( _T("Error: chartdldr_pi::OnSetupOptions AddOptionsPage failed!") );
+            return;
+      }
+      wxBoxSizer *sizer = new wxBoxSizer( wxVERTICAL );
+      m_pOptionsPage->SetSizer( sizer );
+
+      /* TODO: Seth */
+      ChartDldrPanelImpl *dialog = new ChartDldrPanelImpl( m_pOptionsPage, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE );
+      dialog->pPlugIn = this;
+
+      for (size_t i = 0; i < m_chartSources->GetCount(); i++)
+      {
+            ((wxItemContainer*)dialog->m_cbChartSources)->Append(m_chartSources->Item(i)->GetName());
+      }
+
+      sizer->Add( dialog, 0, wxALL | wxEXPAND );
+}
+
+void chartdldr_pi::OnCloseToolboxPanel(int page_sel, int ok_apply_cancel)
+{
+      /* TODO: Seth */
+      SaveConfig();
+}
+
 bool chartdldr_pi::LoadConfig(void)
 {
       wxFileConfig *pConf = (wxFileConfig *)m_pconfig;
@@ -200,7 +232,6 @@ bool chartdldr_pi::LoadConfig(void)
       {
             pConf->SetPath ( _T ( "/Settings/ChartDnldr" ) );
             pConf->Read ( _T ( "Sources" ), &m_schartdldr_sources, _T(NOAA_CHART_SOURCES) );
-            pConf->Read ( _T ( "ShowToolbarIcon" ), &m_bChartDldrShowIcon, false );
             return true;
       }
       else
@@ -222,7 +253,6 @@ bool chartdldr_pi::SaveConfig(void)
       {
             pConf->SetPath ( _T ( "/Settings/ChartDnldr" ) );
             pConf->Write ( _T ( "Sources" ), m_schartdldr_sources );
-            pConf->Write ( _T ( "ShowToolbarIcon" ), m_bChartDldrShowIcon );
 
             return true;
       }
@@ -230,55 +260,8 @@ bool chartdldr_pi::SaveConfig(void)
             return false;
 }
 
-void chartdldr_pi::OnToolbarToolCallback(int id)
-{
-      ChartDldrPrefsDialogImpl *dialog = new ChartDldrPrefsDialogImpl( m_parent_window, wxID_ANY, _("Chart Downloader"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE );
-      dialog->m_cbShowToolbarIcon->Hide();
-      dialog->pPlugIn = this;
-      dialog->Fit();
-      wxColour cl;
-      GetGlobalColor(_T("DILG1"), &cl);
-      dialog->SetBackgroundColour(cl);
-
-      for (size_t i = 0; i < m_chartSources->GetCount(); i++)
-      {
-            ((wxItemContainer*)dialog->m_cbChartSources)->Append(m_chartSources->Item(i)->GetName());
-      }
-      dialog->m_cbShowToolbarIcon->SetValue(m_bChartDldrShowIcon);
-
-      if(dialog->ShowModal() == wxID_OK)
-      {
-            m_bChartDldrShowIcon = dialog->m_cbShowToolbarIcon->IsChecked();
-            SaveConfig();
-      }
-      dialog->Close();
-      dialog->Destroy();
-      wxDELETE(dialog);
-}
-
 void chartdldr_pi::ShowPreferencesDialog( wxWindow* parent )
 {
-      ChartDldrPrefsDialogImpl *dialog = new ChartDldrPrefsDialogImpl( parent, wxID_ANY, _("Chart Downloader"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE );
-      dialog->pPlugIn = this;
-      dialog->Fit();
-      wxColour cl;
-      GetGlobalColor(_T("DILG1"), &cl);
-      dialog->SetBackgroundColour(cl);
-
-      for (size_t i = 0; i < m_chartSources->GetCount(); i++)
-      {
-            ((wxItemContainer*)dialog->m_cbChartSources)->Append(m_chartSources->Item(i)->GetName());
-      }
-      dialog->m_cbShowToolbarIcon->SetValue(m_bChartDldrShowIcon);
-
-      if(dialog->ShowModal() == wxID_OK)
-      {
-            m_bChartDldrShowIcon = dialog->m_cbShowToolbarIcon->IsChecked();
-            SaveConfig();
-      }
-      dialog->Close();
-      dialog->Destroy();
-      wxDELETE(dialog);
 }
 
 ChartSource::ChartSource(wxString name, wxString url, wxString localdir)
@@ -294,7 +277,7 @@ ChartSource::ChartSource(wxString name, wxString url, wxString localdir)
 #define ID_MNU_SELUPD 2004
 #define ID_MNU_SELNEW 2005
 
-void ChartDldrPrefsDialogImpl::OnPopupClick(wxCommandEvent &evt)
+void ChartDldrPanelImpl::OnPopupClick(wxCommandEvent &evt)
 {
 	switch(evt.GetId()) {
 		case ID_MNU_SELALL:
@@ -316,7 +299,7 @@ void ChartDldrPrefsDialogImpl::OnPopupClick(wxCommandEvent &evt)
 	}
 }
 
-void ChartDldrPrefsDialogImpl::OnContextMenu( wxMouseEvent& event )
+void ChartDldrPanelImpl::OnContextMenu( wxMouseEvent& event )
 {
       if (m_clCharts->GetItemCount() == 0)
             return;
@@ -330,12 +313,12 @@ void ChartDldrPrefsDialogImpl::OnContextMenu( wxMouseEvent& event )
       menu.Append(ID_MNU_INVSEL, _("Invert selection"), wxT(""));
       menu.Append(ID_MNU_SELUPD, _("Select updated"), wxT(""));
       menu.Append(ID_MNU_SELNEW, _("Select new"), wxT(""));
-      menu.Connect(wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&ChartDldrPrefsDialogImpl::OnPopupClick, NULL, this);
+      menu.Connect(wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&ChartDldrPanelImpl::OnPopupClick, NULL, this);
       // and then display
       PopupMenu(&menu, p1.x + point.x, p1.y + point.y);
 }
 
-void ChartDldrPrefsDialogImpl::OnTimer( wxTimerEvent &event )
+void ChartDldrPanelImpl::OnTimer( wxTimerEvent &event )
 {
       if( m_http )
       {
@@ -350,7 +333,7 @@ void ChartDldrPrefsDialogImpl::OnTimer( wxTimerEvent &event )
       }
 }
 
-void ChartDldrPrefsDialogImpl::OnDownloadComplete(wxHTTPBuilderEvent &)
+void ChartDldrPanelImpl::OnDownloadComplete(wxHTTPBuilderEvent &)
 {
       m_thread = NULL;
 
@@ -392,7 +375,7 @@ void ChartDldrPrefsDialogImpl::OnDownloadComplete(wxHTTPBuilderEvent &)
       }
 }
 
-void ChartDldrPrefsDialogImpl::OnSourceSelected( wxCommandEvent& event )
+void ChartDldrPanelImpl::OnSourceSelected( wxCommandEvent& event )
 {
       ChartSource *cs = pPlugIn->m_chartSources->Item(m_cbChartSources->GetSelection());
       m_tChartSourceUrl->SetValue(cs->GetUrl());
@@ -405,13 +388,13 @@ void ChartDldrPrefsDialogImpl::OnSourceSelected( wxCommandEvent& event )
       event.Skip();
 }
 
-void ChartDldrPrefsDialogImpl::CleanForm()
+void ChartDldrPanelImpl::CleanForm()
 {
       m_tChartSourceInfo->SetValue(wxEmptyString);
       m_clCharts->DeleteAllItems();
 }
 
-void ChartDldrPrefsDialogImpl::FillFromFile(wxString url, wxString dir, bool selnew, bool selupd)
+void ChartDldrPanelImpl::FillFromFile(wxString url, wxString dir, bool selnew, bool selupd)
 {
       //load if exists
       wxStringTokenizer tk(url, _T("/"));
@@ -494,7 +477,7 @@ bool ChartSource::IsNewerThanLocal(wxString filename, wxDateTime validDate)
       return false;
 }
 
-void ChartDldrPrefsDialogImpl::UpdateChartList( wxCommandEvent& event )
+void ChartDldrPanelImpl::UpdateChartList( wxCommandEvent& event )
 {
       //TODO: check if everything exists and we can write to the output dir etc.
       if (m_cbChartSources->GetSelection() < 0)
@@ -569,7 +552,7 @@ wxArrayString ChartSource::GetLocalFiles()
       return r;
 }
 
-void ChartDldrPrefsDialogImpl::DownloadChart(wxString url, wxString file)
+void ChartDldrPanelImpl::DownloadChart(wxString url, wxString file)
 {
       if (cancelled)
             return;
@@ -596,7 +579,7 @@ void ChartDldrPrefsDialogImpl::DownloadChart(wxString url, wxString file)
       }
 }
 
-void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
+void ChartDldrPanelImpl::DownloadCharts( wxCommandEvent& event )
 {
       urls.Clear();
       localfiles.Clear();
@@ -659,14 +642,14 @@ void ChartDldrPrefsDialogImpl::DownloadCharts( wxCommandEvent& event )
       DownloadChart(urls[downloading], localfiles[downloading]);
 }
 
-void ChartDldrPrefsDialogImpl::OnLocalDirChanged( wxFileDirPickerEvent& event )
+void ChartDldrPanelImpl::OnLocalDirChanged( wxFileDirPickerEvent& event )
 {
       pPlugIn->m_chartSources->Item(m_cbChartSources->GetSelection())->SetDir(m_dpChartDirectory->GetPath());
       pPlugIn->SaveConfig();
       event.Skip();
 }
 
-ChartDldrPrefsDialogImpl::~ChartDldrPrefsDialogImpl()
+ChartDldrPanelImpl::~ChartDldrPanelImpl()
 {
       ((wxListCtrl *)m_clCharts)->DeleteAllItems();
       if (m_timer)
@@ -675,8 +658,8 @@ ChartDldrPrefsDialogImpl::~ChartDldrPrefsDialogImpl()
       m_timer = NULL;
 }
 
-ChartDldrPrefsDialogImpl::ChartDldrPrefsDialogImpl( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style )
-            : ChartDldrPrefsDialog( parent, id, title, pos, size, style )
+ChartDldrPanelImpl::ChartDldrPanelImpl( wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style )
+            : ChartDldrPanel( parent, id, pos, size, style )
 {
       // Add columns
       wxListItem col0;
@@ -701,7 +684,7 @@ ChartDldrPrefsDialogImpl::ChartDldrPrefsDialogImpl( wxWindow* parent, wxWindowID
       pPlugIn = NULL;
 }
 
-void ChartDldrPrefsDialogImpl::DeleteSource( wxCommandEvent& event )
+void ChartDldrPanelImpl::DeleteSource( wxCommandEvent& event )
 {
       pPlugIn->m_chartSources->RemoveAt(m_cbChartSources->GetSelection());
       ((wxItemContainer*)m_cbChartSources)->Delete(m_cbChartSources->GetSelection());
@@ -712,7 +695,7 @@ void ChartDldrPrefsDialogImpl::DeleteSource( wxCommandEvent& event )
       event.Skip();
 }
 
-void ChartDldrPrefsDialogImpl::AddSource( wxCommandEvent& event )
+void ChartDldrPanelImpl::AddSource( wxCommandEvent& event )
 {
       AddSourceDlg *dialog = new AddSourceDlg(pPlugIn->m_parent_window);
       if(dialog->ShowModal() == wxID_OK)
@@ -789,7 +772,7 @@ bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTa
       return ret;
 }
 
-void ChartDldrPrefsDialogImpl::CancelDownload()
+void ChartDldrPanelImpl::CancelDownload()
 {
       m_timer->Stop();
       m_http->Stop();

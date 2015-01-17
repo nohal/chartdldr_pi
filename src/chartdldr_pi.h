@@ -44,7 +44,7 @@
 #include "version.h"
 
 #define     MY_API_VERSION_MAJOR    1
-#define     MY_API_VERSION_MINOR    5
+#define     MY_API_VERSION_MINOR    9
 
 #define     NOAA_CHART_SOURCES "NOAA ENC - all charts - (too) big!|http://www.charts.noaa.gov/ENCs/ENCProdCat.xml|.|\
 NOAA RNC - all charts - (too) big!|http://www.charts.noaa.gov/RNCs/RNCProdCat.xml|.|\
@@ -133,9 +133,7 @@ WX_DECLARE_OBJARRAY(ChartSource *, wxArrayOfChartSources);
 //    The PlugIn Class Definition
 //----------------------------------------------------------------------------------------------------------
 
-#define CHARTDLDR_TOOL_POSITION    -1          // Request default positioning of toolbar tool
-
-class chartdldr_pi : public opencpn_plugin
+class chartdldr_pi : public opencpn_plugin_19
 {
 public:
       chartdldr_pi(void *ppimgr);
@@ -153,12 +151,11 @@ public:
       wxString GetShortDescription();
       wxString GetLongDescription();
 
+      void OnSetupOptions(void);
+      void OnCloseToolboxPanel(int page_sel, int ok_apply_cancel);
+
 //    The required override PlugIn Methods
       void ShowPreferencesDialog( wxWindow* parent );
-
-//    Optional plugin overrides
-      void OnToolbarToolCallback(int id);
-      
 
 //    Other public methods
       bool              SaveConfig(void);
@@ -172,10 +169,10 @@ public:
 
 private:
       wxFileConfig     *m_pconfig;
+      wxScrolledWindow *m_pOptionsPage;
       bool              LoadConfig(void);
 
       int               m_leftclick_tool_id;
-      bool              m_bChartDldrShowIcon;
 
       wxString          m_schartdldr_sources;
 };
@@ -197,8 +194,8 @@ private:
       wxString m_dir;
 };
 
-/** Implementing ChartDldrPrefsDialog */
-class ChartDldrPrefsDialogImpl : public ChartDldrPrefsDialog
+/** Implementing ChartDldrPanel */
+class ChartDldrPanelImpl : public ChartDldrPanel
 {
 private:
       wxHTTPBuilder   *m_http;
@@ -218,8 +215,7 @@ private:
       void OnPopupClick(wxCommandEvent &evt);
 
 protected:
-      // Handlers for ChartDldrPrefsDialog events.
-      void ShowHideToolbarIcon( wxCommandEvent& event ) { event.Skip(); }
+      // Handlers for ChartDldrPanel events.
 	void OnSourceSelected( wxCommandEvent& event );
 	void AddSource( wxCommandEvent& event );
 	void DeleteSource( wxCommandEvent& event );
@@ -236,14 +232,14 @@ protected:
       void OnContextMenu( wxMouseEvent& event );
 
 public:
-      ~ChartDldrPrefsDialogImpl();
-      ChartDldrPrefsDialogImpl( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+      ~ChartDldrPanelImpl();
+      ChartDldrPanelImpl( wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
 
       chartdldr_pi      *pPlugIn;
 
       void CancelDownload();
 
-      DECLARE_CLASS(ChartDldrPrefsDialogImpl)
+      DECLARE_CLASS(ChartDldrPanelImpl)
       // any class wishing to process wxWindows events must use this macro
       DECLARE_EVENT_TABLE()
 };
@@ -254,7 +250,7 @@ public:
       DlProgressDialogImpl( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Download progress"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,-1 ), long style = wxCAPTION )
             : DlProgressDialog( parent, id, title, pos, size, style ) { pParent = NULL; }
       void CancelDownload( wxCommandEvent& event );
-      ChartDldrPrefsDialogImpl *pParent;
+      ChartDldrPanelImpl *pParent;
 };
 
 #endif
