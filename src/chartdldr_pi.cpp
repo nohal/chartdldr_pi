@@ -321,7 +321,8 @@ void ChartDldrPanelImpl::SetSource(int id)
     ChartSource *cs = pPlugIn->m_chartSources->Item(pPlugIn->GetSourceId());
     m_tChartSourceUrl->SetValue(cs->GetUrl());
     m_dpChartDirectory->SetPath(cs->GetDir());
-
+    
+    cs->UpdateLocalFiles();
     pPlugIn->m_pChartSource = cs;
     CleanForm();
     FillFromFile(cs->GetUrl(), cs->GetDir());
@@ -392,12 +393,11 @@ void ChartDldrPanelImpl::FillFromFile(wxString url, wxString dir, bool selnew, b
 
 bool ChartSource::ExistsLocaly(wxString filename)
 {
-      wxArrayString lf = GetLocalFiles();
       wxStringTokenizer tk(filename, _T("."));
       wxString file = tk.GetNextToken();
-      for (size_t i = 0; i < lf.Count(); i++)
+      for (size_t i = 0; i < m_localfiles.Count(); i++)
       {
-            wxFileName fn(lf.Item(i));
+            wxFileName fn(m_localfiles.Item(i));
             if(fn.GetName().StartsWith(file))
                   return true;
       }
@@ -406,12 +406,11 @@ bool ChartSource::ExistsLocaly(wxString filename)
 
 bool ChartSource::IsNewerThanLocal(wxString filename, wxDateTime validDate)
 {
-      wxArrayString lf = GetLocalFiles();
       wxStringTokenizer tk(filename, _T("."));
       wxString file = tk.GetNextToken();
-      for (size_t i = 0; i < lf.Count(); i++)
+      for (size_t i = 0; i < m_localfiles.Count(); i++)
       {
-            wxFileName fn(lf.Item(i));
+            wxFileName fn(m_localfiles.Item(i));
             if(fn.GetName().StartsWith(file))
             {
                   wxDateTime ct, mt, at;

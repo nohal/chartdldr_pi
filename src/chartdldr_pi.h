@@ -191,7 +191,9 @@ public:
       void SetDir(wxString dir) { m_dir = dir; }
       bool ExistsLocaly(wxString filename);
       bool IsNewerThanLocal(wxString filename, wxDateTime validDate);
+      void UpdateLocalFiles() { m_localfiles = GetLocalFiles(); }
 private:
+      wxArrayString m_localfiles;
       wxArrayString GetLocalFiles();
       wxString m_name;
       wxString m_url;
