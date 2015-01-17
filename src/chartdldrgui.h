@@ -1,29 +1,30 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Jun  6 2014)
+// C++ code generated with wxFormBuilder (version Jul  5 2013)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef __CHARTDLDRGUI_H__
-#define __CHARTDLDRGUI_H__
+#ifndef __chartdldrgui__
+#define __chartdldrgui__
 
-#include <wx/artprov.h>
-#include <wx/xrc/xmlres.h>
 #include <wx/intl.h>
+
 #include <wx/string.h>
-#include <wx/stattext.h>
+#include <wx/radiobut.h>
 #include <wx/gdicmn.h>
 #include <wx/font.h>
 #include <wx/colour.h>
 #include <wx/settings.h>
+#include <wx/stattext.h>
+#include <wx/choice.h>
 #include <wx/textctrl.h>
-#include <wx/filepicker.h>
 #include <wx/sizer.h>
+#include <wx/statbox.h>
+#include <wx/filepicker.h>
 #include <wx/button.h>
 #include <wx/dialog.h>
-#include <wx/choice.h>
-#include <wx/statbox.h>
+#include <wx/listbox.h>
 #include <wx/combobox.h>
 #include "checkedlistctrl.h"
 #include <wx/panel.h>
@@ -39,19 +40,29 @@ class AddSourceDlg : public wxDialog
 	private:
 	
 	protected:
+		wxRadioButton* m_radioBtn1;
+		wxStaticText* m_staticText11;
+		wxRadioButton* m_radioBtn2;
 		wxStaticText* m_staticText1;
+		wxStaticText* m_staticText10;
 		wxStaticText* m_staticText2;
 		wxStaticText* m_staticText4;
 		wxStdDialogButtonSizer* m_sdbSizer3;
 		wxButton* m_sdbSizer3OK;
 		wxButton* m_sdbSizer3Cancel;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnChangeType( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSourceSelected( wxCommandEvent& event ) { event.Skip(); }
+		
 	
 	public:
+		wxChoice* m_cbChartSources;
 		wxTextCtrl* m_tSourceName;
 		wxTextCtrl* m_tChartSourceUrl;
 		wxDirPickerCtrl* m_dpChartDirectory;
 		
-		AddSourceDlg( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("New chart source"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE ); 
+		AddSourceDlg( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("New chart source"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
 		~AddSourceDlg();
 	
 };
@@ -64,18 +75,13 @@ class ChartDldrPanel : public wxPanel
 	private:
 	
 	protected:
-		wxStaticText* m_staticText1;
-		wxStaticText* m_staticText2;
-		wxStaticText* m_staticText4;
 		wxButton* m_bAddSource;
 		wxButton* m_bDeleteSource;
 		wxButton* m_bUpdateChartList;
-		wxTextCtrl* m_tChartSourceInfo;
 		wxButton* m_bDnldCharts;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnSourceSelected( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnLocalDirChanged( wxFileDirPickerEvent& event ) { event.Skip(); }
+		virtual void SelectSource( wxCommandEvent& event ) { event.Skip(); }
 		virtual void AddSource( wxCommandEvent& event ) { event.Skip(); }
 		virtual void DeleteSource( wxCommandEvent& event ) { event.Skip(); }
 		virtual void UpdateChartList( wxCommandEvent& event ) { event.Skip(); }
@@ -84,14 +90,12 @@ class ChartDldrPanel : public wxPanel
 		
 	
 	public:
-		wxChoice* m_cbChartSources;
-		wxTextCtrl* m_tChartSourceUrl;
-		wxDirPickerCtrl* m_dpChartDirectory;
+		wxListBox* m_lbChartSources;
 		wxCheckedListCtrl *m_clCharts;
 		
-		ChartDldrPanel( wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxTAB_TRAVERSAL ); 
+		ChartDldrPanel( wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxTAB_TRAVERSAL );
 		~ChartDldrPanel();
 	
 };
 
-#endif //__CHARTDLDRGUI_H__
+#endif //__chartdldrgui__

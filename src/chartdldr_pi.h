@@ -125,6 +125,7 @@ NOAA ENC WI|http://www.charts.noaa.gov/ENCs/WI_ENCProdCat.xml|.|"
 // forward declarations
 class ChartSource;
 class ChartDldrPanelImpl;
+class ChartDldrGuiAddSourceDlg;
 
 WX_DECLARE_OBJARRAY(ChartSource *, wxArrayOfChartSources);
 
@@ -217,7 +218,7 @@ private:
 protected:
       // Handlers for ChartDldrPanel events.
     void SetSource(int id);
-	void OnSourceSelected( wxCommandEvent& event );
+	void SelectSource( wxCommandEvent& event );
 	void AddSource( wxCommandEvent& event );
 	void DeleteSource( wxCommandEvent& event );
 	void UpdateChartList( wxCommandEvent& event );
@@ -232,6 +233,19 @@ protected:
 public:
     ~ChartDldrPanelImpl();
     ChartDldrPanelImpl( chartdldr_pi* plugin, wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+};
+
+class ChartDldrGuiAddSourceDlg : public AddSourceDlg
+{
+	protected:
+        wxArrayOfChartSources *m_chartSources;
+		void OnChangeType( wxCommandEvent& event );
+		void OnSourceSelected( wxCommandEvent& event );
+
+	public:
+		ChartDldrGuiAddSourceDlg( wxWindow* parent );
+		~ChartDldrGuiAddSourceDlg();
+
 };
 
 #endif
