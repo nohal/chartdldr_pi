@@ -428,15 +428,14 @@ void ChartDldrPanelImpl::UpdateChartList( wxCommandEvent& event )
       if (m_cbChartSources->GetSelection() < 0)
             return;
       ChartSource *cs = pPlugIn->m_chartSources->Item(m_cbChartSources->GetSelection());
-      wxURL * url = new wxURL(cs->GetUrl());
-      if (url->GetError() != wxURL_NOERR)
+      wxURL url(cs->GetUrl());
+      if (url.GetError() != wxURL_NOERR)
       {
             wxMessageBox(_("Error, the URL to the chart source data seems wrong."), _("Error"));
-            wxDELETE(url);
             return;
       }
 
-    wxStringTokenizer tk(url->GetPath(), _T("/"));
+    wxStringTokenizer tk(url.GetPath(), _T("/"));
     wxString file;
     do
     {
@@ -447,26 +446,24 @@ void ChartDldrPanelImpl::UpdateChartList( wxCommandEvent& event )
     fn.SetPath(m_dpChartDirectory->GetPath());
 
     wxFileOutputStream output(fn.GetFullPath());
-    wxCurlDownloadDialog ddlg(url->GetURL(), &output, _("Downloading file"),
-        _("Reading Headers: ") + url->GetURL(), wxNullBitmap, this,
+    wxCurlDownloadDialog ddlg(url.GetURL(), &output, _("Downloading file"),
+        _("Reading Headers: ") + url.GetURL(), wxNullBitmap, this,
         wxCTDS_CAN_PAUSE|wxCTDS_CAN_ABORT|wxCTDS_SHOW_ALL|wxCTDS_AUTO_CLOSE);
     ddlg.SetSize(this->GetSize().GetWidth(), ddlg.GetSize().GetHeight());
     switch(ddlg.RunModal())
     {
         case wxCDRF_SUCCESS:
-            FillFromFile(url->GetPath(), fn.GetPath());
+            FillFromFile(url.GetPath(), fn.GetPath());
             break;
         case wxCDRF_FAILED:
         {
-            wxMessageBox(wxString::Format( _("Failed to Download: %s \nVerify there is a working Internet connection."), url->GetURL().c_str() ), 
+            wxMessageBox(wxString::Format( _("Failed to Download: %s \nVerify there is a working Internet connection."), url.GetURL().c_str() ), 
             _("Chart Downloader"), wxOK | wxICON_ERROR);
             wxRemoveFile( fn.GetFullPath() );
         }
         case wxCDRF_USER_ABORTED:
             break;
     }
-    //clean up
-    wxDELETE(url);
 }
 
 wxArrayString ChartSource::GetLocalFiles()
