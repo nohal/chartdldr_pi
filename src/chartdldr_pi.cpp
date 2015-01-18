@@ -660,9 +660,9 @@ void ChartDldrPanelImpl::DeleteSource( wxCommandEvent& event )
             return;
       pPlugIn->m_chartSources->RemoveAt(GetSelectedCatalog());
       m_lbChartSources->DeleteItem(GetSelectedCatalog());
+      CleanForm();
       pPlugIn->SetSourceId(-1);
       SelectCatalog(-1);
-      CleanForm();
       pPlugIn->SaveConfig();
       event.Skip();
 }
