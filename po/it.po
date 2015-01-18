@@ -1,21 +1,19 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: chartdldr_pi 0.4\n"
+"Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-18 17:40-0600\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2015-01-18 17:32-0600\n"
+"PO-Revision-Date: 2015-01-18 18:38-0500\n"
+"Last-Translator: nohal <pavel@kalian.cz>\n"
+"Language-Team: Italian\n"
+"Language: it_IT\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: opencpn\n"
+"X-Crowdin-File: /plugins/chartdldr_pi/po/chartdldr_pi.pot\n"
 
 #: src/chartcatalog.cpp:409
 #, c-format
@@ -31,10 +29,7 @@ msgid "Chart Downloader PlugIn for OpenCPN"
 msgstr ""
 
 #: src/chartdldr_pi.cpp:187
-msgid ""
-"Chart Downloader PlugIn for OpenCPN\n"
-"Manages chart downloads and updates from sources supporting\n"
-"NOAA Chart Catalog format"
+msgid "Chart Downloader PlugIn for OpenCPN\nManages chart downloads and updates from sources supporting\nNOAA Chart Catalog format"
 msgstr ""
 
 #: src/chartdldr_pi.cpp:194 src/chartdldr_pi.cpp:527 src/chartdldr_pi.cpp:567
@@ -95,9 +90,7 @@ msgstr ""
 
 #: src/chartdldr_pi.cpp:526 src/chartdldr_pi.cpp:566
 #, c-format
-msgid ""
-"Failed to Download: %s \n"
-"Verify there is a working Internet connection."
+msgid "Failed to Download: %s \nVerify there is a working Internet connection."
 msgstr ""
 
 #: src/chartdldr_pi.cpp:554
@@ -143,9 +136,7 @@ msgid "Latest"
 msgstr ""
 
 #: src/chartdldr_pi.cpp:809
-msgid ""
-"You must select one of the predefined chart sources or create one of your "
-"own.\n"
+msgid "You must select one of the predefined chart sources or create one of your own.\n"
 msgstr ""
 
 #: src/chartdldr_pi.cpp:811
@@ -161,9 +152,7 @@ msgid "You must select a local folder to store the charts.\n"
 msgstr ""
 
 #: src/chartdldr_pi.cpp:819
-msgid ""
-"The selected local chart folder does not exist. Create it or select an "
-"existing path.\n"
+msgid "The selected local chart folder does not exist. Create it or select an existing path.\n"
 msgstr ""
 
 #: src/chartdldr_pi.cpp:822
@@ -341,3 +330,4 @@ msgstr ""
 #: src/wxcurl/panel.cpp:144
 msgid "Proxy port:"
 msgstr ""
+
