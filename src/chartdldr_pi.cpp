@@ -319,6 +319,7 @@ void ChartDldrPanelImpl::OnContextMenu( wxMouseEvent& event )
 
 void ChartDldrPanelImpl::SetSource(int id)
 {
+    wxSetCursor(wxCURSOR_WAIT);
     pPlugIn->SetSourceId( id );
     
     m_bDeleteSource->Enable( id >= 0 );
@@ -336,13 +337,13 @@ void ChartDldrPanelImpl::SetSource(int id)
     {
         pPlugIn->m_pChartSource = NULL;
     }
+    wxSetCursor(wxCURSOR_DEFAULT);
 }
 
 void ChartDldrPanelImpl::SelectSource( wxListEvent& event )
 {
-      SetSource(GetSelectedCatalog());
-
-      event.Skip();
+    SetSource(GetSelectedCatalog());
+    event.Skip();
 }
 
 void ChartDldrPanelImpl::CleanForm()
@@ -440,6 +441,16 @@ int ChartDldrPanelImpl::GetSelectedCatalog()
 
 void ChartDldrPanelImpl::SelectCatalog(int item)
 {
+    if( item >= 0 )
+    {
+        m_bDeleteSource->Enable();
+        m_bUpdateChartList->Enable();
+    }
+    else
+    {
+        m_bDeleteSource->Disable();
+        m_bUpdateChartList->Disable();
+    }
     m_lbChartSources->SetItemState(item, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
 }
 
@@ -565,10 +576,16 @@ void ChartDldrPanelImpl::DownloadCharts( wxCommandEvent& event )
 {
       cancelled = false;
       if (!m_lbChartSources->GetSelectedItemCount())
-            return;
+      {
+          wxMessageBox(_("No charts selected for download."));
+          return;
+      }
       ChartSource *cs = pPlugIn->m_chartSources->Item(GetSelectedCatalog());
       if (m_clCharts->GetCheckedItemCount() == 0)
-            return;
+      {
+          wxMessageBox(_("No charts selected for download."));
+          return;
+      }
       to_download = m_clCharts->GetCheckedItemCount();
       downloading = 0;
       for (int i = 0; i < m_clCharts->GetItemCount(); i++)
@@ -614,6 +631,8 @@ ChartDldrPanelImpl::~ChartDldrPanelImpl()
 ChartDldrPanelImpl::ChartDldrPanelImpl( chartdldr_pi* plugin, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style )
             : ChartDldrPanel( parent, id, pos, size, style )
 {
+      m_bDeleteSource->Disable();
+      m_bUpdateChartList->Disable();
       m_lbChartSources->InsertColumn (0, _("Catalog"), wxLIST_FORMAT_LEFT, 280);
       m_lbChartSources->InsertColumn (1, _("Released"), wxLIST_FORMAT_LEFT, 230);
       m_lbChartSources->InsertColumn (2, _("Local path"), wxLIST_FORMAT_LEFT, 300);

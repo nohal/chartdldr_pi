@@ -134,13 +134,19 @@ ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& 
 	bSizer8 = new wxBoxSizer( wxVERTICAL );
 	
 	m_bAddSource = new wxButton( this, wxID_ANY, _("Add"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT );
+	m_bAddSource->SetToolTip( _("Add a new chart catalog.") );
+	
 	bSizer8->Add( m_bAddSource, 0, wxALL|wxEXPAND, 5 );
 	
 	m_bDeleteSource = new wxButton( this, wxID_ANY, _("Delete"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_bDeleteSource->SetToolTip( _("Delete the chart catalog. The downloaded charts are not deleted.") );
+	
 	bSizer8->Add( m_bDeleteSource, 0, wxALL|wxEXPAND, 5 );
 	
 	m_bUpdateChartList = new wxButton( this, wxID_ANY, _("Update"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_bUpdateChartList->SetDefault(); 
+	m_bUpdateChartList->SetToolTip( _("Download the current chart catalog and update the data.") );
+	
 	bSizer8->Add( m_bUpdateChartList, 0, wxALL|wxEXPAND, 5 );
 	
 	
