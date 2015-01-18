@@ -90,6 +90,7 @@ chartdldr_pi::chartdldr_pi(void *ppimgr)
       m_pconfig = NULL;
       m_leftclick_tool_id = -1;
       m_schartdldr_sources = wxEmptyString;
+      wxCurlBase::Init();
 }
 
 int chartdldr_pi::Init(void)
@@ -118,7 +119,6 @@ int chartdldr_pi::Init(void)
             wxString s3 = st.GetNextToken();
             m_chartSources->Add(new ChartSource(s1, s2, s3));
       }
-
       return (
               WANTS_PREFERENCES         |
               WANTS_CONFIG              |
@@ -628,8 +628,9 @@ void ChartDldrPanelImpl::DownloadCharts( wxCommandEvent& event )
 
 ChartDldrPanelImpl::~ChartDldrPanelImpl()
 {
-      m_lbChartSources->ClearAll();
-      ((wxListCtrl *)m_clCharts)->DeleteAllItems();
+    wxCurlBase::Shutdown();
+    m_lbChartSources->ClearAll();
+    ((wxListCtrl *)m_clCharts)->DeleteAllItems();
 }
 
 ChartDldrPanelImpl::ChartDldrPanelImpl( chartdldr_pi* plugin, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style )
