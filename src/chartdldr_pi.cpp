@@ -330,7 +330,7 @@ void ChartDldrPanelImpl::SetSource(int id)
     m_bUpdateChartList->Enable( id >= 0 );
 
     CleanForm();
-    if (id >= 0)
+    if (id >= 0 and id < pPlugIn->m_chartSources->Count())
     {
         ChartSource *cs = pPlugIn->m_chartSources->Item(id);
         cs->UpdateLocalFiles();
