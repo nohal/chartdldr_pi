@@ -397,7 +397,7 @@ void ChartDldrPanelImpl::FillFromFile(wxString url, wxString dir, bool selnew, b
                               m_clCharts->SetItem(x, 1, _("Up to date"));
                         }
                   }
-                  m_clCharts->SetItem(x, 2, pPlugIn->m_pChartCatalog->charts->Item(i).GetUpdateDatetime().Format(_T("%F %R")));
+                  m_clCharts->SetItem(x, 2, pPlugIn->m_pChartCatalog->charts->Item(i).GetUpdateDatetime().Format(_T("%Y-%m-%d %H:%M")));
             }
       }
 }
@@ -474,7 +474,7 @@ void ChartDldrPanelImpl::AppendCatalog(ChartSource *cs)
         if (pPlugIn->m_pChartCatalog->LoadFromFile(path, true))
         {
             m_lbChartSources->SetItem(id, 0, pPlugIn->m_pChartCatalog->title);
-            m_lbChartSources->SetItem(id, 1, pPlugIn->m_pChartCatalog->dt_valid.Format(_T("%F %R")));
+            m_lbChartSources->SetItem(id, 1, pPlugIn->m_pChartCatalog->dt_valid.Format(_T("%Y-%m-%d %H:%M")));
             m_lbChartSources->SetItem(id, 2, path);
         }
     }
@@ -515,7 +515,7 @@ void ChartDldrPanelImpl::UpdateChartList( wxCommandEvent& event )
             FillFromFile(url.GetPath(), fn.GetPath());
             long id = GetSelectedCatalog();
             m_lbChartSources->SetItem(id, 0, pPlugIn->m_pChartCatalog->title);
-            m_lbChartSources->SetItem(id, 1, pPlugIn->m_pChartCatalog->dt_valid.Format(_T("%F %R")));
+            m_lbChartSources->SetItem(id, 1, pPlugIn->m_pChartCatalog->dt_valid.Format(_T("%Y-%m-%d %H:%M")));
             m_lbChartSources->SetItem(id, 2, cs->GetDir());
             break;
         }
@@ -743,7 +743,7 @@ bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTa
                               break;
                         }
                         zip.Read(file);
-                        wxString s = aMTime.Format(_T("%F %R"));
+                        wxString s = aMTime.Format(_T("%Y-%m-%d %H:%M"));
                         fn.SetTimes(&aMTime, &aMTime, &aMTime);
                   }
 
