@@ -221,7 +221,7 @@ bool chartdldr_pi::LoadConfig(void)
       if(pConf)
       {
             pConf->SetPath ( _T ( "/Settings/ChartDnldr" ) );
-            pConf->Read ( _T ( "Sources" ), &m_schartdldr_sources, wxEmptyString );
+            pConf->Read ( _T ( "ChartSources" ), &m_schartdldr_sources, wxEmptyString );
             pConf->Read ( _T ( "Source" ), &m_selected_source, -1 );
             return true;
       }
@@ -244,7 +244,7 @@ bool chartdldr_pi::SaveConfig(void)
       if(pConf)
       {
             pConf->SetPath ( _T ( "/Settings/ChartDnldr" ) );
-            pConf->Write ( _T ( "Sources" ), m_schartdldr_sources );
+            pConf->Write ( _T ( "ChartSources" ), m_schartdldr_sources );
             pConf->Write ( _T ( "Source" ), m_selected_source );
 
             return true;
@@ -326,7 +326,7 @@ void ChartDldrPanelImpl::SetSource(int id)
     m_bUpdateChartList->Enable( id >= 0 );
 
     CleanForm();
-    if (id >= 0 and id < pPlugIn->m_chartSources->Count())
+    if (id >= 0 && id < pPlugIn->m_chartSources->Count())
     {
         ChartSource *cs = pPlugIn->m_chartSources->Item(id);
         cs->UpdateLocalFiles();
