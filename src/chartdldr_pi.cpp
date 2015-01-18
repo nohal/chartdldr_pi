@@ -397,7 +397,7 @@ void ChartDldrPanelImpl::FillFromFile(wxString url, wxString dir, bool selnew, b
                               m_clCharts->SetItem(x, 1, _("Up to date"));
                         }
                   }
-                  m_clCharts->SetItem(x, 2, pPlugIn->m_pChartCatalog->charts->Item(i).GetUpdateDatetime().Format());
+                  m_clCharts->SetItem(x, 2, pPlugIn->m_pChartCatalog->charts->Item(i).GetUpdateDatetime().Format(_T("%F %R")));
             }
       }
 }
@@ -474,7 +474,7 @@ void ChartDldrPanelImpl::AppendCatalog(ChartSource *cs)
         if (pPlugIn->m_pChartCatalog->LoadFromFile(path, true))
         {
             m_lbChartSources->SetItem(id, 0, pPlugIn->m_pChartCatalog->title);
-            m_lbChartSources->SetItem(id, 1, pPlugIn->m_pChartCatalog->dt_valid.Format());
+            m_lbChartSources->SetItem(id, 1, pPlugIn->m_pChartCatalog->dt_valid.Format(_T("%F %R")));
             m_lbChartSources->SetItem(id, 2, path);
         }
     }
@@ -515,7 +515,7 @@ void ChartDldrPanelImpl::UpdateChartList( wxCommandEvent& event )
             FillFromFile(url.GetPath(), fn.GetPath());
             long id = GetSelectedCatalog();
             m_lbChartSources->SetItem(id, 0, pPlugIn->m_pChartCatalog->title);
-            m_lbChartSources->SetItem(id, 1, pPlugIn->m_pChartCatalog->dt_valid.Format());
+            m_lbChartSources->SetItem(id, 1, pPlugIn->m_pChartCatalog->dt_valid.Format(_T("%F %R")));
             m_lbChartSources->SetItem(id, 2, cs->GetDir());
             break;
         }
@@ -633,14 +633,14 @@ ChartDldrPanelImpl::ChartDldrPanelImpl( chartdldr_pi* plugin, wxWindow* parent, 
 {
       m_bDeleteSource->Disable();
       m_bUpdateChartList->Disable();
-      m_lbChartSources->InsertColumn (0, _("Catalog"), wxLIST_FORMAT_LEFT, 280);
-      m_lbChartSources->InsertColumn (1, _("Released"), wxLIST_FORMAT_LEFT, 230);
+      m_lbChartSources->InsertColumn (0, _("Catalog"), wxLIST_FORMAT_LEFT, 300);
+      m_lbChartSources->InsertColumn (1, _("Released"), wxLIST_FORMAT_LEFT, 200);
       m_lbChartSources->InsertColumn (2, _("Local path"), wxLIST_FORMAT_LEFT, 300);
 
       // Add columns
-      ((wxListCtrl *)m_clCharts)->InsertColumn(0, _("Title"), wxLIST_FORMAT_LEFT, 300);
-      ((wxListCtrl *)m_clCharts)->InsertColumn(1, _("Status"), wxLIST_FORMAT_LEFT, 100);
-      ((wxListCtrl *)m_clCharts)->InsertColumn(2, _("Latest"), wxLIST_FORMAT_LEFT, 230);
+      ((wxListCtrl *)m_clCharts)->InsertColumn(0, _("Title"), wxLIST_FORMAT_LEFT, 400);
+      ((wxListCtrl *)m_clCharts)->InsertColumn(1, _("Status"), wxLIST_FORMAT_LEFT, 150);
+      ((wxListCtrl *)m_clCharts)->InsertColumn(2, _("Latest"), wxLIST_FORMAT_LEFT, 200);
 
       downloadInProgress = false;
       cancelled = false;
@@ -743,7 +743,7 @@ bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTa
                               break;
                         }
                         zip.Read(file);
-                        wxString s = aMTime.Format();
+                        wxString s = aMTime.Format(_T("%F %R"));
                         fn.SetTimes(&aMTime, &aMTime, &aMTime);
                   }
 
