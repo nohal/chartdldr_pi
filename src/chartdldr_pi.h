@@ -214,11 +214,13 @@ private:
     chartdldr_pi      *pPlugIn;
 
     void OnPopupClick(wxCommandEvent &evt);
+    int GetSelectedCatalog();
+    void AppendCatalog(ChartSource *cs);
 
 protected:
       // Handlers for ChartDldrPanel events.
     void SetSource(int id);
-	void SelectSource( wxCommandEvent& event );
+	void SelectSource( wxListEvent& event );
 	void AddSource( wxCommandEvent& event );
 	void DeleteSource( wxCommandEvent& event );
 	void UpdateChartList( wxCommandEvent& event );
@@ -233,6 +235,7 @@ protected:
 public:
     ~ChartDldrPanelImpl();
     ChartDldrPanelImpl( chartdldr_pi* plugin, wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+    void SelectCatalog(int item);
 };
 
 class ChartDldrGuiAddSourceDlg : public AddSourceDlg

@@ -24,7 +24,7 @@
 #include <wx/filepicker.h>
 #include <wx/button.h>
 #include <wx/dialog.h>
-#include <wx/listbox.h>
+#include <wx/listctrl.h>
 #include <wx/combobox.h>
 #include "checkedlistctrl.h"
 #include <wx/panel.h>
@@ -75,13 +75,14 @@ class ChartDldrPanel : public wxPanel
 	private:
 	
 	protected:
+		wxListCtrl* m_lbChartSources;
 		wxButton* m_bAddSource;
 		wxButton* m_bDeleteSource;
 		wxButton* m_bUpdateChartList;
 		wxButton* m_bDnldCharts;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void SelectSource( wxCommandEvent& event ) { event.Skip(); }
+		virtual void SelectSource( wxListEvent& event ) { event.Skip(); }
 		virtual void AddSource( wxCommandEvent& event ) { event.Skip(); }
 		virtual void DeleteSource( wxCommandEvent& event ) { event.Skip(); }
 		virtual void UpdateChartList( wxCommandEvent& event ) { event.Skip(); }
@@ -90,7 +91,6 @@ class ChartDldrPanel : public wxPanel
 		
 	
 	public:
-		wxListBox* m_lbChartSources;
 		wxCheckedListCtrl *m_clCharts;
 		
 		ChartDldrPanel( wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxTAB_TRAVERSAL );

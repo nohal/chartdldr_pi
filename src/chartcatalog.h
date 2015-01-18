@@ -58,9 +58,8 @@ public:
       ChartCatalog();
       ~ChartCatalog();
       // public methods
-      bool LoadFromFile(wxString path);
-      bool LoadFromXml(TiXmlDocument * doc);
-      wxString GetDescription();
+      bool LoadFromFile(wxString path, bool headerOnly = false);
+      bool LoadFromXml(TiXmlDocument * doc, bool headerOnly);
 
       // public properties
       wxString title;

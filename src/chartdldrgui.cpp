@@ -120,7 +120,7 @@ ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& 
 	wxBoxSizer* bSizer4;
 	bSizer4 = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_lbChartSources = new wxListBox( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_lbChartSources = new wxListCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_NO_SORT_HEADER|wxLC_REPORT|wxLC_SINGLE_SEL );
 	bSizer4->Add( m_lbChartSources, 1, wxALL|wxEXPAND, 5 );
 	
 	wxBoxSizer* bSizer8;
@@ -161,7 +161,8 @@ ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& 
 	bSizer1->Fit( this );
 	
 	// Connect Events
-	m_lbChartSources->Connect( wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler( ChartDldrPanel::SelectSource ), NULL, this );
+	m_lbChartSources->Connect( wxEVT_COMMAND_LIST_ITEM_DESELECTED, wxListEventHandler( ChartDldrPanel::SelectSource ), NULL, this );
+	m_lbChartSources->Connect( wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler( ChartDldrPanel::SelectSource ), NULL, this );
 	m_bAddSource->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPanel::AddSource ), NULL, this );
 	m_bDeleteSource->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPanel::DeleteSource ), NULL, this );
 	m_bUpdateChartList->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPanel::UpdateChartList ), NULL, this );
@@ -172,7 +173,8 @@ ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& 
 ChartDldrPanel::~ChartDldrPanel()
 {
 	// Disconnect Events
-	m_lbChartSources->Disconnect( wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler( ChartDldrPanel::SelectSource ), NULL, this );
+	m_lbChartSources->Disconnect( wxEVT_COMMAND_LIST_ITEM_DESELECTED, wxListEventHandler( ChartDldrPanel::SelectSource ), NULL, this );
+	m_lbChartSources->Disconnect( wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler( ChartDldrPanel::SelectSource ), NULL, this );
 	m_bAddSource->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPanel::AddSource ), NULL, this );
 	m_bDeleteSource->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPanel::DeleteSource ), NULL, this );
 	m_bUpdateChartList->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPanel::UpdateChartList ), NULL, this );

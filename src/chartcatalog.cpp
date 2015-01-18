@@ -37,14 +37,14 @@
 
 
 // Chart Catalog implementation
-bool ChartCatalog::LoadFromFile(wxString path)
+bool ChartCatalog::LoadFromFile(wxString path, bool headerOnly)
 {
       if (!wxFileExists(path))
             return false;
       TiXmlDocument * doc = new TiXmlDocument();
       bool ret = doc->LoadFile(path.mb_str());
       if (ret)
-            ret = LoadFromXml(doc);
+            ret = LoadFromXml(doc, headerOnly);
       doc->Clear();
       wxDELETE(doc);
       
@@ -62,7 +62,7 @@ ChartCatalog::~ChartCatalog()
       wxDELETE(charts);
 }
 
-bool ChartCatalog::LoadFromXml(TiXmlDocument * doc)
+bool ChartCatalog::LoadFromXml(TiXmlDocument * doc, bool headerOnly)
 {
       TiXmlElement * root = doc->RootElement();
       wxString rootName = wxString::FromUTF8( root->Value() );
@@ -73,6 +73,7 @@ bool ChartCatalog::LoadFromXml(TiXmlDocument * doc)
             {
                   return false;
             }
+            if (headerOnly) return true;
             TiXmlNode *child;
             for ( child = root->FirstChildElement()->NextSibling(); child != 0; child = child->NextSibling())
             {
@@ -85,6 +86,7 @@ bool ChartCatalog::LoadFromXml(TiXmlDocument * doc)
             {
                   return false;
             }
+            if (headerOnly) return true;
             TiXmlNode *child;
             for ( child = root->FirstChildElement()->NextSibling(); child != 0; child = child->NextSibling())
             {
@@ -97,6 +99,7 @@ bool ChartCatalog::LoadFromXml(TiXmlDocument * doc)
             {
                   return false;
             }
+            if (headerOnly) return true;
             TiXmlNode *child;
             for ( child = root->FirstChildElement()->NextSibling(); child != 0; child = child->NextSibling())
             {
@@ -156,11 +159,6 @@ bool ChartCatalog::ParseNoaaHeader(TiXmlElement * xmldata)
             }
       }
       return true;
-}
-
-wxString ChartCatalog::GetDescription()
-{
-      return wxString::Format(_("Title: %s\nValid from: %s"), title.c_str(), dt_valid.Format().c_str());
 }
 
 Chart::~Chart()
