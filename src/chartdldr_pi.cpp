@@ -490,7 +490,7 @@ wxArrayString ChartSource::GetLocalFiles()
       return r;
 }
 
-bool ChartDldrPanelImpl::DownloadChart(wxString url, wxString file)
+bool ChartDldrPanelImpl::DownloadChart(wxString url, wxString file, wxString title)
 {
     if (cancelled)
         return false;
@@ -498,8 +498,8 @@ bool ChartDldrPanelImpl::DownloadChart(wxString url, wxString file)
 
     downloadInProgress = true;
     wxFileOutputStream output(file);
-    wxCurlDownloadDialog ddlg(url, &output, _("Downloading file"),
-        _("Reading Headers: ") + url, wxNullBitmap, this,
+    wxCurlDownloadDialog ddlg(url, &output, wxString::Format(_("Downloading file %d of %d"), downloading, to_download),
+        wxString::Format(_("Chart: %s"), title.c_str()), wxNullBitmap, this,
         wxCTDS_CAN_PAUSE|wxCTDS_CAN_ABORT|wxCTDS_SHOW_ALL|wxCTDS_AUTO_CLOSE);
     ddlg.SetSize(this->GetSize().GetWidth(), ddlg.GetSize().GetHeight());
     switch(ddlg.RunModal())
@@ -530,6 +530,7 @@ void ChartDldrPanelImpl::DownloadCharts( wxCommandEvent& event )
       if (m_clCharts->GetCheckedItemCount() == 0)
             return;
       to_download = m_clCharts->GetCheckedItemCount();
+      downloading = 0;
       for (int i = 0; i < m_clCharts->GetItemCount(); i++)
       {
             //Prepare download queues
@@ -551,8 +552,9 @@ void ChartDldrPanelImpl::DownloadCharts( wxCommandEvent& event )
                   wxString path = fn.GetFullPath();
                   if (wxFileExists(path))
                         wxRemoveFile(path);
+                  wxString title = pPlugIn->m_pChartCatalog->charts->Item(i).GetChartTitle();
 
-                  if( DownloadChart(url.GetURL(), path) )
+                  if( DownloadChart(url.GetURL(), path, title) )
                   {
                         wxFileName fn(path);
                         pPlugIn->ExtractZipFiles(path, fn.GetPath(), true, pPlugIn->m_pChartCatalog->charts->Item(i).GetUpdateDatetime());

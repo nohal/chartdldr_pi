@@ -206,7 +206,7 @@ class ChartDldrPanelImpl : public ChartDldrPanel
 {
 friend class chartdldr_pi;
 private:
-    bool DownloadChart(wxString url, wxString file);
+    bool DownloadChart(wxString url, wxString file, wxString title);
     bool downloadInProgress;
     int to_download;
     int downloading;
