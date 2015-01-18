@@ -184,7 +184,7 @@ void wxCurlTransferDialog::CreateControls(const wxString &url, const wxString &m
 
     // speed & size row
     if (HasFlag(wxCTDS_SPEED))
-        m_pSpeed = AddSizerRow(leftcolumn, wxS("Speed:"));
+        m_pSpeed = AddSizerRow(leftcolumn, _("Speed:"));
     if (HasFlag(wxCTDS_SIZE))
         m_pSize = AddSizerRow(leftcolumn, sizeLabel);
 
@@ -193,11 +193,11 @@ void wxCurlTransferDialog::CreateControls(const wxString &url, const wxString &m
 
     // the time rows
     if (HasFlag(wxCTDS_ELAPSED_TIME))
-        m_pElapsedTime = AddSizerRow(leftcolumn, wxS("Elapsed time:"));
+        m_pElapsedTime = AddSizerRow(leftcolumn, _("Elapsed time:"));
     if (HasFlag(wxCTDS_ESTIMATED_TIME))
-        m_pEstimatedTime = AddSizerRow(leftcolumn, wxS("Estimated total time:"));
+        m_pEstimatedTime = AddSizerRow(leftcolumn, _("Estimated total time:"));
     if (HasFlag(wxCTDS_REMAINING_TIME))
-        m_pRemainingTime = AddSizerRow(leftcolumn, wxS("Estimated remaining time:"));
+        m_pRemainingTime = AddSizerRow(leftcolumn, _("Estimated remaining time:"));
 
     if (bitmap.IsOk())
     {
@@ -389,7 +389,7 @@ void wxCurlTransferDialog::OnAbort(wxCommandEvent &WXUNUSED(ev))
 
 void wxCurlTransferDialog::OnAbortUpdateUI(wxUpdateUIEvent &ev)
 {
-    ev.SetText(m_pThread->IsAlive() ? wxS("Abort") : wxS("Close"));
+    ev.SetText(m_pThread->IsAlive() ? _("Abort") : _("Close"));
 }
 
 void wxCurlTransferDialog::OnPauseResume(wxCommandEvent &WXUNUSED(ev))
@@ -400,17 +400,17 @@ void wxCurlTransferDialog::OnPauseResume(wxCommandEvent &WXUNUSED(ev))
     {
         if (HandleCurlThreadError(m_pThread->Pause(), m_pThread))
         {
-            FindWindowById(PauseResumeButtonId)->SetLabel(wxS("Resume"));
+            FindWindowById(PauseResumeButtonId)->SetLabel(_("Resume"));
 
             if (m_pSpeed)
-                m_pSpeed->SetLabel(wxS("0 (transfer paused)"));
+                m_pSpeed->SetLabel(_("0 (transfer paused)"));
         }
     }
     else
     {
         if (HandleCurlThreadError(m_pThread->Resume(), m_pThread))
         {
-            FindWindowById(PauseResumeButtonId)->SetLabel(wxS("Pause"));
+            FindWindowById(PauseResumeButtonId)->SetLabel(_("Pause"));
         }
     }
 }
@@ -506,7 +506,7 @@ void wxCurlTransferDialog::OnEndPerform(wxCurlEndPerformEvent &ev)
         SetReturnCode(retCode);     // will exit later in OnAbort()
 
         if (m_pSpeed)
-            m_pSpeed->SetLabel(wxS("0 (transfer completed)"));
+            m_pSpeed->SetLabel(_("0 (transfer completed)"));
     }
 }
 
@@ -527,7 +527,7 @@ bool wxCurlDownloadDialog::Create(const wxString &url, wxOutputStream *out,
                                   const wxBitmap& bitmap,
                                   wxWindow *parent, long style)
 {
-    if (!wxCurlTransferDialog::Create(url, title, message, wxS("Downloaded:"), bitmap, parent, style))
+    if (!wxCurlTransferDialog::Create(url, title, message, _("Downloaded:"), bitmap, parent, style))
         return false;
 
     // register as the thread's event handler
@@ -575,7 +575,7 @@ bool wxCurlUploadDialog::Create(const wxString &url, wxInputStream *in,
                                   const wxBitmap& bitmap,
                                   wxWindow *parent, long style)
 {
-    if (!wxCurlTransferDialog::Create(url, title, message, wxS("Uploaded:"), bitmap, parent, style))
+    if (!wxCurlTransferDialog::Create(url, title, message, _("Uploaded:"), bitmap, parent, style))
         return false;
 
     // register as the thread's event handler

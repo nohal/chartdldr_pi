@@ -131,9 +131,9 @@ void wxCurlConnectionSettingsPanel::CreateControls(const wxString &msg)
     // proxy options
     if (HasFlag(wxCCSP_PROXY_OPTIONS))
     {
-        wxSizer* proxy = new wxStaticBoxSizer(wxVERTICAL, this, wxS("Proxy settings"));
+        wxSizer* proxy = new wxStaticBoxSizer(wxVERTICAL, this, _("Proxy settings"));
 
-        m_pProxyCheckBox = new wxCheckBox(this, UseProxy, wxS("Use proxy"));
+        m_pProxyCheckBox = new wxCheckBox(this, UseProxy, _("Use proxy"));
         m_pProxyCheckBox->SetValue(false);
         proxy->Add(m_pProxyCheckBox, 0, wxLEFT|wxTOP, BORDER);
 
