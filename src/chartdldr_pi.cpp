@@ -506,9 +506,11 @@ void ChartDldrPanelImpl::UpdateChartList( wxCommandEvent& event )
     wxFileOutputStream output(fn.GetFullPath());
     wxCurlDownloadDialog ddlg(url.GetURL(), &output, _("Downloading file"),
         _("Reading Headers: ") + url.GetURL(), wxNullBitmap, this,
-        wxCTDS_CAN_PAUSE|wxCTDS_CAN_ABORT|wxCTDS_SHOW_ALL|wxCTDS_AUTO_CLOSE);
+        wxCTDS_ELAPSED_TIME|wxCTDS_ESTIMATED_TIME|wxCTDS_REMAINING_TIME|wxCTDS_SPEED|wxCTDS_SIZE|wxCTDS_URL|wxCTDS_CAN_PAUSE|wxCTDS_CAN_ABORT|wxCTDS_AUTO_CLOSE);
     ddlg.SetSize(this->GetSize().GetWidth(), ddlg.GetSize().GetHeight());
-    switch(ddlg.RunModal())
+    wxCurlDialogReturnFlag ret = ddlg.RunModal();
+    output.Close(); 
+    switch(ret)
     {
         case wxCDRF_SUCCESS:
         {
@@ -551,9 +553,11 @@ bool ChartDldrPanelImpl::DownloadChart(wxString url, wxString file, wxString tit
     wxFileOutputStream output(file);
     wxCurlDownloadDialog ddlg(url, &output, wxString::Format(_("Downloading file %d of %d"), downloading, to_download),
         wxString::Format(_("Chart: %s"), title.c_str()), wxNullBitmap, this,
-        wxCTDS_CAN_PAUSE|wxCTDS_CAN_ABORT|wxCTDS_SHOW_ALL|wxCTDS_AUTO_CLOSE);
+        wxCTDS_ELAPSED_TIME|wxCTDS_ESTIMATED_TIME|wxCTDS_REMAINING_TIME|wxCTDS_SPEED|wxCTDS_SIZE|wxCTDS_URL|wxCTDS_CAN_PAUSE|wxCTDS_CAN_ABORT|wxCTDS_AUTO_CLOSE);
     ddlg.SetSize(this->GetSize().GetWidth(), ddlg.GetSize().GetHeight());
-    switch(ddlg.RunModal())
+    wxCurlDialogReturnFlag ret = ddlg.RunModal();
+    output.Close(); 
+    switch(ret)
     {
         case wxCDRF_SUCCESS:
             return true;
