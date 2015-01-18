@@ -347,7 +347,6 @@ void ChartDldrPanelImpl::SelectSource( wxListEvent& event )
 
 void ChartDldrPanelImpl::CleanForm()
 {
-//      m_tChartSourceInfo->SetValue(wxEmptyString);
       m_clCharts->DeleteAllItems();
 }
 
@@ -644,6 +643,7 @@ void ChartDldrPanelImpl::DeleteSource( wxCommandEvent& event )
       m_lbChartSources->DeleteItem(GetSelectedCatalog());
       pPlugIn->SetSourceId(-1);
       SelectCatalog(-1);
+      CleanForm();
       pPlugIn->SaveConfig();
       event.Skip();
 }
@@ -656,9 +656,6 @@ void ChartDldrPanelImpl::AddSource( wxCommandEvent& event )
             ChartSource *cs = new ChartSource(dialog->m_tSourceName->GetValue(), dialog->m_tChartSourceUrl->GetValue(), dialog->m_dpChartDirectory->GetTextCtrlValue());
             pPlugIn->m_chartSources->Add(cs);
             AppendCatalog(cs);
-            /*m_lbChartSources->Select(m_lbChartSources->GetChildren().GetCount() - 1);
-            m_tChartSourceUrl->SetValue(dialog->m_tChartSourceUrl->GetValue());
-            m_dpChartDirectory->SetPath(dialog->m_dpChartDirectory->GetPath());*/
 
             pPlugIn->SaveConfig();
       }
