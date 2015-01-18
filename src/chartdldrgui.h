@@ -1,15 +1,16 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Jul  5 2013)
+// C++ code generated with wxFormBuilder (version Jun  6 2014)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef __chartdldrgui__
-#define __chartdldrgui__
+#ifndef __CHARTDLDRGUI_H__
+#define __CHARTDLDRGUI_H__
 
+#include <wx/artprov.h>
+#include <wx/xrc/xmlres.h>
 #include <wx/intl.h>
-
 #include <wx/string.h>
 #include <wx/radiobut.h>
 #include <wx/gdicmn.h>
@@ -40,20 +41,20 @@ class AddSourceDlg : public wxDialog
 	private:
 	
 	protected:
-		wxRadioButton* m_radioBtn1;
-		wxStaticText* m_staticText11;
-		wxRadioButton* m_radioBtn2;
-		wxStaticText* m_staticText1;
-		wxStaticText* m_staticText10;
-		wxStaticText* m_staticText2;
-		wxStaticText* m_staticText4;
-		wxStdDialogButtonSizer* m_sdbSizer3;
-		wxButton* m_sdbSizer3OK;
-		wxButton* m_sdbSizer3Cancel;
+		wxRadioButton* m_rbPredefined;
+		wxStaticText* m_stCatalog;
+		wxRadioButton* m_rbCustom;
+		wxStaticText* m_stName;
+		wxStaticText* m_stUrl;
+		wxStaticText* m_stChartDir;
+		wxStdDialogButtonSizer* m_sdbSizerBtns;
+		wxButton* m_sdbSizerBtnsOK;
+		wxButton* m_sdbSizerBtnsCancel;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnChangeType( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSourceSelected( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnOkClick( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
@@ -62,7 +63,7 @@ class AddSourceDlg : public wxDialog
 		wxTextCtrl* m_tChartSourceUrl;
 		wxDirPickerCtrl* m_dpChartDirectory;
 		
-		AddSourceDlg( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("New chart source"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+		AddSourceDlg( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("New chart source"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE ); 
 		~AddSourceDlg();
 	
 };
@@ -93,9 +94,9 @@ class ChartDldrPanel : public wxPanel
 	public:
 		wxCheckedListCtrl *m_clCharts;
 		
-		ChartDldrPanel( wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxTAB_TRAVERSAL );
+		ChartDldrPanel( wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxTAB_TRAVERSAL ); 
 		~ChartDldrPanel();
 	
 };
 
-#endif //__chartdldrgui__
+#endif //__CHARTDLDRGUI_H__

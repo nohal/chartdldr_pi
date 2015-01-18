@@ -45,9 +45,9 @@
 #define     MY_API_VERSION_MAJOR    1
 #define     MY_API_VERSION_MINOR    9
 
-#define     NOAA_CHART_SOURCES "NOAA ENC - all charts - (too) big!|http://www.charts.noaa.gov/ENCs/ENCProdCat.xml|.|\
-NOAA RNC - all charts - (too) big!|http://www.charts.noaa.gov/RNCs/RNCProdCat.xml|.|\
-USACE IENC charts|http://crunch.tec.army.mil/enc/echarts/catalog/iencproductscatalog.xml|.|\
+#define     NOAA_CHART_SOURCES "NOAA ENC - all charts - big!|http://www.charts.noaa.gov/ENCs/ENCProdCat.xml|.|\
+NOAA RNC - all charts - big!|http://www.charts.noaa.gov/RNCs/RNCProdCat.xml|.|\
+USACE IENC charts|http://inland.agc.army.mil/enc/echarts/catalog/iencu37productscatalog.xml|.|\
 NOAA RNC AK|http://www.charts.noaa.gov/RNCs/AK_RNCProdCat.xml|.|\
 NOAA RNC AL|http://www.charts.noaa.gov/RNCs/AL_RNCProdCat.xml|.|\
 NOAA RNC CA|http://www.charts.noaa.gov/RNCs/CA_RNCProdCat.xml|.|\
@@ -244,6 +244,7 @@ class ChartDldrGuiAddSourceDlg : public AddSourceDlg
         wxArrayOfChartSources *m_chartSources;
 		void OnChangeType( wxCommandEvent& event );
 		void OnSourceSelected( wxCommandEvent& event );
+		void OnOkClick( wxCommandEvent& event );
 
 	public:
 		ChartDldrGuiAddSourceDlg( wxWindow* parent );

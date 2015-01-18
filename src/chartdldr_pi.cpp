@@ -449,6 +449,7 @@ void ChartDldrPanelImpl::AppendCatalog(ChartSource *cs)
     long id = m_lbChartSources->GetItemCount();
     m_lbChartSources->InsertItem(id, cs->GetName());
     m_lbChartSources->SetItem(id, 1, _("(Please update first)"));
+    m_lbChartSources->SetItem(id, 2, cs->GetDir());
     wxURL url(cs->GetUrl());
     if (url.GetError() != wxURL_NOERR)
     {
@@ -464,6 +465,7 @@ void ChartDldrPanelImpl::AppendCatalog(ChartSource *cs)
         {
             m_lbChartSources->SetItem(id, 0, pPlugIn->m_pChartCatalog->title);
             m_lbChartSources->SetItem(id, 1, pPlugIn->m_pChartCatalog->dt_valid.Format());
+            m_lbChartSources->SetItem(id, 2, path);
         }
     }
 }
@@ -504,6 +506,7 @@ void ChartDldrPanelImpl::UpdateChartList( wxCommandEvent& event )
             long id = GetSelectedCatalog();
             m_lbChartSources->SetItem(id, 0, pPlugIn->m_pChartCatalog->title);
             m_lbChartSources->SetItem(id, 1, pPlugIn->m_pChartCatalog->dt_valid.Format());
+            m_lbChartSources->SetItem(id, 2, cs->GetDir());
             break;
         }
         case wxCDRF_FAILED:
@@ -521,7 +524,8 @@ void ChartDldrPanelImpl::UpdateChartList( wxCommandEvent& event )
 wxArrayString ChartSource::GetLocalFiles()
 {
       wxArrayString *ret = new wxArrayString();
-      wxDir::GetAllFiles(GetDir(), ret);
+      if( wxDirExists(GetDir()) )
+        wxDir::GetAllFiles(GetDir(), ret);
       wxArrayString r(*ret);
       wxDELETE(ret);
       return r;
@@ -613,6 +617,7 @@ ChartDldrPanelImpl::ChartDldrPanelImpl( chartdldr_pi* plugin, wxWindow* parent, 
 {
       m_lbChartSources->InsertColumn (0, _("Catalog"), wxLIST_FORMAT_LEFT, 280);
       m_lbChartSources->InsertColumn (1, _("Released"), wxLIST_FORMAT_LEFT, 230);
+      m_lbChartSources->InsertColumn (2, _("Local path"), wxLIST_FORMAT_LEFT, 300);
 
       // Add columns
       ((wxListCtrl *)m_clCharts)->InsertColumn(0, _("Title"), wxLIST_FORMAT_LEFT, 300);
@@ -637,6 +642,7 @@ void ChartDldrPanelImpl::DeleteSource( wxCommandEvent& event )
             return;
       pPlugIn->m_chartSources->RemoveAt(GetSelectedCatalog());
       m_lbChartSources->DeleteItem(GetSelectedCatalog());
+      pPlugIn->SetSourceId(-1);
       SelectCatalog(-1);
       pPlugIn->SaveConfig();
       event.Skip();
@@ -644,10 +650,10 @@ void ChartDldrPanelImpl::DeleteSource( wxCommandEvent& event )
 
 void ChartDldrPanelImpl::AddSource( wxCommandEvent& event )
 {
-      ChartDldrGuiAddSourceDlg *dialog = new ChartDldrGuiAddSourceDlg(pPlugIn->m_parent_window);
+      ChartDldrGuiAddSourceDlg *dialog = new ChartDldrGuiAddSourceDlg(this);
       if(dialog->ShowModal() == wxID_OK)
       {
-            ChartSource *cs = new ChartSource(dialog->m_tSourceName->GetValue(), dialog->m_tChartSourceUrl->GetValue(), dialog->m_dpChartDirectory->GetPath());
+            ChartSource *cs = new ChartSource(dialog->m_tSourceName->GetValue(), dialog->m_tChartSourceUrl->GetValue(), dialog->m_dpChartDirectory->GetTextCtrlValue());
             pPlugIn->m_chartSources->Add(cs);
             AppendCatalog(cs);
             /*m_lbChartSources->Select(m_lbChartSources->GetChildren().GetCount() - 1);
@@ -743,7 +749,7 @@ ChartDldrGuiAddSourceDlg::ChartDldrGuiAddSourceDlg( wxWindow* parent ) : AddSour
             wxString s3 = st.GetNextToken();
             m_chartSources->Add(new ChartSource(s1, s2, s3));
       }
-      m_radioBtn1->SetValue(true);
+      m_rbPredefined->SetValue(true);
 
       for (size_t i = 0; i < m_chartSources->GetCount(); i++)
       {
@@ -760,9 +766,9 @@ ChartDldrGuiAddSourceDlg::~ChartDldrGuiAddSourceDlg()
 
 void ChartDldrGuiAddSourceDlg::OnChangeType( wxCommandEvent& event )
 {
-      m_cbChartSources->Enable(m_radioBtn1->GetValue());
-      m_tSourceName->Enable(m_radioBtn2->GetValue());
-      m_tChartSourceUrl->Enable(m_radioBtn2->GetValue());
+      m_cbChartSources->Enable(m_rbPredefined->GetValue());
+      m_tSourceName->Enable(m_rbCustom->GetValue());
+      m_tChartSourceUrl->Enable(m_rbCustom->GetValue());
 }
 
 void ChartDldrGuiAddSourceDlg::OnSourceSelected( wxCommandEvent& event )
@@ -774,3 +780,25 @@ void ChartDldrGuiAddSourceDlg::OnSourceSelected( wxCommandEvent& event )
       event.Skip();
 }
 
+void ChartDldrGuiAddSourceDlg::OnOkClick( wxCommandEvent& event )
+{
+    wxString msg = wxEmptyString;
+    
+    if( m_rbPredefined->GetValue() && m_cbChartSources->GetSelection() < 0 )
+        msg += _("You must select one of the predefined chart sources or create one of your own.\n");
+    if( m_rbCustom->GetValue() && m_tSourceName->GetValue() == wxEmptyString )
+        msg += _("The chart source must have a name.\n");
+    wxURL url(m_tChartSourceUrl->GetValue());
+    if( m_rbCustom->GetValue() && ( m_tChartSourceUrl->GetValue() == wxEmptyString || url.GetError() != wxURL_NOERR ) )
+        msg += _("The chart source must have a valid URL.\n");
+    if( m_dpChartDirectory->GetPath() == wxEmptyString )
+        msg += _("You must select a local folder to store the charts.\n");
+    else
+        if( !wxDirExists(m_dpChartDirectory->GetTextCtrlValue()) )
+            msg += _("The selected local chart folder does not exist. Create it or select an existing path.\n");
+    
+    if( msg != wxEmptyString )
+        wxMessageBox( msg, _("Chart source definition problem"), wxOK | wxCENTRE | wxICON_ERROR );
+    else
+        event.Skip();
+}
