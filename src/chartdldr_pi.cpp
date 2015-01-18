@@ -640,7 +640,20 @@ bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTa
             while (entry.reset(zip.GetNextEntry()), entry.get() != NULL) {
                   // access meta-data
                   wxString name = entry->GetName();
-                  name = aTargetDir + wxFileName::GetPathSeparator() + name;
+                  if (aStripPath)
+                  {
+                      wxFileName fn(name);
+                      /* We can completly replace the entry path */
+                      //fn.SetPath(aTargetDir);
+                      //name = fn.GetFullPath();
+                      /* Or only remove the first dir (eg. ENC_ROOT) */
+                      fn.RemoveDir(0);
+                      name = aTargetDir + wxFileName::GetPathSeparator() + fn.GetFullPath();
+                  }
+                  else
+                  {
+                      name = aTargetDir + wxFileName::GetPathSeparator() + name;
+                  }
 
                   // read 'zip' to access the entry's data
                   if (entry->IsDir()) {
@@ -655,10 +668,8 @@ bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTa
                         }
 
                         wxFileName fn(name);
-                        if (aStripPath)
-                        {
-                              fn.SetPath(aTargetDir);
-                              name = fn.GetFullPath();
+                        if (!fn.DirExists()) {
+                            wxFileName::Mkdir(fn.GetPath());
                         }
 
                         wxFileOutputStream file(name);
