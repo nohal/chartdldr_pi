@@ -1,170 +1,333 @@
-# Localization file for the OpenCPN chart downloader plugin.
-# Copyright (C) 2011 Pavel Kalian
-# This file is distributed under the same license as the OpenCPN package.
-# Pavel Kalian <pavel@kalian.cz>, 2011.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: chartdldr_pi 2.4.324\n"
+"Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-12 16:43+0200\n"
-"PO-Revision-Date: 2011-04-12 16:52+0100\n"
-"Last-Translator: Pavel Kalian <pavel@kalian.cz>\n"
-"Language-Team: Pavel Kalian <pavel@kalian.cz>\n"
+"POT-Creation-Date: 2015-01-18 17:32-0600\n"
+"PO-Revision-Date: 2015-01-18 18:38-0500\n"
+"Last-Translator: nohal <pavel@kalian.cz>\n"
+"Language-Team: Czech\n"
+"Language: cs_CZ\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Czech\n"
-"X-Poedit-Country: CZECH REPUBLIC\n"
-"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: opencpn\n"
+"X-Crowdin-File: /plugins/chartdldr_pi/po/chartdldr_pi.pot\n"
 
-#: src/chartcatalog.cpp:151
+#: src/chartcatalog.cpp:409
 #, c-format
-msgid ""
-"Title: %s\n"
-"Valid from: %s"
+msgid "%s (%s to %s), river miles %3.1f - %3.1f"
 msgstr ""
-"Název: %s\n"
-"Platí od: %s"
 
-#: src/chartdldr_pi.cpp:115
-#: src/chartdldr_pi.cpp:218
-#: src/chartdldr_pi.cpp:244
-msgid "Chart Downloader"
-msgstr "Manažer map"
-
-#: src/chartdldr_pi.cpp:162
+#: src/chartdldr_pi.cpp:176
 msgid "ChartDownloader"
 msgstr "Správce map"
 
-#: src/chartdldr_pi.cpp:168
+#: src/chartdldr_pi.cpp:182
 msgid "Chart Downloader PlugIn for OpenCPN"
 msgstr "Doplněk Manažer map pro OpenCPN"
 
-#: src/chartdldr_pi.cpp:173
-msgid ""
-"Chart Downloader PlugIn for OpenCPN\n"
-"Manages chart downloads and updates from sources supporting\n"
-"NOAA Chart Catalog format"
-msgstr ""
-"Doplněk Manažer map pro OpenCPN\n"
-"Umožňuje stahování a správu map ze zdrojů, které podporují\n"
-"NOAA Chart Catalog format"
+#: src/chartdldr_pi.cpp:187
+msgid "Chart Downloader PlugIn for OpenCPN\nManages chart downloads and updates from sources supporting\nNOAA Chart Catalog format"
+msgstr "Doplněk Manažer map pro OpenCPN\nUmožňuje stahování a správu map ze zdrojů, které podporují\nNOAA Chart Catalog format"
 
-#: src/chartdldr_pi.cpp:328
+#: src/chartdldr_pi.cpp:194 src/chartdldr_pi.cpp:527 src/chartdldr_pi.cpp:567
+msgid "Chart Downloader"
+msgstr "Manažer map"
+
+#: src/chartdldr_pi.cpp:310
+msgid "Select all"
+msgstr "Vyber složku"
+
+#: src/chartdldr_pi.cpp:311
+msgid "Deselect all"
+msgstr ""
+
+#: src/chartdldr_pi.cpp:312
+msgid "Invert selection"
+msgstr ""
+
+#: src/chartdldr_pi.cpp:313
+msgid "Select updated"
+msgstr "Vyber složku"
+
+#: src/chartdldr_pi.cpp:314
+msgid "Select new"
+msgstr "Vyber složku"
+
+#: src/chartdldr_pi.cpp:383
 msgid "New"
 msgstr "Nová"
 
-#: src/chartdldr_pi.cpp:334
+#: src/chartdldr_pi.cpp:391
 msgid "Update available"
 msgstr "Má aktualizaci"
 
-#: src/chartdldr_pi.cpp:338
+#: src/chartdldr_pi.cpp:397
 msgid "Up to date"
 msgstr "Aktuální"
 
-#: src/chartdldr_pi.cpp:387
+#: src/chartdldr_pi.cpp:461
+msgid "(Please update first)"
+msgstr ""
+
+#: src/chartdldr_pi.cpp:466 src/chartdldr_pi.cpp:492
 msgid "Error, the URL to the chart source data seems wrong."
 msgstr "Chyba, URL zdroje map vypadá chybně."
 
-#: src/chartdldr_pi.cpp:387
-#: src/chartdldr_pi.cpp:415
-#: src/chartdldr_pi.cpp:472
-#: src/chartdldr_pi.cpp:526
+#: src/chartdldr_pi.cpp:466 src/chartdldr_pi.cpp:492 src/chartdldr_pi.cpp:604
 msgid "Error"
 msgstr "Chyba"
 
-#: src/chartdldr_pi.cpp:397
-msgid "Downloading..."
+#: src/chartdldr_pi.cpp:507
+msgid "Downloading file"
 msgstr "Stahování..."
 
-#: src/chartdldr_pi.cpp:397
-msgid "Downloading chart list..."
-msgstr "Stahování seznamu map..."
+#: src/chartdldr_pi.cpp:508
+msgid "Reading Headers: "
+msgstr ""
 
-#: src/chartdldr_pi.cpp:415
-#: src/chartdldr_pi.cpp:526
-msgid "Unable to connect."
-msgstr "Nelze se připojit."
+#: src/chartdldr_pi.cpp:526 src/chartdldr_pi.cpp:566
+#, c-format
+msgid "Failed to Download: %s \nVerify there is a working Internet connection."
+msgstr ""
 
-#: src/chartdldr_pi.cpp:472
+#: src/chartdldr_pi.cpp:554
+#, c-format
+msgid "Downloading file %d of %d"
+msgstr ""
+
+#: src/chartdldr_pi.cpp:555
+#, c-format
+msgid "Chart: %s"
+msgstr ""
+
+#: src/chartdldr_pi.cpp:584 src/chartdldr_pi.cpp:590
+msgid "No charts selected for download."
+msgstr ""
+
+#: src/chartdldr_pi.cpp:604
 msgid "Error, the URL to the chart data seems wrong."
 msgstr "Chyba, URL zdroje map vypadá chybně."
 
-#: src/chartdldr_pi.cpp:567
+#: src/chartdldr_pi.cpp:641 src/chartdldrgui.cpp:20 src/chartdldrgui.cpp:31
+msgid "Catalog"
+msgstr ""
+
+#: src/chartdldr_pi.cpp:642
+msgid "Released"
+msgstr ""
+
+#: src/chartdldr_pi.cpp:643
+msgid "Local path"
+msgstr ""
+
+#: src/chartdldr_pi.cpp:646
 msgid "Title"
 msgstr "Název"
 
-#: src/chartdldr_pi.cpp:572
+#: src/chartdldr_pi.cpp:647
 msgid "Status"
 msgstr "Stav"
 
-#: src/chartdldrgui.cpp:20
-msgid "Show in Toolbar (Takes effect on next restart of the application)"
-msgstr "Zobrazit v nástrojové liště (po restartu aplikace)"
+#: src/chartdldr_pi.cpp:648
+msgid "Latest"
+msgstr ""
 
-#: src/chartdldrgui.cpp:24
-msgid "Charts source"
-msgstr "Zdroje map"
+#: src/chartdldr_pi.cpp:809
+msgid "You must select one of the predefined chart sources or create one of your own.\n"
+msgstr ""
 
-#: src/chartdldrgui.cpp:32
-#: src/chartdldrgui.cpp:189
-msgid "Chart source"
-msgstr "Zdroj map"
+#: src/chartdldr_pi.cpp:811
+msgid "The chart source must have a name.\n"
+msgstr ""
 
-#: src/chartdldrgui.cpp:41
-#: src/chartdldrgui.cpp:196
+#: src/chartdldr_pi.cpp:814
+msgid "The chart source must have a valid URL.\n"
+msgstr ""
+
+#: src/chartdldr_pi.cpp:816
+msgid "You must select a local folder to store the charts.\n"
+msgstr ""
+
+#: src/chartdldr_pi.cpp:819
+msgid "The selected local chart folder does not exist. Create it or select an existing path.\n"
+msgstr ""
+
+#: src/chartdldr_pi.cpp:822
+msgid "Chart source definition problem"
+msgstr ""
+
+#: src/chartdldrgui.cpp:28
+msgid "Predefined"
+msgstr ""
+
+#: src/chartdldrgui.cpp:40
+msgid "Custom"
+msgstr ""
+
+#: src/chartdldrgui.cpp:43
+msgid "Name"
+msgstr ""
+
+#: src/chartdldrgui.cpp:56
 msgid "URL"
-msgstr "URL"
+msgstr ""
 
-#: src/chartdldrgui.cpp:48
-#: src/chartdldrgui.cpp:203
+#: src/chartdldrgui.cpp:75
 msgid "Chart directory"
 msgstr "Složka map"
 
-#: src/chartdldrgui.cpp:52
-#: src/chartdldrgui.cpp:207
+#: src/chartdldrgui.cpp:79
 msgid "Select a folder"
 msgstr "Vyber složku"
 
-#: src/chartdldrgui.cpp:60
-msgid "Add new source"
-msgstr "Přidej zdroj map"
+#: src/chartdldrgui.cpp:125
+msgid "Catalogs"
+msgstr ""
 
-#: src/chartdldrgui.cpp:63
-msgid "Delete source"
+#: src/chartdldrgui.cpp:136
+msgid "Add"
+msgstr ""
+
+#: src/chartdldrgui.cpp:137
+msgid "Add a new chart catalog."
+msgstr ""
+
+#: src/chartdldrgui.cpp:141
+msgid "Delete"
 msgstr "Smaž zdroj"
 
-#: src/chartdldrgui.cpp:66
-msgid "Update chart list"
-msgstr "Aktualizuj seznam map"
+#: src/chartdldrgui.cpp:142
+msgid "Delete the chart catalog. The downloaded charts are not deleted."
+msgstr ""
 
-#: src/chartdldrgui.cpp:75
-msgid "Chart source info"
-msgstr "Informace o zdroji map"
+#: src/chartdldrgui.cpp:146
+msgid "Update"
+msgstr "Aktuální"
 
-#: src/chartdldrgui.cpp:83
+#: src/chartdldrgui.cpp:148
+msgid "Download the current chart catalog and update the data."
+msgstr ""
+
+#: src/chartdldrgui.cpp:162
 msgid "Charts"
 msgstr "MApy"
 
-#: src/chartdldrgui.cpp:91
+#: src/chartdldrgui.cpp:170
 msgid "Download selected charts"
 msgstr "Stáhni vybrané mapy"
 
-#: src/chartdldrgui.cpp:141
-#: src/chartdldrgui.h:93
-msgid "Download progress"
-msgstr "Průběh stahování"
-
-#: src/chartdldrgui.cpp:143
-msgid "Total"
-msgstr "Celkem"
-
-#: src/chartdldrgui.cpp:150
-msgid "Current chart"
-msgstr "Tato mapa"
-
-#: src/chartdldrgui.h:118
+#: src/chartdldrgui.h:66
 msgid "New chart source"
 msgstr "Nový zdroj map"
+
+#: src/wxcurl/dialog.cpp:137
+msgid "Not available"
+msgstr "Má aktualizaci"
+
+#: src/wxcurl/dialog.cpp:168
+msgid "URL:"
+msgstr ""
+
+#: src/wxcurl/dialog.cpp:187
+msgid "Speed:"
+msgstr ""
+
+#: src/wxcurl/dialog.cpp:196
+msgid "Elapsed time:"
+msgstr ""
+
+#: src/wxcurl/dialog.cpp:198
+msgid "Estimated total time:"
+msgstr ""
+
+#: src/wxcurl/dialog.cpp:200
+msgid "Estimated remaining time:"
+msgstr ""
+
+#: src/wxcurl/dialog.cpp:243 src/wxcurl/dialog.cpp:392
+msgid "Abort"
+msgstr ""
+
+#: src/wxcurl/dialog.cpp:245
+msgid "Settings"
+msgstr ""
+
+#: src/wxcurl/dialog.cpp:250 src/wxcurl/dialog.cpp:413
+msgid "Pause"
+msgstr ""
+
+#: src/wxcurl/dialog.cpp:252
+msgid "Start"
+msgstr ""
+
+#: src/wxcurl/dialog.cpp:392
+msgid "Close"
+msgstr ""
+
+#: src/wxcurl/dialog.cpp:403
+msgid "Resume"
+msgstr ""
+
+#: src/wxcurl/dialog.cpp:406
+msgid "0 (transfer paused)"
+msgstr ""
+
+#: src/wxcurl/dialog.cpp:454
+msgid "Connection settings"
+msgstr ""
+
+#: src/wxcurl/dialog.cpp:454
+msgid "Connection settings used for the transfer:"
+msgstr ""
+
+#: src/wxcurl/dialog.cpp:509
+msgid "0 (transfer completed)"
+msgstr ""
+
+#: src/wxcurl/dialog.cpp:530
+msgid "Downloaded:"
+msgstr "Správce map"
+
+#: src/wxcurl/dialog.cpp:578
+msgid "Uploaded:"
+msgstr ""
+
+#: src/wxcurl/panel.cpp:111
+msgid "Username:"
+msgstr ""
+
+#: src/wxcurl/panel.cpp:112
+msgid "Password:"
+msgstr ""
+
+#: src/wxcurl/panel.cpp:120
+msgid "Port:"
+msgstr ""
+
+#: src/wxcurl/panel.cpp:134
+msgid "Proxy settings"
+msgstr ""
+
+#: src/wxcurl/panel.cpp:136
+msgid "Use proxy"
+msgstr ""
+
+#: src/wxcurl/panel.cpp:141
+msgid "Proxy host:"
+msgstr ""
+
+#: src/wxcurl/panel.cpp:142
+msgid "Proxy username:"
+msgstr ""
+
+#: src/wxcurl/panel.cpp:143
+msgid "Proxy password:"
+msgstr ""
+
+#: src/wxcurl/panel.cpp:144
+msgid "Proxy port:"
+msgstr ""
 
