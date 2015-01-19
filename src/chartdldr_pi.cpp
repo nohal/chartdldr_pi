@@ -335,6 +335,7 @@ void ChartDldrPanelImpl::OnContextMenu( wxMouseEvent& event )
 void ChartDldrPanelImpl::SetSource(int id)
 {
     wxSetCursor(wxCURSOR_WAIT);
+    wxYield();
     pPlugIn->SetSourceId( id );
     
     m_bDeleteSource->Enable( id >= 0 );
