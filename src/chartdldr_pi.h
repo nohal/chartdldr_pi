@@ -45,77 +45,47 @@
 #define     MY_API_VERSION_MAJOR    1
 #define     MY_API_VERSION_MINOR    9
 
-#define     NOAA_CHART_SOURCES "NOAA ENC - all charts - big!|http://www.charts.noaa.gov/ENCs/ENCProdCat.xml|.|\
-NOAA RNC - all charts - big!|http://www.charts.noaa.gov/RNCs/RNCProdCat.xml|.|\
-USACE IENC charts|http://inland.agc.army.mil/enc/echarts/catalog/iencu37productscatalog.xml|.|\
-NOAA RNC AK|http://www.charts.noaa.gov/RNCs/AK_RNCProdCat.xml|.|\
-NOAA RNC AL|http://www.charts.noaa.gov/RNCs/AL_RNCProdCat.xml|.|\
-NOAA RNC CA|http://www.charts.noaa.gov/RNCs/CA_RNCProdCat.xml|.|\
-NOAA RNC CT|http://www.charts.noaa.gov/RNCs/CT_RNCProdCat.xml|.|\
-NOAA RNC DE|http://www.charts.noaa.gov/RNCs/DE_RNCProdCat.xml|.|\
-NOAA RNC FL|http://www.charts.noaa.gov/RNCs/FL_RNCProdCat.xml|.|\
-NOAA RNC GA|http://www.charts.noaa.gov/RNCs/GA_RNCProdCat.xml|.|\
-NOAA RNC HI|http://www.charts.noaa.gov/RNCs/HI_RNCProdCat.xml|.|\
-NOAA RNC ID|http://www.charts.noaa.gov/RNCs/ID_RNCProdCat.xml|.|\
-NOAA RNC IL|http://www.charts.noaa.gov/RNCs/IL_RNCProdCat.xml|.|\
-NOAA RNC IN|http://www.charts.noaa.gov/RNCs/IN_RNCProdCat.xml|.|\
-NOAA RNC LA|http://www.charts.noaa.gov/RNCs/LA_RNCProdCat.xml|.|\
-NOAA RNC MA|http://www.charts.noaa.gov/RNCs/MA_RNCProdCat.xml|.|\
-NOAA RNC MD|http://www.charts.noaa.gov/RNCs/MD_RNCProdCat.xml|.|\
-NOAA RNC ME|http://www.charts.noaa.gov/RNCs/ME_RNCProdCat.xml|.|\
-NOAA RNC MI|http://www.charts.noaa.gov/RNCs/MI_RNCProdCat.xml|.|\
-NOAA RNC MN|http://www.charts.noaa.gov/RNCs/MN_RNCProdCat.xml|.|\
-NOAA RNC MS|http://www.charts.noaa.gov/RNCs/MS_RNCProdCat.xml|.|\
-NOAA RNC NC|http://www.charts.noaa.gov/RNCs/NC_RNCProdCat.xml|.|\
-NOAA RNC NH|http://www.charts.noaa.gov/RNCs/NH_RNCProdCat.xml|.|\
-NOAA RNC NJ|http://www.charts.noaa.gov/RNCs/NJ_RNCProdCat.xml|.|\
-NOAA RNC NV|http://www.charts.noaa.gov/RNCs/NV_RNCProdCat.xml|.|\
-NOAA RNC NY|http://www.charts.noaa.gov/RNCs/NY_RNCProdCat.xml|.|\
-NOAA RNC OH|http://www.charts.noaa.gov/RNCs/OH_RNCProdCat.xml|.|\
-NOAA RNC OR|http://www.charts.noaa.gov/RNCs/OR_RNCProdCat.xml|.|\
-NOAA RNC PA|http://www.charts.noaa.gov/RNCs/PA_RNCProdCat.xml|.|\
-NOAA RNC PO (Pacific ocean)|http://www.charts.noaa.gov/RNCs/PO_RNCProdCat.xml|.|\
-NOAA RNC PR|http://www.charts.noaa.gov/RNCs/PR_RNCProdCat.xml|.|\
-NOAA RNC RI|http://www.charts.noaa.gov/RNCs/RI_RNCProdCat.xml|.|\
-NOAA RNC SC|http://www.charts.noaa.gov/RNCs/SC_RNCProdCat.xml|.|\
-NOAA RNC TX|http://www.charts.noaa.gov/RNCs/TX_RNCProdCat.xml|.|\
-NOAA RNC VA|http://www.charts.noaa.gov/RNCs/VA_RNCProdCat.xml|.|\
-NOAA RNC VT|http://www.charts.noaa.gov/RNCs/VT_RNCProdCat.xml|.|\
-NOAA RNC WA|http://www.charts.noaa.gov/RNCs/WA_RNCProdCat.xml|.|\
-NOAA RNC WI|http://www.charts.noaa.gov/RNCs/WI_RNCProdCat.xml|.|\
-NOAA ENC AK|http://www.charts.noaa.gov/ENCs/AK_ENCProdCat.xml|.|\
-NOAA ENC AL|http://www.charts.noaa.gov/ENCs/AL_ENCProdCat.xml|.|\
-NOAA ENC CA|http://www.charts.noaa.gov/ENCs/CA_ENCProdCat.xml|.|\
-NOAA ENC CT|http://www.charts.noaa.gov/ENCs/CT_ENCProdCat.xml|.|\
-NOAA ENC DE|http://www.charts.noaa.gov/ENCs/DE_ENCProdCat.xml|.|\
-NOAA ENC FL|http://www.charts.noaa.gov/ENCs/FL_ENCProdCat.xml|.|\
-NOAA ENC GA|http://www.charts.noaa.gov/ENCs/GA_ENCProdCat.xml|.|\
-NOAA ENC HI|http://www.charts.noaa.gov/ENCs/HI_ENCProdCat.xml|.|\
-NOAA ENC ID|http://www.charts.noaa.gov/ENCs/ID_ENCProdCat.xml|.|\
-NOAA ENC IL|http://www.charts.noaa.gov/ENCs/IL_ENCProdCat.xml|.|\
-NOAA ENC IN|http://www.charts.noaa.gov/ENCs/IN_ENCProdCat.xml|.|\
-NOAA ENC LA|http://www.charts.noaa.gov/ENCs/LA_ENCProdCat.xml|.|\
-NOAA ENC MA|http://www.charts.noaa.gov/ENCs/MA_ENCProdCat.xml|.|\
-NOAA ENC MD|http://www.charts.noaa.gov/ENCs/MD_ENCProdCat.xml|.|\
-NOAA ENC ME|http://www.charts.noaa.gov/ENCs/ME_ENCProdCat.xml|.|\
-NOAA ENC MI|http://www.charts.noaa.gov/ENCs/MI_ENCProdCat.xml|.|\
-NOAA ENC MN|http://www.charts.noaa.gov/ENCs/MN_ENCProdCat.xml|.|\
-NOAA ENC MS|http://www.charts.noaa.gov/ENCs/MS_ENCProdCat.xml|.|\
-NOAA ENC NC|http://www.charts.noaa.gov/ENCs/NC_ENCProdCat.xml|.|\
-NOAA ENC NH|http://www.charts.noaa.gov/ENCs/NH_ENCProdCat.xml|.|\
-NOAA ENC NJ|http://www.charts.noaa.gov/ENCs/NJ_ENCProdCat.xml|.|\
-NOAA ENC NY|http://www.charts.noaa.gov/ENCs/NY_ENCProdCat.xml|.|\
-NOAA ENC OH|http://www.charts.noaa.gov/ENCs/OH_ENCProdCat.xml|.|\
-NOAA ENC OR|http://www.charts.noaa.gov/ENCs/OR_ENCProdCat.xml|.|\
-NOAA ENC PA|http://www.charts.noaa.gov/ENCs/PA_ENCProdCat.xml|.|\
-NOAA ENC PO (Pacific ocean)|http://www.charts.noaa.gov/ENCs/PO_ENCProdCat.xml|.|\
-NOAA ENC PR|http://www.charts.noaa.gov/ENCs/PR_ENCProdCat.xml|.|\
-NOAA ENC RI|http://www.charts.noaa.gov/ENCs/RI_ENCProdCat.xml|.|\
-NOAA ENC SC|http://www.charts.noaa.gov/ENCs/SC_ENCProdCat.xml|.|\
-NOAA ENC TX|http://www.charts.noaa.gov/ENCs/TX_ENCProdCat.xml|.|\
-NOAA ENC VA|http://www.charts.noaa.gov/ENCs/VA_ENCProdCat.xml|.|\
-NOAA ENC WA|http://www.charts.noaa.gov/ENCs/WA_ENCProdCat.xml|.|\
-NOAA ENC WI|http://www.charts.noaa.gov/ENCs/WI_ENCProdCat.xml|.|"
+#define     NOAA_CHART_SOURCES "US RNC Region 02 - Block Island, RI to the Canadian Border|http://www.charts.noaa.gov/RNCs/02Region_RNCProdCat.xml|{USERDATA}/{Charts}/RNC/US_REGION02|\
+US RNC Region 03 - New York to Nantucket and Cape May, NJ|http://www.charts.noaa.gov/RNCs/03Region_RNCProdCat.xml|{USERDATA}/{Charts}/RNC/US_REGION03|\
+US RNC Region 04 - Chesapeake and Delaware Bays|http://www.charts.noaa.gov/RNCs/04Region_RNCProdCat.xml|{USERDATA}/{Charts}/RNC/US_REGION04|\
+US RNC Region 06 - Norfolk, VA to Florida including the ICW|http://www.charts.noaa.gov/RNCs/06Region_RNCProdCat.xml|{USERDATA}/{Charts}/RNC/US_REGION06|\
+US RNC Region 07 - Florida East Coast and the Keys|http://www.charts.noaa.gov/RNCs/07Region_RNCProdCat.xml|{USERDATA}/{Charts}/RNC/US_REGION07|\
+US RNC Region 08 - Florida West Coast and the Keys|http://www.charts.noaa.gov/RNCs/08Region_RNCProdCat.xml|{USERDATA}/{Charts}/RNC/US_REGION08|\
+US RNC Region 10 - Puerto Rico and the U.S. Virgin Islands|http://www.charts.noaa.gov/RNCs/10Region_RNCProdCat.xml|{USERDATA}/{Charts}/RNC/US_REGION10|\
+US RNC Region 12 - Southern California: Point Arena to the Mexican Border|http://www.charts.noaa.gov/RNCs/12Region_RNCProdCat.xml|{USERDATA}/{Charts}/RNC/US_REGION12|\
+US RNC Region 13 - Lake Michigan|http://www.charts.noaa.gov/RNCs/13Region_RNCProdCat.xml|{USERDATA}/{Charts}/RNC/US_REGION13|\
+US RNC Region 14 - San Francisco to Cape Flattery|http://www.charts.noaa.gov/RNCs/14Region_RNCProdCat.xml|{USERDATA}/{Charts}/RNC/US_REGION14|\
+US RNC Region 15 - Pacific Northwest: Puget Sound to the Canadian Border|http://www.charts.noaa.gov/RNCs/15Region_RNCProdCat.xml|{USERDATA}/{Charts}/RNC/US_REGION15|\
+US RNC Region 17 - Mobile, AL to the Mexican Border|http://www.charts.noaa.gov/RNCs/17Region_RNCProdCat.xml|{USERDATA}/{Charts}/RNC/US_REGION17|\
+US RNC Region 22 - Lake Superior and Lake Huron (U.S. Waters)|http://www.charts.noaa.gov/RNCs/22Region_RNCProdCat.xml|{USERDATA}/{Charts}/RNC/US_REGION22|\
+US RNC Region 24 - Lake Erie (U.S. Waters)|http://www.charts.noaa.gov/RNCs/24Region_RNCProdCat.xml|{USERDATA}/{Charts}/RNC/US_REGION24|\
+US RNC Region 26 - Lake Ontario (U.S. Waters)|http://www.charts.noaa.gov/RNCs/26Region_RNCProdCat.xml|{USERDATA}/{Charts}/RNC/US_REGION26|\
+US RNC Region 30 - Southeast Alaska|http://www.charts.noaa.gov/RNCs/30Region_RNCProdCat.xml|{USERDATA}/{Charts}/RNC/US_REGION30|\
+US RNC Region 32 - South Central Alaska: Yakutat to Kodiak|http://www.charts.noaa.gov/RNCs/32Region_RNCProdCat.xml|{USERDATA}/{Charts}/RNC/US_REGION32|\
+US RNC Region 34 - Alaska: The Aleutians and Bristol Bay|http://www.charts.noaa.gov/RNCs/34Region_RNCProdCat.xml|{USERDATA}/{Charts}/RNC/US_REGION34|\
+US RNC Region 36 - Alaska: Norton Sound to Beaufort Sea|http://www.charts.noaa.gov/RNCs/36Region_RNCProdCat.xml|{USERDATA}/{Charts}/RNC/US_REGION36|\
+US RNC Region 40 - Hawaiian Islands and U.S. Territories|http://www.charts.noaa.gov/RNCs/40Region_RNCProdCat.xml|{USERDATA}/{Charts}/RNC/US_REGION40|\
+US ENC Region 02 - Block Island, RI to the Canadian Border|http://www.charts.noaa.gov/ENCs/02Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION02|\
+US ENC Region 03 - New York to Nantucket and Cape May, NJ|http://www.charts.noaa.gov/ENCs/03Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION03|\
+US ENC Region 04 - Chesapeake and Delaware Bays|http://www.charts.noaa.gov/ENCs/04Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION04|\
+US ENC Region 06 - Norfolk, VA to Florida including the ICW|http://www.charts.noaa.gov/ENCs/06Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION06|\
+US ENC Region 07 - Florida East Coast and the Keys|http://www.charts.noaa.gov/ENCs/07Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION07|\
+US ENC Region 08 - Florida West Coast and the Keys|http://www.charts.noaa.gov/ENCs/08Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION08|\
+US ENC Region 10 - Puerto Rico and the U.S. Virgin Islands|http://www.charts.noaa.gov/ENCs/10Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION10|\
+US ENC Region 12 - Southern California: Point Arena to the Mexican Border|http://www.charts.noaa.gov/ENCs/12Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION12|\
+US ENC Region 13 - Lake Michigan|http://www.charts.noaa.gov/ENCs/13Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION13|\
+US ENC Region 14 - San Francisco to Cape Flattery|http://www.charts.noaa.gov/ENCs/14Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION14|\
+US ENC Region 15 - Pacific Northwest: Puget Sound to the Canadian Border|http://www.charts.noaa.gov/ENCs/15Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION15|\
+US ENC Region 17 - Mobile, AL to the Mexican Border|http://www.charts.noaa.gov/ENCs/17Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION17|\
+US ENC Region 22 - Lake Superior and Lake Huron (U.S. Waters)|http://www.charts.noaa.gov/ENCs/22Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION22|\
+US ENC Region 24 - Lake Erie (U.S. Waters)|http://www.charts.noaa.gov/ENCs/24Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION24|\
+US ENC Region 26 - Lake Ontario (U.S. Waters)|http://www.charts.noaa.gov/ENCs/26Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION26|\
+US ENC Region 30 - Southeast Alaska|http://www.charts.noaa.gov/ENCs/30Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION30|\
+US ENC Region 32 - South Central Alaska: Yakutat to Kodiak|http://www.charts.noaa.gov/ENCs/32Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION32|\
+US ENC Region 34 - Alaska: The Aleutians and Bristol Bay|http://www.charts.noaa.gov/ENCs/34Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION34|\
+US ENC Region 36 - Alaska: Norton Sound to Beaufort Sea|http://www.charts.noaa.gov/ENCs/36Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION36|\
+US ENC Region 40 - Hawaiian Islands and U.S. Territories|http://www.charts.noaa.gov/ENCs/40Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION40|\
+US ACE Inland ENC charts|http://inland.agc.army.mil/enc/echarts/catalog/iencu37productscatalog.xml|{USERDATA}/{Charts}/ENC/US_INLAND|"
 
 #include "ocpn_plugin.h"
 
