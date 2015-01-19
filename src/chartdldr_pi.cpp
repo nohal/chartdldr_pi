@@ -49,6 +49,22 @@
 
 #include <wx/arrimpl.cpp>
     WX_DEFINE_OBJARRAY(wxArrayOfChartSources);
+    
+#ifdef __WXMAC__
+#define CATALOGS_NAME_WIDTH 300
+#define CATALOGS_DATE_WIDTH 120
+#define CATALOGS_PATH_WIDTH 100
+#define CHARTS_NAME_WIDTH 300
+#define CHARTS_STATUS_WIDTH 100
+#define CHARTS_DATE_WIDTH 120
+#else
+#define CATALOGS_NAME_WIDTH 300
+#define CATALOGS_DATE_WIDTH 200
+#define CATALOGS_PATH_WIDTH 300
+#define CHARTS_NAME_WIDTH 400
+#define CHARTS_STATUS_WIDTH 150
+#define CHARTS_DATE_WIDTH 200
+#endif // __WXMAC__
 
 
 // the class factories, used to create and destroy instances of the PlugIn
@@ -120,7 +136,6 @@ int chartdldr_pi::Init(void)
             m_chartSources->Add(new ChartSource(s1, s2, s3));
       }
       return (
-              WANTS_PREFERENCES         |
               WANTS_CONFIG              |
               INSTALLS_TOOLBOX_PAGE
            );
@@ -638,14 +653,14 @@ ChartDldrPanelImpl::ChartDldrPanelImpl( chartdldr_pi* plugin, wxWindow* parent, 
 {
       m_bDeleteSource->Disable();
       m_bUpdateChartList->Disable();
-      m_lbChartSources->InsertColumn (0, _("Catalog"), wxLIST_FORMAT_LEFT, 300);
-      m_lbChartSources->InsertColumn (1, _("Released"), wxLIST_FORMAT_LEFT, 200);
-      m_lbChartSources->InsertColumn (2, _("Local path"), wxLIST_FORMAT_LEFT, 300);
+      m_lbChartSources->InsertColumn (0, _("Catalog"), wxLIST_FORMAT_LEFT, CATALOGS_NAME_WIDTH);
+      m_lbChartSources->InsertColumn (1, _("Released"), wxLIST_FORMAT_LEFT, CATALOGS_DATE_WIDTH);
+      m_lbChartSources->InsertColumn (2, _("Local path"), wxLIST_FORMAT_LEFT, CATALOGS_PATH_WIDTH);
 
       // Add columns
-      ((wxListCtrl *)m_clCharts)->InsertColumn(0, _("Title"), wxLIST_FORMAT_LEFT, 400);
-      ((wxListCtrl *)m_clCharts)->InsertColumn(1, _("Status"), wxLIST_FORMAT_LEFT, 150);
-      ((wxListCtrl *)m_clCharts)->InsertColumn(2, _("Latest"), wxLIST_FORMAT_LEFT, 200);
+      ((wxListCtrl *)m_clCharts)->InsertColumn(0, _("Title"), wxLIST_FORMAT_LEFT, CHARTS_NAME_WIDTH);
+      ((wxListCtrl *)m_clCharts)->InsertColumn(1, _("Status"), wxLIST_FORMAT_LEFT, CHARTS_STATUS_WIDTH);
+      ((wxListCtrl *)m_clCharts)->InsertColumn(2, _("Latest"), wxLIST_FORMAT_LEFT, CHARTS_DATE_WIDTH);
 
       downloadInProgress = false;
       cancelled = false;
