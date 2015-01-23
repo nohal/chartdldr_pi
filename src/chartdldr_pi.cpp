@@ -476,8 +476,8 @@ void ChartDldrPanelImpl::AppendCatalog(ChartSource *cs)
     m_lbChartSources->InsertItem(id, cs->GetName());
     m_lbChartSources->SetItem(id, 1, _("(Please update first)"));
     m_lbChartSources->SetItem(id, 2, cs->GetDir());
-    wxURL url(cs->GetUrl());
-    if (url.GetError() != wxURL_NOERR)
+    wxURI url(cs->GetUrl());
+    if (url.IsReference())
     {
         wxMessageBox(_("Error, the URL to the chart source data seems wrong."), _("Error"));
         return;
@@ -502,8 +502,8 @@ void ChartDldrPanelImpl::UpdateChartList( wxCommandEvent& event )
       if (!m_lbChartSources->GetSelectedItemCount())
             return;
       ChartSource *cs = pPlugIn->m_chartSources->Item(GetSelectedCatalog());
-      wxURL url(cs->GetUrl());
-      if (url.GetError() != wxURL_NOERR)
+      wxURI url(cs->GetUrl());
+      if (url.IsReference())
       {
             wxMessageBox(_("Error, the URL to the chart source data seems wrong."), _("Error"));
             return;
@@ -520,8 +520,8 @@ void ChartDldrPanelImpl::UpdateChartList( wxCommandEvent& event )
     fn.SetPath(cs->GetDir());
 
     wxFileOutputStream output(fn.GetFullPath());
-    wxCurlDownloadDialog ddlg(url.GetURL(), &output, _("Downloading file"),
-        _("Reading Headers: ") + url.GetURL(), wxNullBitmap, this,
+    wxCurlDownloadDialog ddlg(url.BuildURI(), &output, _("Downloading file"),
+        _("Reading Headers: ") + url.BuildURI(), wxNullBitmap, this,
         wxCTDS_ELAPSED_TIME|wxCTDS_ESTIMATED_TIME|wxCTDS_REMAINING_TIME|wxCTDS_SPEED|wxCTDS_SIZE|wxCTDS_URL|wxCTDS_CAN_PAUSE|wxCTDS_CAN_ABORT|wxCTDS_AUTO_CLOSE);
     ddlg.SetSize(this->GetSize().GetWidth(), ddlg.GetSize().GetHeight());
     wxCurlDialogReturnFlag ret = ddlg.RunModal();
@@ -539,7 +539,7 @@ void ChartDldrPanelImpl::UpdateChartList( wxCommandEvent& event )
         }
         case wxCDRF_FAILED:
         {
-            wxMessageBox(wxString::Format( _("Failed to Download: %s \nVerify there is a working Internet connection."), url.GetURL().c_str() ), 
+            wxMessageBox(wxString::Format( _("Failed to Download: %s \nVerify there is a working Internet connection."), url.BuildURI().c_str() ), 
             _("Chart Downloader"), wxOK | wxICON_ERROR);
             wxRemoveFile( fn.GetFullPath() );
             break;
@@ -614,8 +614,8 @@ void ChartDldrPanelImpl::DownloadCharts( wxCommandEvent& event )
             if(m_clCharts->IsChecked(i))
             {
                   //download queue
-                  wxURL url(pPlugIn->m_pChartCatalog->charts->Item(i).GetDownloadLocation());
-                  if (url.GetError() != wxURL_NOERR)
+                  wxURI url(pPlugIn->m_pChartCatalog->charts->Item(i).GetDownloadLocation());
+                  if (url.IsReference())
                   {
                         wxMessageBox(_("Error, the URL to the chart data seems wrong."), _("Error"));
                         this->Enable();
@@ -631,7 +631,7 @@ void ChartDldrPanelImpl::DownloadCharts( wxCommandEvent& event )
                         wxRemoveFile(path);
                   wxString title = pPlugIn->m_pChartCatalog->charts->Item(i).GetChartTitle();
 
-                  if( DownloadChart(url.GetURL(), path, title) )
+                  if( DownloadChart(url.BuildURI(), path, title) )
                   {
                         wxFileName fn(path);
                         pPlugIn->ExtractZipFiles(path, fn.GetPath(), true, pPlugIn->m_pChartCatalog->charts->Item(i).GetUpdateDatetime());
@@ -825,8 +825,8 @@ void ChartDldrGuiAddSourceDlg::OnOkClick( wxCommandEvent& event )
         msg += _("You must select one of the predefined chart sources or create one of your own.\n");
     if( m_rbCustom->GetValue() && m_tSourceName->GetValue() == wxEmptyString )
         msg += _("The chart source must have a name.\n");
-    wxURL url(m_tChartSourceUrl->GetValue());
-    if( m_rbCustom->GetValue() && ( m_tChartSourceUrl->GetValue() == wxEmptyString || url.GetError() != wxURL_NOERR ) )
+    wxURI url(m_tChartSourceUrl->GetValue());
+    if( m_rbCustom->GetValue() && ( m_tChartSourceUrl->GetValue() == wxEmptyString || url.IsReference() ) )
         msg += _("The chart source must have a valid URL.\n");
     if( m_dpChartDirectory->GetPath() == wxEmptyString )
         msg += _("You must select a local folder to store the charts.\n");
