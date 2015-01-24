@@ -421,11 +421,11 @@ void ChartDldrPanelImpl::FillFromFile(wxString url, wxString dir, bool selnew, b
 bool ChartSource::ExistsLocaly(wxString filename)
 {
       wxStringTokenizer tk(filename, _T("."));
-      wxString file = tk.GetNextToken();
+      wxString file = tk.GetNextToken().MakeLower();
       for (size_t i = 0; i < m_localfiles.Count(); i++)
       {
             wxFileName fn(m_localfiles.Item(i));
-            if(fn.GetName().StartsWith(file))
+            if(fn.GetName().MakeLower() == file)
                   return true;
       }
       return false;
