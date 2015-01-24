@@ -42,7 +42,7 @@ bool ChartCatalog::LoadFromFile(wxString path, bool headerOnly)
       if (!wxFileExists(path))
             return false;
       TiXmlDocument * doc = new TiXmlDocument();
-      bool ret = doc->LoadFile(path.mb_str());
+      bool ret = doc->LoadFile(path.mb_str(), TIXML_ENCODING_UTF8);
       if (ret)
             ret = LoadFromXml(doc, headerOnly);
       doc->Clear();
