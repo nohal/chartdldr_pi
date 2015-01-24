@@ -85,7 +85,8 @@ US ENC Region 32 - South Central Alaska: Yakutat to Kodiak|http://www.charts.noa
 US ENC Region 34 - Alaska: The Aleutians and Bristol Bay|http://www.charts.noaa.gov/ENCs/34Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION34|\
 US ENC Region 36 - Alaska: Norton Sound to Beaufort Sea|http://www.charts.noaa.gov/ENCs/36Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION36|\
 US ENC Region 40 - Hawaiian Islands and U.S. Territories|http://www.charts.noaa.gov/ENCs/40Region_ENCProdCat.xml|{USERDATA}/{Charts}/ENC/US_REGION40|\
-US ACE Inland ENC charts|http://inland.agc.army.mil/enc/echarts/catalog/iencu37productscatalog.xml|{USERDATA}/{Charts}/ENC/US_INLAND|"
+US ACE Inland ENC charts|http://inland.agc.army.mil/enc/echarts/catalog/iencu37productscatalog.xml|{USERDATA}/{Charts}/ENC/US_INLAND|\
+Brasil RNC Nautical Charts|https://raw.githubusercontent.com/chartcatalogs/catalogs/master/BR_RNC_Catalog.xml|{USERDATA}/{Charts}/RNC/BRASIL|"
 
 #include "ocpn_plugin.h"
 
