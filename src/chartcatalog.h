@@ -35,7 +35,7 @@
   #include "wx/wx.h"
 #endif //precompiled headers
 
-#include "tinyxml/tinyxml.h"
+#include "tinyxml.h"
 
 //Forward declarations
 class NoticeToMariners;
