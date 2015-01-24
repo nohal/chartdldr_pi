@@ -30,6 +30,8 @@ Under windows, you must find the file "opencpn.lib" (Visual Studio) or "libopenc
 There are also some libraries and an external program needed:
 http://sourceforge.net/projects/opencpnplugins/files/weatherfax_pi/wf_depends.7z/download
 
+On Windows, also the CA certificates bundle must be part of the package. Get it from http://sourceforge.net/projects/opencpnplugins/files/chartdldr_pi/curl-ca-bundle.crt/download and place into the buildwin directory
+
 For Mingw, only a single file "libcurl.dll" is needed for libcurl, for visual studio, several files.
 
 ###Build on Mac OS X:
