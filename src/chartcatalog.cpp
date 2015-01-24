@@ -93,7 +93,7 @@ bool ChartCatalog::LoadFromXml(TiXmlDocument * doc, bool headerOnly)
                   charts->Add(new EncCell(child));
             }
       }
-      else if (rootName.StartsWith(_T("IENCProductCatalog")))
+      else if (rootName.StartsWith(_T("IENCU37ProductCatalog")))
       {
             if (!ParseNoaaHeader(root->FirstChildElement()))
             {
@@ -411,7 +411,7 @@ wxString IEncCell::GetChartTitle()
 
 wxString IEncCell::GetChartFilename()
 {
-      return name;
+      return wxString::Format(_("%s.zip"), name.c_str());
 }
 
 wxString IEncCell::GetDownloadLocation()
