@@ -222,8 +222,8 @@ Chart::Chart(TiXmlNode * xmldata)
             }
             if (s == _T("zipfile_datetime"))
             {
-                  zipfile_datetime.ParseDateTime(wxString::FromUTF8(child->FirstChild()->Value()));
-                  zipfile_datetime.MakeFromTimezone(wxDateTime::UTC);
+                  if( zipfile_datetime.ParseFormat(wxString::FromUTF8(child->FirstChild()->Value()), _T("%Y%m%d_%H%M%S")) );
+                    zipfile_datetime.MakeFromTimezone(wxDateTime::UTC);
             }
             if (s == _T("zipfile_datetime_iso8601"))
             {
