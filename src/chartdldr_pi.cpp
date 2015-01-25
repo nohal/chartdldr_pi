@@ -242,6 +242,8 @@ bool chartdldr_pi::LoadConfig(void)
             pConf->Read ( _T ( "ChartSources" ), &m_schartdldr_sources, wxEmptyString );
             pConf->Read ( _T ( "Source" ), &m_selected_source, -1 );
             pConf->Read ( _T ( "BaseChartDir" ), &m_base_chart_dir, *GetpPrivateApplicationDataLocation() + wxFileName::GetPathSeparator() + _T(CHART_DIR) );
+            pConf->Read ( _T ( "PreselectNew" ), &m_preselect_new, false );
+            pConf->Read ( _T ( "PreselectUpdated" ), &m_preselect_updated, true );
             return true;
       }
       else
@@ -266,6 +268,8 @@ bool chartdldr_pi::SaveConfig(void)
             pConf->Write ( _T ( "ChartSources" ), m_schartdldr_sources );
             pConf->Write ( _T ( "Source" ), m_selected_source );
             pConf->Write ( _T ( "BaseChartDir" ), m_base_chart_dir );
+            pConf->Write ( _T ( "PreselectNew" ), m_preselect_new );
+            pConf->Write ( _T ( "PreselectUpdated" ), m_preselect_updated );
 
             return true;
       }
@@ -277,9 +281,11 @@ void chartdldr_pi::ShowPreferencesDialog( wxWindow* parent )
 {
     ChartDldrPrefsDlgImpl *dialog = new ChartDldrPrefsDlgImpl(m_parent_window);
     dialog->SetPath(m_base_chart_dir);
+    dialog->SetPreferences(m_preselect_new, m_preselect_updated);
     if( wxID_OK == dialog->ShowModal() )
     {
         m_base_chart_dir = dialog->GetPath();
+        dialog->GetPreferences(m_preselect_new, m_preselect_updated);
         SaveConfig();
     }
     dialog->Close();
@@ -375,7 +381,7 @@ void ChartDldrPanelImpl::SetSource(int id)
         ChartSource *cs = pPlugIn->m_chartSources->Item(id);
         cs->UpdateLocalFiles();
         pPlugIn->m_pChartSource = cs;
-        FillFromFile(cs->GetUrl(), cs->GetDir());
+        FillFromFile(cs->GetUrl(), cs->GetDir(), pPlugIn->m_preselect_new, pPlugIn->m_preselect_updated);
     }
     else
     {
@@ -880,6 +886,17 @@ void ChartDldrPrefsDlgImpl::SetPath(const wxString path)
         //    return;
         //}
     m_dpDefaultDir->SetPath(path);
+}
+
+void ChartDldrPrefsDlgImpl::GetPreferences(bool &preselect_new, bool &preselect_updated)
+{
+    preselect_new = m_cbSelectNew->GetValue();
+    preselect_updated = m_cbSelectUpdated->GetValue();
+}
+void ChartDldrPrefsDlgImpl::SetPreferences(bool preselect_new, bool preselect_updated)
+{
+    m_cbSelectNew->SetValue(preselect_new);
+    m_cbSelectUpdated->SetValue(preselect_updated);
 }
 
 void ChartDldrGuiAddSourceDlg::OnOkClick( wxCommandEvent& event )

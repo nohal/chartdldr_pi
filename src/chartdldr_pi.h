@@ -142,6 +142,8 @@ public:
       void              SetSourceId(int id) { m_selected_source = id; }
       int               GetSourceId() { return m_selected_source; }
       wxString          GetBaseChartDir() { return m_base_chart_dir; }
+      bool              m_preselect_new;
+      bool              m_preselect_updated;
 
 private:
       wxFileConfig     *m_pconfig;
@@ -242,6 +244,8 @@ class ChartDldrPrefsDlgImpl : public ChartDldrPrefsDlg
 		~ChartDldrPrefsDlgImpl();
 		wxString GetPath() { return m_dpDefaultDir->GetPath(); }
 		void SetPath(const wxString path);
+		void GetPreferences(bool &preselect_new, bool &preselect_updated);
+		void SetPreferences(bool preselect_new, bool preselect_updated);
 
 };
 

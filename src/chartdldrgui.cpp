@@ -225,7 +225,24 @@ ChartDldrPrefsDlg::ChartDldrPrefsDlg( wxWindow* parent, wxWindowID id, const wxS
 	sbSizerPaths->Add( m_dpDefaultDir, 0, wxALL|wxEXPAND, 5 );
 	
 	
-	bSizerPrefsMain->Add( sbSizerPaths, 1, wxALL|wxEXPAND, 5 );
+	bSizerPrefsMain->Add( sbSizerPaths, 0, wxALL|wxEXPAND, 5 );
+	
+	wxStaticBoxSizer* sbSizerBehavior;
+	sbSizerBehavior = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Preferences") ), wxVERTICAL );
+	
+	m_stPreselect = new wxStaticText( this, wxID_ANY, _("After catalog update select for download"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_stPreselect->Wrap( -1 );
+	sbSizerBehavior->Add( m_stPreselect, 0, wxALL, 5 );
+	
+	m_cbSelectUpdated = new wxCheckBox( this, wxID_ANY, _("All updated charts"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_cbSelectUpdated->SetValue(true); 
+	sbSizerBehavior->Add( m_cbSelectUpdated, 0, wxALL, 5 );
+	
+	m_cbSelectNew = new wxCheckBox( this, wxID_ANY, _("All new charts"), wxDefaultPosition, wxDefaultSize, 0 );
+	sbSizerBehavior->Add( m_cbSelectNew, 0, wxALL, 5 );
+	
+	
+	bSizerPrefsMain->Add( sbSizerBehavior, 1, wxALL|wxEXPAND, 5 );
 	
 	m_sdbSizerBtns = new wxStdDialogButtonSizer();
 	m_sdbSizerBtnsOK = new wxButton( this, wxID_OK );
