@@ -220,6 +220,7 @@ void chartdldr_pi::OnSetupOptions(void)
       m_dldrpanel = new ChartDldrPanelImpl( this, m_pOptionsPage, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE );
 
       sizer->Add( m_dldrpanel, 1, wxALL | wxEXPAND );
+      m_dldrpanel->Layout();
 }
 
 void chartdldr_pi::OnCloseToolboxPanel(int page_sel, int ok_apply_cancel)
@@ -238,7 +239,8 @@ bool chartdldr_pi::LoadConfig(void)
             pConf->SetPath ( _T ( "/Settings/ChartDnldr" ) );
             pConf->Read ( _T ( "ChartSources" ), &m_schartdldr_sources, wxEmptyString );
             pConf->Read ( _T ( "Source" ), &m_selected_source, -1 );
-            pConf->Read ( _T ( "BaseChartDir" ), &m_base_chart_dir, *GetpPrivateApplicationDataLocation() + wxFileName::GetPathSeparator() + _T(CHART_DIR) );
+            
+            pConf->Read ( _T ( "BaseChartDir" ), &m_base_chart_dir, *GetpPrivateApplicationDataLocation() + _T(CHART_DIR) );
             pConf->Read ( _T ( "PreselectNew" ), &m_preselect_new, false );
             pConf->Read ( _T ( "PreselectUpdated" ), &m_preselect_updated, true );
             return true;
