@@ -120,7 +120,6 @@ ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& 
 	wxBoxSizer* bSizer1;
 	bSizer1 = new wxBoxSizer( wxVERTICAL );
 	
-	bSizer1->SetMinSize( wxSize( 500,-1 ) ); 
 	wxStaticBoxSizer* sbSchartsource;
 	sbSchartsource = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Catalogs") ), wxVERTICAL );
 	
