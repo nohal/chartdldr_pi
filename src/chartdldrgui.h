@@ -86,6 +86,7 @@ class ChartDldrPanel : public wxPanel
 		wxButton* m_bShowLocal;
 		
 		// Virtual event handlers, overide them in your derived class
+		virtual void OnPaint( wxPaintEvent& event ) { event.Skip(); }
 		virtual void SelectSource( wxListEvent& event ) { event.Skip(); }
 		virtual void AddSource( wxCommandEvent& event ) { event.Skip(); }
 		virtual void DeleteSource( wxCommandEvent& event ) { event.Skip(); }

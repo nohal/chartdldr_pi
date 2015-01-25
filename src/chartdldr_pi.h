@@ -191,6 +191,7 @@ private:
     int downloading;
     bool cancelled;
     chartdldr_pi      *pPlugIn;
+    bool m_populated;
 
     void OnPopupClick(wxCommandEvent &evt);
     int GetSelectedCatalog();
@@ -206,6 +207,7 @@ protected:
 	void UpdateChartList( wxCommandEvent& event );
 	void DownloadCharts( wxCommandEvent& event );
     void OnShowLocalDir( wxCommandEvent& event );
+    void OnPaint( wxPaintEvent& event );
       
     void CleanForm();
     void FillFromFile(wxString url, wxString dir, bool selnew = false, bool selupd = false);

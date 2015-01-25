@@ -221,8 +221,6 @@ void chartdldr_pi::OnSetupOptions(void)
       m_dldrpanel = new ChartDldrPanelImpl( this, m_pOptionsPage, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE );
 
       sizer->Add( m_dldrpanel, 0, wxALL | wxEXPAND );
-      m_dldrpanel->SelectCatalog(m_selected_source);
-      m_dldrpanel->SetSource(m_selected_source);
 }
 
 void chartdldr_pi::OnCloseToolboxPanel(int page_sel, int ok_apply_cancel)
@@ -708,11 +706,22 @@ ChartDldrPanelImpl::ChartDldrPanelImpl( chartdldr_pi* plugin, wxWindow* parent, 
       to_download = -1;
       downloading = -1;
       pPlugIn = plugin;
+      m_populated = false;
+}
 
-      for (size_t i = 0; i < plugin->m_chartSources->GetCount(); i++)
-      {
-            AppendCatalog(plugin->m_chartSources->Item(i));
-      }
+void ChartDldrPanelImpl::OnPaint( wxPaintEvent& event )
+{
+    if( !m_populated )
+    {
+        m_populated = true;
+        for (size_t i = 0; i < pPlugIn->m_chartSources->GetCount(); i++)
+        {
+            AppendCatalog(pPlugIn->m_chartSources->Item(i));
+        }
+        SelectCatalog(pPlugIn->GetSourceId());
+        SetSource(pPlugIn->GetSourceId());
+    }
+    event.Skip();
 }
 
 void ChartDldrPanelImpl::DeleteSource( wxCommandEvent& event )
