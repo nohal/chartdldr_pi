@@ -19,14 +19,23 @@ AddSourceDlg::AddSourceDlg( wxWindow* parent, wxWindowID id, const wxString& tit
 	wxStaticBoxSizer* sbSizerSourceSel;
 	sbSizerSourceSel = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Catalog") ), wxVERTICAL );
 	
-	wxFlexGridSizer* fgSizerSourceSel;
-	fgSizerSourceSel = new wxFlexGridSizer( 3, 3, 0, 0 );
-	fgSizerSourceSel->AddGrowableCol( 2 );
-	fgSizerSourceSel->SetFlexibleDirection( wxBOTH );
-	fgSizerSourceSel->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	wxBoxSizer* bSizerType;
+	bSizerType = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_rbPredefined = new wxRadioButton( this, wxID_ANY, _("Predefined"), wxDefaultPosition, wxDefaultSize, 0 );
-	fgSizerSourceSel->Add( m_rbPredefined, 0, wxALL|wxEXPAND, 5 );
+	bSizerType->Add( m_rbPredefined, 0, wxALL|wxEXPAND, 5 );
+	
+	m_rbCustom = new wxRadioButton( this, wxID_ANY, _("Custom"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizerType->Add( m_rbCustom, 0, wxALL, 5 );
+	
+	
+	sbSizerSourceSel->Add( bSizerType, 0, wxEXPAND, 5 );
+	
+	wxFlexGridSizer* fgSizerSourceSel;
+	fgSizerSourceSel = new wxFlexGridSizer( 3, 2, 0, 0 );
+	fgSizerSourceSel->AddGrowableCol( 1 );
+	fgSizerSourceSel->SetFlexibleDirection( wxBOTH );
+	fgSizerSourceSel->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
 	m_stCatalog = new wxStaticText( this, wxID_ANY, _("Catalog"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_stCatalog->Wrap( -1 );
@@ -37,9 +46,6 @@ AddSourceDlg::AddSourceDlg( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_cbChartSources->SetSelection( 0 );
 	fgSizerSourceSel->Add( m_cbChartSources, 0, wxALL|wxEXPAND, 5 );
 	
-	m_rbCustom = new wxRadioButton( this, wxID_ANY, _("Custom"), wxDefaultPosition, wxDefaultSize, 0 );
-	fgSizerSourceSel->Add( m_rbCustom, 0, wxALL, 5 );
-	
 	m_stName = new wxStaticText( this, wxID_ANY, _("Name"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_stName->Wrap( -1 );
 	fgSizerSourceSel->Add( m_stName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
@@ -49,9 +55,6 @@ AddSourceDlg::AddSourceDlg( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_tSourceName->Enable( false );
 	
 	fgSizerSourceSel->Add( m_tSourceName, 0, wxALL|wxEXPAND, 5 );
-	
-	
-	fgSizerSourceSel->Add( 0, 0, 1, wxEXPAND, 5 );
 	
 	m_stUrl = new wxStaticText( this, wxID_ANY, _("URL"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_stUrl->Wrap( -1 );
@@ -69,18 +72,14 @@ AddSourceDlg::AddSourceDlg( wxWindow* parent, wxWindowID id, const wxString& tit
 	
 	bSizerMain->Add( sbSizerSourceSel, 1, wxALL|wxEXPAND, 5 );
 	
-	wxBoxSizer* bSizerChartDir;
-	bSizerChartDir = new wxBoxSizer( wxHORIZONTAL );
-	
-	m_stChartDir = new wxStaticText( this, wxID_ANY, _("Chart directory"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_stChartDir->Wrap( -1 );
-	bSizerChartDir->Add( m_stChartDir, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	wxStaticBoxSizer* sbSizerChartDir;
+	sbSizerChartDir = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Chart Directory") ), wxVERTICAL );
 	
 	m_dpChartDirectory = new wxDirPickerCtrl( this, wxID_ANY, wxEmptyString, _("Select a folder"), wxDefaultPosition, wxDefaultSize, wxDIRP_USE_TEXTCTRL );
-	bSizerChartDir->Add( m_dpChartDirectory, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
+	sbSizerChartDir->Add( m_dpChartDirectory, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
 	
 	
-	bSizerMain->Add( bSizerChartDir, 0, wxALL|wxEXPAND, 5 );
+	bSizerMain->Add( sbSizerChartDir, 0, wxALL|wxEXPAND, 5 );
 	
 	m_sdbSizerBtns = new wxStdDialogButtonSizer();
 	m_sdbSizerBtnsOK = new wxButton( this, wxID_OK );
@@ -100,8 +99,8 @@ AddSourceDlg::AddSourceDlg( wxWindow* parent, wxWindowID id, const wxString& tit
 	
 	// Connect Events
 	m_rbPredefined->Connect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( AddSourceDlg::OnChangeType ), NULL, this );
-	m_cbChartSources->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( AddSourceDlg::OnSourceSelected ), NULL, this );
 	m_rbCustom->Connect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( AddSourceDlg::OnChangeType ), NULL, this );
+	m_cbChartSources->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( AddSourceDlg::OnSourceSelected ), NULL, this );
 	m_sdbSizerBtnsOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AddSourceDlg::OnOkClick ), NULL, this );
 }
 
@@ -109,8 +108,8 @@ AddSourceDlg::~AddSourceDlg()
 {
 	// Disconnect Events
 	m_rbPredefined->Disconnect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( AddSourceDlg::OnChangeType ), NULL, this );
-	m_cbChartSources->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( AddSourceDlg::OnSourceSelected ), NULL, this );
 	m_rbCustom->Disconnect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( AddSourceDlg::OnChangeType ), NULL, this );
+	m_cbChartSources->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( AddSourceDlg::OnSourceSelected ), NULL, this );
 	m_sdbSizerBtnsOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AddSourceDlg::OnOkClick ), NULL, this );
 	
 }

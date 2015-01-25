@@ -17,10 +17,10 @@
 #include <wx/font.h>
 #include <wx/colour.h>
 #include <wx/settings.h>
+#include <wx/sizer.h>
 #include <wx/stattext.h>
 #include <wx/choice.h>
 #include <wx/textctrl.h>
-#include <wx/sizer.h>
 #include <wx/statbox.h>
 #include <wx/filepicker.h>
 #include <wx/button.h>
@@ -43,11 +43,10 @@ class AddSourceDlg : public wxDialog
 	
 	protected:
 		wxRadioButton* m_rbPredefined;
-		wxStaticText* m_stCatalog;
 		wxRadioButton* m_rbCustom;
+		wxStaticText* m_stCatalog;
 		wxStaticText* m_stName;
 		wxStaticText* m_stUrl;
-		wxStaticText* m_stChartDir;
 		wxStdDialogButtonSizer* m_sdbSizerBtns;
 		wxButton* m_sdbSizerBtnsOK;
 		wxButton* m_sdbSizerBtnsCancel;
