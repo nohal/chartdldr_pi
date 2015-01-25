@@ -66,6 +66,8 @@
 #define CHARTS_DATE_WIDTH 200
 #endif // __WXMAC__
 
+#define CHART_DIR "Charts"
+
 
 // the class factories, used to create and destroy instances of the PlugIn
 
@@ -94,7 +96,7 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 //---------------------------------------------------------------------------------------------------------
 
 chartdldr_pi::chartdldr_pi(void *ppimgr)
-      :opencpn_plugin_19(ppimgr)
+      :opencpn_plugin_112(ppimgr)
 {
       // Create the PlugIn icons
       initialize_images();
@@ -136,6 +138,7 @@ int chartdldr_pi::Init(void)
             m_chartSources->Add(new ChartSource(s1, s2, s3));
       }
       return (
+              WANTS_PREFERENCES         |
               WANTS_CONFIG              |
               INSTALLS_TOOLBOX_PAGE
            );
@@ -238,6 +241,7 @@ bool chartdldr_pi::LoadConfig(void)
             pConf->SetPath ( _T ( "/Settings/ChartDnldr" ) );
             pConf->Read ( _T ( "ChartSources" ), &m_schartdldr_sources, wxEmptyString );
             pConf->Read ( _T ( "Source" ), &m_selected_source, -1 );
+            pConf->Read ( _T ( "BaseChartDir" ), &m_base_chart_dir, *GetpPrivateApplicationDataLocation() + wxFileName::GetPathSeparator() + _T(CHART_DIR) );
             return true;
       }
       else
@@ -261,6 +265,7 @@ bool chartdldr_pi::SaveConfig(void)
             pConf->SetPath ( _T ( "/Settings/ChartDnldr" ) );
             pConf->Write ( _T ( "ChartSources" ), m_schartdldr_sources );
             pConf->Write ( _T ( "Source" ), m_selected_source );
+            pConf->Write ( _T ( "BaseChartDir" ), m_base_chart_dir );
 
             return true;
       }
@@ -270,6 +275,16 @@ bool chartdldr_pi::SaveConfig(void)
 
 void chartdldr_pi::ShowPreferencesDialog( wxWindow* parent )
 {
+    ChartDldrPrefsDlgImpl *dialog = new ChartDldrPrefsDlgImpl(m_parent_window);
+    dialog->SetPath(m_base_chart_dir);
+    if( wxID_OK == dialog->ShowModal() )
+    {
+        m_base_chart_dir = dialog->GetPath();
+        SaveConfig();
+    }
+    dialog->Close();
+    dialog->Destroy();
+    wxDELETE(dialog);
 }
 
 ChartSource::ChartSource(wxString name, wxString url, wxString localdir)
@@ -330,6 +345,19 @@ void ChartDldrPanelImpl::OnContextMenu( wxMouseEvent& event )
       menu.Connect(wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&ChartDldrPanelImpl::OnPopupClick, NULL, this);
       // and then display
       PopupMenu(&menu, p1.x + point.x, p1.y + point.y);
+}
+
+void ChartDldrPanelImpl::OnShowLocalDir( wxCommandEvent& event )
+{
+#ifdef __WXGTK__
+    wxExecute(wxString::Format(_T("xdg-open %s"), pPlugIn->m_pChartSource->GetDir().c_str()));
+#endif
+#ifdef __WXMAC__
+    wxExecute(wxString::Format(_T("open %s"), pPlugIn->m_pChartSource->GetDir().c_str()));
+#endif
+#ifdef __WXMSW__
+    wxExecute(wxString::Format(_T("explorer %s"), pPlugIn->m_pChartSource->GetDir().c_str()));
+#endif
 }
 
 void ChartDldrPanelImpl::SetSource(int id)
@@ -518,6 +546,12 @@ void ChartDldrPanelImpl::UpdateChartList( wxCommandEvent& event )
     wxFileName fn;
     fn.SetFullName(file);
     fn.SetPath(cs->GetDir());
+    if( !wxDirExists(cs->GetDir()) )
+        if( !wxFileName::Mkdir(cs->GetDir(), 0755, wxPATH_MKDIR_FULL) )
+        {
+            wxMessageBox(wxString::Format(_("Directory %s can't be created."), cs->GetDir().c_str()), _("Chart Downloader"));
+            return;
+        }
 
     wxFileOutputStream output(fn.GetFullPath());
     wxCurlDownloadDialog ddlg(url.BuildURI(), &output, _("Downloading file"),
@@ -691,6 +725,7 @@ void ChartDldrPanelImpl::DeleteSource( wxCommandEvent& event )
 void ChartDldrPanelImpl::AddSource( wxCommandEvent& event )
 {
       ChartDldrGuiAddSourceDlg *dialog = new ChartDldrGuiAddSourceDlg(this);
+      dialog->SetBasePath(pPlugIn->GetBaseChartDir());
       if(dialog->ShowModal() == wxID_OK)
       {
             ChartSource *cs = new ChartSource(dialog->m_tSourceName->GetValue(), dialog->m_tChartSourceUrl->GetValue(), dialog->m_dpChartDirectory->GetTextCtrlValue());
@@ -777,6 +812,7 @@ bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTa
 
 ChartDldrGuiAddSourceDlg::ChartDldrGuiAddSourceDlg( wxWindow* parent ) : AddSourceDlg( parent )
 {
+      m_base_path = wxEmptyString;
       m_chartSources = new wxArrayOfChartSources();
       wxStringTokenizer st(_T(NOAA_CHART_SOURCES), _T("|"), wxTOKEN_DEFAULT);
       while ( st.HasMoreTokens() )
@@ -801,6 +837,15 @@ ChartDldrGuiAddSourceDlg::~ChartDldrGuiAddSourceDlg()
       wxDELETE(m_chartSources);
 }
 
+wxString ChartDldrGuiAddSourceDlg::FixPath(wxString path)
+{
+    wxString sep ( wxFileName::GetPathSeparator() );
+    wxString s = path;
+    s.Replace(_T("/"), sep, true);
+    s.Replace(_T(USERDATA), m_base_path);
+    return s;
+}
+
 void ChartDldrGuiAddSourceDlg::OnChangeType( wxCommandEvent& event )
 {
       m_cbChartSources->Enable(m_rbPredefined->GetValue());
@@ -813,8 +858,28 @@ void ChartDldrGuiAddSourceDlg::OnSourceSelected( wxCommandEvent& event )
       ChartSource *cs = m_chartSources->Item(m_cbChartSources->GetSelection());
       m_tSourceName->SetValue(cs->GetName());
       m_tChartSourceUrl->SetValue(cs->GetUrl());
+      m_dpChartDirectory->SetPath(FixPath(cs->GetDir()));
 
       event.Skip();
+}
+
+ChartDldrPrefsDlgImpl::ChartDldrPrefsDlgImpl( wxWindow* parent ) : ChartDldrPrefsDlg( parent )
+{
+}
+
+ChartDldrPrefsDlgImpl::~ChartDldrPrefsDlgImpl()
+{    
+}
+
+void ChartDldrPrefsDlgImpl::SetPath(const wxString path)
+{
+    //if( !wxDirExists(path) )
+        //if( !wxFileName::Mkdir(path, 0755, wxPATH_MKDIR_FULL) )
+        //{
+        //    wxMessageBox(wxString::Format(_("Directory %s can't be created."), m_dpDefaultDir->GetTextCtrlValue().c_str()), _("Chart Downloader"));
+        //    return;
+        //}
+    m_dpDefaultDir->SetPath(path);
 }
 
 void ChartDldrGuiAddSourceDlg::OnOkClick( wxCommandEvent& event )
@@ -832,10 +897,22 @@ void ChartDldrGuiAddSourceDlg::OnOkClick( wxCommandEvent& event )
         msg += _("You must select a local folder to store the charts.\n");
     else
         if( !wxDirExists(m_dpChartDirectory->GetTextCtrlValue()) )
-            msg += _("The selected local chart folder does not exist. Create it or select an existing path.\n");
+            if( !wxFileName::Mkdir(m_dpChartDirectory->GetTextCtrlValue(), 0755, wxPATH_MKDIR_FULL) )
+                msg += wxString::Format(_("Directory %s can't be created."), m_dpChartDirectory->GetTextCtrlValue().c_str()) + _T("\n");
     
     if( msg != wxEmptyString )
         wxMessageBox( msg, _("Chart source definition problem"), wxOK | wxCENTRE | wxICON_ERROR );
     else
         event.Skip();
+}
+
+void ChartDldrPrefsDlgImpl::OnOkClick( wxCommandEvent& event )
+{
+    if( !wxDirExists(m_dpDefaultDir->GetTextCtrlValue()) )
+        if( !wxFileName::Mkdir(m_dpDefaultDir->GetTextCtrlValue(), 0755, wxPATH_MKDIR_FULL) )
+        {
+            wxMessageBox(wxString::Format(_("Directory %s can't be created."), m_dpDefaultDir->GetTextCtrlValue().c_str()), _("Chart Downloader"));
+            return;
+        }
+    event.Skip();
 }

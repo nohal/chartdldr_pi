@@ -76,7 +76,7 @@ AddSourceDlg::AddSourceDlg( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_stChartDir->Wrap( -1 );
 	bSizerChartDir->Add( m_stChartDir, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_dpChartDirectory = new wxDirPickerCtrl( this, wxID_ANY, wxEmptyString, _("Select a folder"), wxDefaultPosition, wxDefaultSize, wxDIRP_DIR_MUST_EXIST|wxDIRP_USE_TEXTCTRL );
+	m_dpChartDirectory = new wxDirPickerCtrl( this, wxID_ANY, wxEmptyString, _("Select a folder"), wxDefaultPosition, wxDefaultSize, wxDIRP_USE_TEXTCTRL );
 	bSizerChartDir->Add( m_dpChartDirectory, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
 	
 	
@@ -167,8 +167,18 @@ ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& 
 	//m_clCharts>UpdateStyle();
 	sbSCharts->Add( m_clCharts, 1, wxALL|wxEXPAND, 5 );
 	
+	wxBoxSizer* bSizerBtns;
+	bSizerBtns = new wxBoxSizer( wxHORIZONTAL );
+	
 	m_bDnldCharts = new wxButton( this, wxID_ANY, _("Download selected charts"), wxDefaultPosition, wxDefaultSize, 0 );
-	sbSCharts->Add( m_bDnldCharts, 0, wxALIGN_CENTER|wxALL, 5 );
+	m_bDnldCharts->SetDefault(); 
+	bSizerBtns->Add( m_bDnldCharts, 1, wxALIGN_CENTER|wxALL, 5 );
+	
+	m_bShowLocal = new wxButton( this, wxID_ANY, _("Show local files"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizerBtns->Add( m_bShowLocal, 0, wxALL, 5 );
+	
+	
+	sbSCharts->Add( bSizerBtns, 0, wxEXPAND, 5 );
 	
 	
 	bSizer1->Add( sbSCharts, 1, wxALL|wxEXPAND, 5 );
@@ -185,6 +195,7 @@ ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& 
 	m_bUpdateChartList->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPanel::UpdateChartList ), NULL, this );
 	m_clCharts->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ChartDldrPanel::OnContextMenu ), NULL, this );
 	m_bDnldCharts->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPanel::DownloadCharts ), NULL, this );
+	m_bShowLocal->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPanel::OnShowLocalDir ), NULL, this );
 }
 
 ChartDldrPanel::~ChartDldrPanel()
@@ -196,5 +207,50 @@ ChartDldrPanel::~ChartDldrPanel()
 	m_bUpdateChartList->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPanel::UpdateChartList ), NULL, this );
 	m_clCharts->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ChartDldrPanel::OnContextMenu ), NULL, this );
 	m_bDnldCharts->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPanel::DownloadCharts ), NULL, this );
+	m_bShowLocal->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPanel::OnShowLocalDir ), NULL, this );
+	
+}
+
+ChartDldrPrefsDlg::ChartDldrPrefsDlg( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	wxBoxSizer* bSizerPrefsMain;
+	bSizerPrefsMain = new wxBoxSizer( wxVERTICAL );
+	
+	wxStaticBoxSizer* sbSizerPaths;
+	sbSizerPaths = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Default Path to Charts") ), wxVERTICAL );
+	
+	m_dpDefaultDir = new wxDirPickerCtrl( this, wxID_ANY, wxEmptyString, _("Select a root folder for your charts"), wxDefaultPosition, wxDefaultSize, wxDIRP_USE_TEXTCTRL );
+	sbSizerPaths->Add( m_dpDefaultDir, 0, wxALL|wxEXPAND, 5 );
+	
+	
+	bSizerPrefsMain->Add( sbSizerPaths, 1, wxALL|wxEXPAND, 5 );
+	
+	m_sdbSizerBtns = new wxStdDialogButtonSizer();
+	m_sdbSizerBtnsOK = new wxButton( this, wxID_OK );
+	m_sdbSizerBtns->AddButton( m_sdbSizerBtnsOK );
+	m_sdbSizerBtnsCancel = new wxButton( this, wxID_CANCEL );
+	m_sdbSizerBtns->AddButton( m_sdbSizerBtnsCancel );
+	m_sdbSizerBtns->Realize();
+	
+	bSizerPrefsMain->Add( m_sdbSizerBtns, 0, wxALL|wxEXPAND, 5 );
+	
+	
+	this->SetSizer( bSizerPrefsMain );
+	this->Layout();
+	
+	this->Centre( wxBOTH );
+	
+	// Connect Events
+	m_sdbSizerBtnsCancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDlg::OnCancelClick ), NULL, this );
+	m_sdbSizerBtnsOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDlg::OnOkClick ), NULL, this );
+}
+
+ChartDldrPrefsDlg::~ChartDldrPrefsDlg()
+{
+	// Disconnect Events
+	m_sdbSizerBtnsCancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDlg::OnCancelClick ), NULL, this );
+	m_sdbSizerBtnsOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDlg::OnOkClick ), NULL, this );
 	
 }

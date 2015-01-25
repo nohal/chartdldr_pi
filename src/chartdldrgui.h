@@ -81,6 +81,7 @@ class ChartDldrPanel : public wxPanel
 		wxButton* m_bDeleteSource;
 		wxButton* m_bUpdateChartList;
 		wxButton* m_bDnldCharts;
+		wxButton* m_bShowLocal;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void SelectSource( wxListEvent& event ) { event.Skip(); }
@@ -89,6 +90,7 @@ class ChartDldrPanel : public wxPanel
 		virtual void UpdateChartList( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnContextMenu( wxMouseEvent& event ) { event.Skip(); }
 		virtual void DownloadCharts( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnShowLocalDir( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
@@ -96,6 +98,31 @@ class ChartDldrPanel : public wxPanel
 		
 		ChartDldrPanel( wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxTAB_TRAVERSAL ); 
 		~ChartDldrPanel();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class ChartDldrPrefsDlg
+///////////////////////////////////////////////////////////////////////////////
+class ChartDldrPrefsDlg : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxDirPickerCtrl* m_dpDefaultDir;
+		wxStdDialogButtonSizer* m_sdbSizerBtns;
+		wxButton* m_sdbSizerBtnsOK;
+		wxButton* m_sdbSizerBtnsCancel;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnCancelClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnOkClick( wxCommandEvent& event ) { event.Skip(); }
+		
+	
+	public:
+		
+		ChartDldrPrefsDlg( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Chart Downloader Preferences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 462,331 ), long style = wxDEFAULT_DIALOG_STYLE ); 
+		~ChartDldrPrefsDlg();
 	
 };
 
