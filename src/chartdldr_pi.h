@@ -167,6 +167,8 @@ public:
       wxString GetUrl() { return m_url; }
       wxString GetDir() { return m_dir; }
       void SetDir(wxString dir) { m_dir = dir; }
+      void SetName(wxString name) { m_name = name; }
+      void SetUrl(wxString url) { m_url = url; }
       bool ExistsLocaly(wxString filename);
       bool IsNewerThanLocal(wxString filename, wxDateTime validDate);
       void UpdateLocalFiles() { m_localfiles = GetLocalFiles(); }
@@ -200,6 +202,7 @@ protected:
 	void SelectSource( wxListEvent& event );
 	void AddSource( wxCommandEvent& event );
 	void DeleteSource( wxCommandEvent& event );
+	void EditSource( wxCommandEvent& event );
 	void UpdateChartList( wxCommandEvent& event );
 	void DownloadCharts( wxCommandEvent& event );
     void OnShowLocalDir( wxCommandEvent& event );
@@ -226,7 +229,8 @@ class ChartDldrGuiAddSourceDlg : public AddSourceDlg
 	public:
 		ChartDldrGuiAddSourceDlg( wxWindow* parent );
 		~ChartDldrGuiAddSourceDlg();
-		void SetBasePath(const wxString path) { m_base_path = path; }
+		void SetBasePath( const wxString path ) { m_base_path = path; }
+        void SetSourceEdit( ChartSource* cs );
     
     private:
         wxString m_base_path;

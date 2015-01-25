@@ -80,6 +80,7 @@ class ChartDldrPanel : public wxPanel
 		wxListCtrl* m_lbChartSources;
 		wxButton* m_bAddSource;
 		wxButton* m_bDeleteSource;
+		wxButton* m_bEditSource;
 		wxButton* m_bUpdateChartList;
 		wxButton* m_bDnldCharts;
 		wxButton* m_bShowLocal;
@@ -88,6 +89,7 @@ class ChartDldrPanel : public wxPanel
 		virtual void SelectSource( wxListEvent& event ) { event.Skip(); }
 		virtual void AddSource( wxCommandEvent& event ) { event.Skip(); }
 		virtual void DeleteSource( wxCommandEvent& event ) { event.Skip(); }
+		virtual void EditSource( wxCommandEvent& event ) { event.Skip(); }
 		virtual void UpdateChartList( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnContextMenu( wxMouseEvent& event ) { event.Skip(); }
 		virtual void DownloadCharts( wxCommandEvent& event ) { event.Skip(); }

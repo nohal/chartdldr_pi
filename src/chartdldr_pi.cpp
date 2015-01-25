@@ -730,20 +730,43 @@ void ChartDldrPanelImpl::DeleteSource( wxCommandEvent& event )
 
 void ChartDldrPanelImpl::AddSource( wxCommandEvent& event )
 {
-      ChartDldrGuiAddSourceDlg *dialog = new ChartDldrGuiAddSourceDlg(this);
-      dialog->SetBasePath(pPlugIn->GetBaseChartDir());
-      if(dialog->ShowModal() == wxID_OK)
-      {
-            ChartSource *cs = new ChartSource(dialog->m_tSourceName->GetValue(), dialog->m_tChartSourceUrl->GetValue(), dialog->m_dpChartDirectory->GetTextCtrlValue());
-            pPlugIn->m_chartSources->Add(cs);
-            AppendCatalog(cs);
+    ChartDldrGuiAddSourceDlg *dialog = new ChartDldrGuiAddSourceDlg(this);
+    dialog->SetBasePath(pPlugIn->GetBaseChartDir());
+    if(dialog->ShowModal() == wxID_OK)
+    {
+        ChartSource *cs = new ChartSource(dialog->m_tSourceName->GetValue(), dialog->m_tChartSourceUrl->GetValue(), dialog->m_dpChartDirectory->GetTextCtrlValue());
+        pPlugIn->m_chartSources->Add(cs);
+        AppendCatalog(cs);
 
-            pPlugIn->SaveConfig();
-      }
-      dialog->Close();
-      dialog->Destroy();
-      wxDELETE(dialog);
-      event.Skip();
+        pPlugIn->SaveConfig();
+    }
+    dialog->Close();
+    dialog->Destroy();
+    wxDELETE(dialog);
+    event.Skip();
+}
+
+void ChartDldrPanelImpl::EditSource( wxCommandEvent& event )
+{
+    if (!m_lbChartSources->GetSelectedItemCount())
+        return;
+    int cat = GetSelectedCatalog();
+    ChartDldrGuiAddSourceDlg *dialog = new ChartDldrGuiAddSourceDlg(this);
+    dialog->SetBasePath(pPlugIn->GetBaseChartDir());
+    dialog->SetSourceEdit(pPlugIn->m_chartSources->Item(cat));
+    if(dialog->ShowModal() == wxID_OK)
+    {
+        pPlugIn->m_chartSources->Item(cat)->SetName(dialog->m_tSourceName->GetValue());
+        pPlugIn->m_chartSources->Item(cat)->SetUrl(dialog->m_tChartSourceUrl->GetValue());
+        pPlugIn->m_chartSources->Item(cat)->SetDir(dialog->m_dpChartDirectory->GetTextCtrlValue());
+
+        pPlugIn->SaveConfig();
+        SetSource(cat);
+    }
+    dialog->Close();
+    dialog->Destroy();
+    wxDELETE(dialog);
+    event.Skip();
 }
 
 bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTargetDir, bool aStripPath, wxDateTime aMTime) {
@@ -867,6 +890,16 @@ void ChartDldrGuiAddSourceDlg::OnSourceSelected( wxCommandEvent& event )
       m_dpChartDirectory->SetPath(FixPath(cs->GetDir()));
 
       event.Skip();
+}
+
+void ChartDldrGuiAddSourceDlg::SetSourceEdit( ChartSource* cs )
+{
+    m_rbCustom->SetValue(true);
+    m_rbPredefined->Disable();
+    m_tChartSourceUrl->Enable();
+    m_tSourceName->SetValue(cs->GetName());
+    m_tChartSourceUrl->SetValue(cs->GetUrl());
+    m_dpChartDirectory->SetPath(FixPath(cs->GetDir()));
 }
 
 ChartDldrPrefsDlgImpl::ChartDldrPrefsDlgImpl( wxWindow* parent ) : ChartDldrPrefsDlg( parent )
