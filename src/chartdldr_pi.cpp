@@ -466,11 +466,11 @@ bool ChartSource::ExistsLocaly(wxString filename)
 bool ChartSource::IsNewerThanLocal(wxString filename, wxDateTime validDate)
 {
       wxStringTokenizer tk(filename, _T("."));
-      wxString file = tk.GetNextToken();
+      wxString file = tk.GetNextToken().MakeLower();
       for (size_t i = 0; i < m_localfiles.Count(); i++)
       {
             wxFileName fn(m_localfiles.Item(i));
-            if(fn.GetName().StartsWith(file))
+            if(fn.GetName().MakeLower() == file)
             {
                   wxDateTime ct, mt, at;
                   fn.GetTimes(&at, &mt, &ct);
