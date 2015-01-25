@@ -465,6 +465,7 @@ bool ChartSource::ExistsLocaly(wxString filename)
 
 bool ChartSource::IsNewerThanLocal(wxString filename, wxDateTime validDate)
 {
+      bool update_candidate = false;
       wxStringTokenizer tk(filename, _T("."));
       wxString file = tk.GetNextToken().MakeLower();
       for (size_t i = 0; i < m_localfiles.Count(); i++)
@@ -475,10 +476,12 @@ bool ChartSource::IsNewerThanLocal(wxString filename, wxDateTime validDate)
                   wxDateTime ct, mt, at;
                   fn.GetTimes(&at, &mt, &ct);
                   if (validDate.IsLaterThan(ct))
-                        return true;
+                    update_candidate = true;
+                  else if( update_candidate )
+                    return false; //This improves performance a bit
             }
       }
-      return false;
+      return update_candidate;
 }
 
 int ChartDldrPanelImpl::GetSelectedCatalog()
