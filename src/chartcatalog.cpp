@@ -144,6 +144,7 @@ bool ChartCatalog::ParseNoaaHeader(TiXmlElement * xmldata)
                   wxStringTokenizer tk(wxString::FromUTF8(child->FirstChild()->Value()), _T("TZ"));
                   dt_valid.ParseDate(tk.GetNextToken());
                   dt_valid.ParseTime(tk.GetNextToken());
+                  dt_valid.MakeFromTimezone(wxDateTime::UTC);
             }
             if (s == _T("ref_spec"))
             {
@@ -222,12 +223,14 @@ Chart::Chart(TiXmlNode * xmldata)
             if (s == _T("zipfile_datetime"))
             {
                   zipfile_datetime.ParseDateTime(wxString::FromUTF8(child->FirstChild()->Value()));
+                  zipfile_datetime.MakeFromTimezone(wxDateTime::UTC);
             }
             if (s == _T("zipfile_datetime_iso8601"))
             {
                   wxStringTokenizer tk(wxString::FromUTF8(child->FirstChild()->Value()), _T("TZ"));
                   zipfile_datetime_iso8601.ParseDate(tk.GetNextToken());
                   zipfile_datetime_iso8601.ParseTime(tk.GetNextToken());
+                  zipfile_datetime_iso8601.MakeFromTimezone(wxDateTime::UTC);
             }
             if (s == _T("zipfile_size"))
             {
