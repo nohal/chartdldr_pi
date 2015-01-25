@@ -217,10 +217,9 @@ void chartdldr_pi::OnSetupOptions(void)
       wxBoxSizer *sizer = new wxBoxSizer( wxVERTICAL );
       m_pOptionsPage->SetSizer( sizer );
 
-      /* TODO: Seth */
       m_dldrpanel = new ChartDldrPanelImpl( this, m_pOptionsPage, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE );
 
-      sizer->Add( m_dldrpanel, 0, wxALL | wxEXPAND );
+      sizer->Add( m_dldrpanel, 1, wxALL | wxEXPAND );
 }
 
 void chartdldr_pi::OnCloseToolboxPanel(int page_sel, int ok_apply_cancel)

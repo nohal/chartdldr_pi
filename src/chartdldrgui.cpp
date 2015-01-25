@@ -162,7 +162,6 @@ ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& 
 	wxStaticBoxSizer* sbSCharts;
 	sbSCharts = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Charts") ), wxVERTICAL );
 	
-	sbSCharts->SetMinSize( wxSize( -1,350 ) ); 
 	m_clCharts = new wxCheckedListCtrl(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL);
 	//m_clCharts>SetImagesForList(wxLC_REPORT|wxLC_SINGLE_SEL);
 	//m_clCharts>UpdateStyle();
