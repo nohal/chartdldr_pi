@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-18 17:32-0600\n"
-"PO-Revision-Date: 2015-01-18 18:38-0500\n"
+"POT-Creation-Date: 2015-01-18 17:40-0600\n"
+"PO-Revision-Date: 2015-01-25 13:36-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Estonian\n"
 "Language: et_EE\n"
@@ -18,138 +18,138 @@ msgstr ""
 #: src/chartcatalog.cpp:409
 #, c-format
 msgid "%s (%s to %s), river miles %3.1f - %3.1f"
-msgstr ""
+msgstr "%s (%s kuni %s), jõe miile %3.1f - %3.1f"
 
 #: src/chartdldr_pi.cpp:176
 msgid "ChartDownloader"
-msgstr ""
+msgstr "ChartDownloader"
 
 #: src/chartdldr_pi.cpp:182
 msgid "Chart Downloader PlugIn for OpenCPN"
-msgstr ""
+msgstr "Chart Downloader plugIn OpenCPN'i jaoks"
 
 #: src/chartdldr_pi.cpp:187
 msgid "Chart Downloader PlugIn for OpenCPN\nManages chart downloads and updates from sources supporting\nNOAA Chart Catalog format"
-msgstr ""
+msgstr "Chart Downloader plugIn OpenCPN'i jaoks\nHaldab kaartide allalaadimisi ja uuendusi allikatest toetades\nNOAA laardikataloogi formaati"
 
 #: src/chartdldr_pi.cpp:194 src/chartdldr_pi.cpp:527 src/chartdldr_pi.cpp:567
 msgid "Chart Downloader"
-msgstr ""
+msgstr "Kaartide allalaadija"
 
 #: src/chartdldr_pi.cpp:310
 msgid "Select all"
-msgstr ""
+msgstr "Vali kõik"
 
 #: src/chartdldr_pi.cpp:311
 msgid "Deselect all"
-msgstr ""
+msgstr "Vabasta kõik valitud"
 
 #: src/chartdldr_pi.cpp:312
 msgid "Invert selection"
-msgstr ""
+msgstr "Pööra valik"
 
 #: src/chartdldr_pi.cpp:313
 msgid "Select updated"
-msgstr ""
+msgstr "Vali uuendatud"
 
 #: src/chartdldr_pi.cpp:314
 msgid "Select new"
-msgstr ""
+msgstr "Vali uued"
 
 #: src/chartdldr_pi.cpp:383
 msgid "New"
-msgstr ""
+msgstr "Uus"
 
 #: src/chartdldr_pi.cpp:391
 msgid "Update available"
-msgstr ""
+msgstr "Uuendus saadaval"
 
 #: src/chartdldr_pi.cpp:397
 msgid "Up to date"
-msgstr ""
+msgstr "Uuendatud"
 
 #: src/chartdldr_pi.cpp:461
 msgid "(Please update first)"
-msgstr ""
+msgstr "(Palun enne uuendada)"
 
 #: src/chartdldr_pi.cpp:466 src/chartdldr_pi.cpp:492
 msgid "Error, the URL to the chart source data seems wrong."
-msgstr ""
+msgstr "Viga, URL kaardi algallika andmete juurde tundub olema vale."
 
 #: src/chartdldr_pi.cpp:466 src/chartdldr_pi.cpp:492 src/chartdldr_pi.cpp:604
 msgid "Error"
-msgstr ""
+msgstr "Viga"
 
 #: src/chartdldr_pi.cpp:507
 msgid "Downloading file"
-msgstr ""
+msgstr "Faili allalaadimine"
 
 #: src/chartdldr_pi.cpp:508
 msgid "Reading Headers: "
-msgstr ""
+msgstr "Päiste lugemine: "
 
 #: src/chartdldr_pi.cpp:526 src/chartdldr_pi.cpp:566
 #, c-format
 msgid "Failed to Download: %s \nVerify there is a working Internet connection."
-msgstr ""
+msgstr "Allalaadimine nurjus: %s \nKontrolli, et internetiühendus töötab."
 
 #: src/chartdldr_pi.cpp:554
 #, c-format
 msgid "Downloading file %d of %d"
-msgstr ""
+msgstr "Faili %d %d -st allalaadimine"
 
 #: src/chartdldr_pi.cpp:555
 #, c-format
 msgid "Chart: %s"
-msgstr ""
+msgstr "Kaart: %s"
 
 #: src/chartdldr_pi.cpp:584 src/chartdldr_pi.cpp:590
 msgid "No charts selected for download."
-msgstr ""
+msgstr "Allalaadimiseks pole kaarte valitud."
 
 #: src/chartdldr_pi.cpp:604
 msgid "Error, the URL to the chart data seems wrong."
-msgstr ""
+msgstr "Viga, URL kaardiandmete juurde tundub olema vale."
 
 #: src/chartdldr_pi.cpp:641 src/chartdldrgui.cpp:20 src/chartdldrgui.cpp:31
 msgid "Catalog"
-msgstr ""
+msgstr "Kataloog"
 
 #: src/chartdldr_pi.cpp:642
 msgid "Released"
-msgstr ""
+msgstr "Väljaantud"
 
 #: src/chartdldr_pi.cpp:643
 msgid "Local path"
-msgstr ""
+msgstr "Kohalik tee"
 
 #: src/chartdldr_pi.cpp:646
 msgid "Title"
-msgstr ""
+msgstr "Tiitel"
 
 #: src/chartdldr_pi.cpp:647
 msgid "Status"
-msgstr ""
+msgstr "Olek"
 
 #: src/chartdldr_pi.cpp:648
 msgid "Latest"
-msgstr ""
+msgstr "Viimased"
 
 #: src/chartdldr_pi.cpp:809
 msgid "You must select one of the predefined chart sources or create one of your own.\n"
-msgstr ""
+msgstr "Pead valima ühe eelmääratletud kaardiallikatest või looma ise ühe enda oma. \n"
 
 #: src/chartdldr_pi.cpp:811
 msgid "The chart source must have a name.\n"
-msgstr ""
+msgstr "Kaardi allikal peab olema nimi.\n"
 
 #: src/chartdldr_pi.cpp:814
 msgid "The chart source must have a valid URL.\n"
-msgstr ""
+msgstr "Kaardi allkial peab olema kehtiv URL.\n"
 
 #: src/chartdldr_pi.cpp:816
 msgid "You must select a local folder to store the charts.\n"
-msgstr ""
+msgstr "Pead kaartide säilitamiseks valima kohaliku kausta.\n"
 
 #: src/chartdldr_pi.cpp:819
 msgid "The selected local chart folder does not exist. Create it or select an existing path.\n"
@@ -157,177 +157,177 @@ msgstr ""
 
 #: src/chartdldr_pi.cpp:822
 msgid "Chart source definition problem"
-msgstr ""
+msgstr "Kaardi allika defineerimise probleem"
 
 #: src/chartdldrgui.cpp:28
 msgid "Predefined"
-msgstr ""
+msgstr "Eelmääratletud"
 
 #: src/chartdldrgui.cpp:40
 msgid "Custom"
-msgstr ""
+msgstr "Kohandatud"
 
 #: src/chartdldrgui.cpp:43
 msgid "Name"
-msgstr ""
+msgstr "Nimi"
 
 #: src/chartdldrgui.cpp:56
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: src/chartdldrgui.cpp:75
 msgid "Chart directory"
-msgstr ""
+msgstr "Kaardi kataloog"
 
 #: src/chartdldrgui.cpp:79
 msgid "Select a folder"
-msgstr ""
+msgstr "Vali kaust"
 
 #: src/chartdldrgui.cpp:125
 msgid "Catalogs"
-msgstr ""
+msgstr "Kataloogid"
 
 #: src/chartdldrgui.cpp:136
 msgid "Add"
-msgstr ""
+msgstr "Lisa"
 
 #: src/chartdldrgui.cpp:137
 msgid "Add a new chart catalog."
-msgstr ""
+msgstr "Lisa uus kaardi kataloog."
 
 #: src/chartdldrgui.cpp:141
 msgid "Delete"
-msgstr ""
+msgstr "Kustuta"
 
 #: src/chartdldrgui.cpp:142
 msgid "Delete the chart catalog. The downloaded charts are not deleted."
-msgstr ""
+msgstr "Kustuta kaardi kataloog. Allalaaditud kaarte ei kustutata."
 
 #: src/chartdldrgui.cpp:146
 msgid "Update"
-msgstr ""
+msgstr "Uuendus"
 
 #: src/chartdldrgui.cpp:148
 msgid "Download the current chart catalog and update the data."
-msgstr ""
+msgstr "Lae nüüdne kaardikataloog alla ja uuenda andmed."
 
 #: src/chartdldrgui.cpp:162
 msgid "Charts"
-msgstr ""
+msgstr "Kaardid"
 
 #: src/chartdldrgui.cpp:170
 msgid "Download selected charts"
-msgstr ""
+msgstr "Lae valitud kaardid alla"
 
 #: src/chartdldrgui.h:66
 msgid "New chart source"
-msgstr ""
+msgstr "Uus kaardiallikas"
 
 #: src/wxcurl/dialog.cpp:137
 msgid "Not available"
-msgstr ""
+msgstr "Pole saadaval"
 
 #: src/wxcurl/dialog.cpp:168
 msgid "URL:"
-msgstr ""
+msgstr "URL:"
 
 #: src/wxcurl/dialog.cpp:187
 msgid "Speed:"
-msgstr ""
+msgstr "Kiirus:"
 
 #: src/wxcurl/dialog.cpp:196
 msgid "Elapsed time:"
-msgstr ""
+msgstr "Möödunud aeg:"
 
 #: src/wxcurl/dialog.cpp:198
 msgid "Estimated total time:"
-msgstr ""
+msgstr "Hinnanguline koguaeg:"
 
 #: src/wxcurl/dialog.cpp:200
 msgid "Estimated remaining time:"
-msgstr ""
+msgstr "Eeldatav allesjäänud aeg:"
 
 #: src/wxcurl/dialog.cpp:243 src/wxcurl/dialog.cpp:392
 msgid "Abort"
-msgstr ""
+msgstr "Katkesta"
 
 #: src/wxcurl/dialog.cpp:245
 msgid "Settings"
-msgstr ""
+msgstr "Sätted"
 
 #: src/wxcurl/dialog.cpp:250 src/wxcurl/dialog.cpp:413
 msgid "Pause"
-msgstr ""
+msgstr "Paus"
 
 #: src/wxcurl/dialog.cpp:252
 msgid "Start"
-msgstr ""
+msgstr "Käivita"
 
 #: src/wxcurl/dialog.cpp:392
 msgid "Close"
-msgstr ""
+msgstr "Sulge"
 
 #: src/wxcurl/dialog.cpp:403
 msgid "Resume"
-msgstr ""
+msgstr "Jätka"
 
 #: src/wxcurl/dialog.cpp:406
 msgid "0 (transfer paused)"
-msgstr ""
+msgstr "0 (edastus on peatatud)"
 
 #: src/wxcurl/dialog.cpp:454
 msgid "Connection settings"
-msgstr ""
+msgstr "Ühenduse sätted"
 
 #: src/wxcurl/dialog.cpp:454
 msgid "Connection settings used for the transfer:"
-msgstr ""
+msgstr "Ülekande teostamiseks kasutatud ühenduse sätted:"
 
 #: src/wxcurl/dialog.cpp:509
 msgid "0 (transfer completed)"
-msgstr ""
+msgstr "0 (ülekanne lõpetatud)"
 
 #: src/wxcurl/dialog.cpp:530
 msgid "Downloaded:"
-msgstr ""
+msgstr "Allalaetud:"
 
 #: src/wxcurl/dialog.cpp:578
 msgid "Uploaded:"
-msgstr ""
+msgstr "Üleslaetud:"
 
 #: src/wxcurl/panel.cpp:111
 msgid "Username:"
-msgstr ""
+msgstr "Kasutajanimi:"
 
 #: src/wxcurl/panel.cpp:112
 msgid "Password:"
-msgstr ""
+msgstr "Salasõna:"
 
 #: src/wxcurl/panel.cpp:120
 msgid "Port:"
-msgstr ""
+msgstr "Port:"
 
 #: src/wxcurl/panel.cpp:134
 msgid "Proxy settings"
-msgstr ""
+msgstr "Puhvri seaded"
 
 #: src/wxcurl/panel.cpp:136
 msgid "Use proxy"
-msgstr ""
+msgstr "Kasuta puhverserverit"
 
 #: src/wxcurl/panel.cpp:141
 msgid "Proxy host:"
-msgstr ""
+msgstr "Proksi host:"
 
 #: src/wxcurl/panel.cpp:142
 msgid "Proxy username:"
-msgstr ""
+msgstr "Proksi kasutajanimi:"
 
 #: src/wxcurl/panel.cpp:143
 msgid "Proxy password:"
-msgstr ""
+msgstr "Proksi salasõna:"
 
 #: src/wxcurl/panel.cpp:144
 msgid "Proxy port:"
-msgstr ""
+msgstr "Proksi port:"
 

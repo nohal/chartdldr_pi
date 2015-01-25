@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-18 17:32-0600\n"
-"PO-Revision-Date: 2015-01-18 18:38-0500\n"
+"POT-Creation-Date: 2015-01-18 17:40-0600\n"
+"PO-Revision-Date: 2015-01-25 13:36-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -70,7 +70,7 @@ msgstr "Ajan tasalla"
 
 #: src/chartdldr_pi.cpp:461
 msgid "(Please update first)"
-msgstr ""
+msgstr "(Tee ensin päivitys)"
 
 #: src/chartdldr_pi.cpp:466 src/chartdldr_pi.cpp:492
 msgid "Error, the URL to the chart source data seems wrong."
@@ -96,16 +96,16 @@ msgstr "Ei voitu ladata: %s \nTarkista nettiyhteyden toiminta."
 #: src/chartdldr_pi.cpp:554
 #, c-format
 msgid "Downloading file %d of %d"
-msgstr ""
+msgstr "Lataa tiedosto %d %d"
 
 #: src/chartdldr_pi.cpp:555
 #, c-format
 msgid "Chart: %s"
-msgstr ""
+msgstr "Kartta: %s"
 
 #: src/chartdldr_pi.cpp:584 src/chartdldr_pi.cpp:590
 msgid "No charts selected for download."
-msgstr ""
+msgstr "Karttoja ei ole valittu ladattavaksi."
 
 #: src/chartdldr_pi.cpp:604
 msgid "Error, the URL to the chart data seems wrong."
@@ -117,11 +117,11 @@ msgstr "Luettelo"
 
 #: src/chartdldr_pi.cpp:642
 msgid "Released"
-msgstr ""
+msgstr "Julkaistu"
 
 #: src/chartdldr_pi.cpp:643
 msgid "Local path"
-msgstr ""
+msgstr "Paikallinen polku"
 
 #: src/chartdldr_pi.cpp:646
 msgid "Title"
@@ -133,23 +133,23 @@ msgstr "Tila"
 
 #: src/chartdldr_pi.cpp:648
 msgid "Latest"
-msgstr ""
+msgstr "Uusimmat"
 
 #: src/chartdldr_pi.cpp:809
 msgid "You must select one of the predefined chart sources or create one of your own.\n"
-msgstr ""
+msgstr "Valitse yksi valmiista karttalähteistä tai luo omasi. \n"
 
 #: src/chartdldr_pi.cpp:811
 msgid "The chart source must have a name.\n"
-msgstr ""
+msgstr "Karttalähteellä on oltava nimi. \n"
 
 #: src/chartdldr_pi.cpp:814
 msgid "The chart source must have a valid URL.\n"
-msgstr ""
+msgstr "Karttalähteellä on oltava kelvollinen URL-osoite. \n"
 
 #: src/chartdldr_pi.cpp:816
 msgid "You must select a local folder to store the charts.\n"
-msgstr ""
+msgstr "Valitse paikallinen kansio, johon kartat tallennetaan.\n"
 
 #: src/chartdldr_pi.cpp:819
 msgid "The selected local chart folder does not exist. Create it or select an existing path.\n"
@@ -157,11 +157,11 @@ msgstr ""
 
 #: src/chartdldr_pi.cpp:822
 msgid "Chart source definition problem"
-msgstr ""
+msgstr "Karttalähteen määrittely ongelma"
 
 #: src/chartdldrgui.cpp:28
 msgid "Predefined"
-msgstr ""
+msgstr "Ennalta määritetty"
 
 #: src/chartdldrgui.cpp:40
 msgid "Custom"
@@ -193,7 +193,7 @@ msgstr "Lisää"
 
 #: src/chartdldrgui.cpp:137
 msgid "Add a new chart catalog."
-msgstr ""
+msgstr "Lisää uusi karttaluettelo."
 
 #: src/chartdldrgui.cpp:141
 msgid "Delete"
@@ -201,7 +201,7 @@ msgstr "Poista"
 
 #: src/chartdldrgui.cpp:142
 msgid "Delete the chart catalog. The downloaded charts are not deleted."
-msgstr ""
+msgstr "Poista karttaluettelo. Ladattuja karttoja ei poisteta."
 
 #: src/chartdldrgui.cpp:146
 msgid "Update"
@@ -209,7 +209,7 @@ msgstr "Päivitä"
 
 #: src/chartdldrgui.cpp:148
 msgid "Download the current chart catalog and update the data."
-msgstr ""
+msgstr "Lataa nykyinen karttaluettelo ja päivitä tiedot."
 
 #: src/chartdldrgui.cpp:162
 msgid "Charts"

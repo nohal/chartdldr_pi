@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-18 17:32-0600\n"
-"PO-Revision-Date: 2015-01-18 18:38-0500\n"
+"POT-Creation-Date: 2015-01-18 17:40-0600\n"
+"PO-Revision-Date: 2015-01-25 13:36-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Danish\n"
 "Language: da_DK\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: src/chartdldr_pi.cpp:176
 msgid "ChartDownloader"
-msgstr ""
+msgstr "ChartDownloader"
 
 #: src/chartdldr_pi.cpp:182
 msgid "Chart Downloader PlugIn for OpenCPN"
@@ -34,55 +34,55 @@ msgstr ""
 
 #: src/chartdldr_pi.cpp:194 src/chartdldr_pi.cpp:527 src/chartdldr_pi.cpp:567
 msgid "Chart Downloader"
-msgstr ""
+msgstr "Kortdownloader"
 
 #: src/chartdldr_pi.cpp:310
 msgid "Select all"
-msgstr ""
+msgstr "Vælg alt"
 
 #: src/chartdldr_pi.cpp:311
 msgid "Deselect all"
-msgstr ""
+msgstr "Fravælg alle"
 
 #: src/chartdldr_pi.cpp:312
 msgid "Invert selection"
-msgstr ""
+msgstr "Inverter markeringen"
 
 #: src/chartdldr_pi.cpp:313
 msgid "Select updated"
-msgstr ""
+msgstr "Vælg opdaterede"
 
 #: src/chartdldr_pi.cpp:314
 msgid "Select new"
-msgstr ""
+msgstr "Vælg nye"
 
 #: src/chartdldr_pi.cpp:383
 msgid "New"
-msgstr ""
+msgstr "Ny"
 
 #: src/chartdldr_pi.cpp:391
 msgid "Update available"
-msgstr ""
+msgstr "Opdatering tilgængelig"
 
 #: src/chartdldr_pi.cpp:397
 msgid "Up to date"
-msgstr ""
+msgstr "Opdateret"
 
 #: src/chartdldr_pi.cpp:461
 msgid "(Please update first)"
-msgstr ""
+msgstr "(opdater først)"
 
 #: src/chartdldr_pi.cpp:466 src/chartdldr_pi.cpp:492
 msgid "Error, the URL to the chart source data seems wrong."
-msgstr ""
+msgstr "Fejl: URL til kortdata virker forkert."
 
 #: src/chartdldr_pi.cpp:466 src/chartdldr_pi.cpp:492 src/chartdldr_pi.cpp:604
 msgid "Error"
-msgstr ""
+msgstr "Fejl"
 
 #: src/chartdldr_pi.cpp:507
 msgid "Downloading file"
-msgstr ""
+msgstr "Henter filen"
 
 #: src/chartdldr_pi.cpp:508
 msgid "Reading Headers: "
@@ -91,65 +91,65 @@ msgstr ""
 #: src/chartdldr_pi.cpp:526 src/chartdldr_pi.cpp:566
 #, c-format
 msgid "Failed to Download: %s \nVerify there is a working Internet connection."
-msgstr ""
+msgstr "Kunne ikke downloade: %s \nVerificer at der er en fungerende internetforbindelse."
 
 #: src/chartdldr_pi.cpp:554
 #, c-format
 msgid "Downloading file %d of %d"
-msgstr ""
+msgstr "Henter fil %d af %d"
 
 #: src/chartdldr_pi.cpp:555
 #, c-format
 msgid "Chart: %s"
-msgstr ""
+msgstr "Kort: %s"
 
 #: src/chartdldr_pi.cpp:584 src/chartdldr_pi.cpp:590
 msgid "No charts selected for download."
-msgstr ""
+msgstr "Ingen kort valgt til download."
 
 #: src/chartdldr_pi.cpp:604
 msgid "Error, the URL to the chart data seems wrong."
-msgstr ""
+msgstr "Fejl, URL til kortdata virker forkert."
 
 #: src/chartdldr_pi.cpp:641 src/chartdldrgui.cpp:20 src/chartdldrgui.cpp:31
 msgid "Catalog"
-msgstr ""
+msgstr "Katalog"
 
 #: src/chartdldr_pi.cpp:642
 msgid "Released"
-msgstr ""
+msgstr "Frigivet"
 
 #: src/chartdldr_pi.cpp:643
 msgid "Local path"
-msgstr ""
+msgstr "Lokal sti"
 
 #: src/chartdldr_pi.cpp:646
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: src/chartdldr_pi.cpp:647
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: src/chartdldr_pi.cpp:648
 msgid "Latest"
-msgstr ""
+msgstr "Seneste"
 
 #: src/chartdldr_pi.cpp:809
 msgid "You must select one of the predefined chart sources or create one of your own.\n"
-msgstr ""
+msgstr "Du skal vælge en af de foruddefinerede kortkilder eller oprette din egen. \n"
 
 #: src/chartdldr_pi.cpp:811
 msgid "The chart source must have a name.\n"
-msgstr ""
+msgstr "Kortkilde skal have et navn. \n"
 
 #: src/chartdldr_pi.cpp:814
 msgid "The chart source must have a valid URL.\n"
-msgstr ""
+msgstr "Kortkilde skal have en gyldig webadresse.\n"
 
 #: src/chartdldr_pi.cpp:816
 msgid "You must select a local folder to store the charts.\n"
-msgstr ""
+msgstr "Du skal vælge en lokal mappe til at gemme kortene. \n"
 
 #: src/chartdldr_pi.cpp:819
 msgid "The selected local chart folder does not exist. Create it or select an existing path.\n"
@@ -161,173 +161,173 @@ msgstr ""
 
 #: src/chartdldrgui.cpp:28
 msgid "Predefined"
-msgstr ""
+msgstr "Foruddefinerede"
 
 #: src/chartdldrgui.cpp:40
 msgid "Custom"
-msgstr ""
+msgstr "Brugerdefineret"
 
 #: src/chartdldrgui.cpp:43
 msgid "Name"
-msgstr ""
+msgstr "Navn"
 
 #: src/chartdldrgui.cpp:56
 msgid "URL"
-msgstr ""
+msgstr "web-adresse"
 
 #: src/chartdldrgui.cpp:75
 msgid "Chart directory"
-msgstr ""
+msgstr "Kortbibliotek"
 
 #: src/chartdldrgui.cpp:79
 msgid "Select a folder"
-msgstr ""
+msgstr "Vælg en mappe"
 
 #: src/chartdldrgui.cpp:125
 msgid "Catalogs"
-msgstr ""
+msgstr "Kataloger"
 
 #: src/chartdldrgui.cpp:136
 msgid "Add"
-msgstr ""
+msgstr "Tilføj"
 
 #: src/chartdldrgui.cpp:137
 msgid "Add a new chart catalog."
-msgstr ""
+msgstr "Tilføj et nyt kortkatalog."
 
 #: src/chartdldrgui.cpp:141
 msgid "Delete"
-msgstr ""
+msgstr "Slet"
 
 #: src/chartdldrgui.cpp:142
 msgid "Delete the chart catalog. The downloaded charts are not deleted."
-msgstr ""
+msgstr "Slet kortkataloget. De downloadede kort slettes ikke."
 
 #: src/chartdldrgui.cpp:146
 msgid "Update"
-msgstr ""
+msgstr "Opdater"
 
 #: src/chartdldrgui.cpp:148
 msgid "Download the current chart catalog and update the data."
-msgstr ""
+msgstr "Download det nuværende kortkatalog og opdater data."
 
 #: src/chartdldrgui.cpp:162
 msgid "Charts"
-msgstr ""
+msgstr "Kort"
 
 #: src/chartdldrgui.cpp:170
 msgid "Download selected charts"
-msgstr ""
+msgstr "Download valgte kort"
 
 #: src/chartdldrgui.h:66
 msgid "New chart source"
-msgstr ""
+msgstr "Ny kortkilde"
 
 #: src/wxcurl/dialog.cpp:137
 msgid "Not available"
-msgstr ""
+msgstr "Ikke tilgængelig"
 
 #: src/wxcurl/dialog.cpp:168
 msgid "URL:"
-msgstr ""
+msgstr "Webadresse:"
 
 #: src/wxcurl/dialog.cpp:187
 msgid "Speed:"
-msgstr ""
+msgstr "Hastighed:"
 
 #: src/wxcurl/dialog.cpp:196
 msgid "Elapsed time:"
-msgstr ""
+msgstr "Forløbet tid:"
 
 #: src/wxcurl/dialog.cpp:198
 msgid "Estimated total time:"
-msgstr ""
+msgstr "Anslået samlet tid:"
 
 #: src/wxcurl/dialog.cpp:200
 msgid "Estimated remaining time:"
-msgstr ""
+msgstr "Anslået resterende tid:"
 
 #: src/wxcurl/dialog.cpp:243 src/wxcurl/dialog.cpp:392
 msgid "Abort"
-msgstr ""
+msgstr "Afbryd"
 
 #: src/wxcurl/dialog.cpp:245
 msgid "Settings"
-msgstr ""
+msgstr "Indstillinger"
 
 #: src/wxcurl/dialog.cpp:250 src/wxcurl/dialog.cpp:413
 msgid "Pause"
-msgstr ""
+msgstr "Pause"
 
 #: src/wxcurl/dialog.cpp:252
 msgid "Start"
-msgstr ""
+msgstr "Start"
 
 #: src/wxcurl/dialog.cpp:392
 msgid "Close"
-msgstr ""
+msgstr "Luk"
 
 #: src/wxcurl/dialog.cpp:403
 msgid "Resume"
-msgstr ""
+msgstr "Genoptag"
 
 #: src/wxcurl/dialog.cpp:406
 msgid "0 (transfer paused)"
-msgstr ""
+msgstr "0 (overførsel er afbrudt midlertidigt)"
 
 #: src/wxcurl/dialog.cpp:454
 msgid "Connection settings"
-msgstr ""
+msgstr "Forbindelsesindstillinger"
 
 #: src/wxcurl/dialog.cpp:454
 msgid "Connection settings used for the transfer:"
-msgstr ""
+msgstr "Forbindelsesindstillinger brugt til overførslen:"
 
 #: src/wxcurl/dialog.cpp:509
 msgid "0 (transfer completed)"
-msgstr ""
+msgstr "0 (overførsel afsluttet)"
 
 #: src/wxcurl/dialog.cpp:530
 msgid "Downloaded:"
-msgstr ""
+msgstr " Downloadet:"
 
 #: src/wxcurl/dialog.cpp:578
 msgid "Uploaded:"
-msgstr ""
+msgstr "Uploadet:"
 
 #: src/wxcurl/panel.cpp:111
 msgid "Username:"
-msgstr ""
+msgstr "Brugernavn:"
 
 #: src/wxcurl/panel.cpp:112
 msgid "Password:"
-msgstr ""
+msgstr "Kodeord:"
 
 #: src/wxcurl/panel.cpp:120
 msgid "Port:"
-msgstr ""
+msgstr "Port:"
 
 #: src/wxcurl/panel.cpp:134
 msgid "Proxy settings"
-msgstr ""
+msgstr "Proxy-indstillinger"
 
 #: src/wxcurl/panel.cpp:136
 msgid "Use proxy"
-msgstr ""
+msgstr "Brug proxy"
 
 #: src/wxcurl/panel.cpp:141
 msgid "Proxy host:"
-msgstr ""
+msgstr "Proxy-vært:"
 
 #: src/wxcurl/panel.cpp:142
 msgid "Proxy username:"
-msgstr ""
+msgstr "Proxy brugernavn:"
 
 #: src/wxcurl/panel.cpp:143
 msgid "Proxy password:"
-msgstr ""
+msgstr "Proxy kodeord:"
 
 #: src/wxcurl/panel.cpp:144
 msgid "Proxy port:"
-msgstr ""
+msgstr "Proxyport:"
 
