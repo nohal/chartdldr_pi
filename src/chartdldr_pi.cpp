@@ -772,6 +772,23 @@ void ChartDldrPanelImpl::EditSource( wxCommandEvent& event )
         pPlugIn->m_chartSources->Item(cat)->SetName(dialog->m_tSourceName->GetValue());
         pPlugIn->m_chartSources->Item(cat)->SetUrl(dialog->m_tChartSourceUrl->GetValue());
         pPlugIn->m_chartSources->Item(cat)->SetDir(dialog->m_dpChartDirectory->GetTextCtrlValue());
+        
+        m_lbChartSources->SetItem(cat, 0, pPlugIn->m_chartSources->Item(cat)->GetName());
+        m_lbChartSources->SetItem(cat, 1, _("(Please update first)"));
+        m_lbChartSources->SetItem(cat, 2, pPlugIn->m_chartSources->Item(cat)->GetDir());
+        wxURI url(pPlugIn->m_chartSources->Item(cat)->GetUrl());
+        wxFileName fn(url.GetPath());
+        fn.SetPath(pPlugIn->m_chartSources->Item(cat)->GetDir());
+        wxString path = fn.GetFullPath();
+        if (wxFileExists(path))
+        {
+            if (pPlugIn->m_pChartCatalog->LoadFromFile(path, true))
+            {
+                m_lbChartSources->SetItem(cat, 0, pPlugIn->m_pChartCatalog->title);
+                m_lbChartSources->SetItem(cat, 1, pPlugIn->m_pChartCatalog->dt_valid.Format(_T("%Y-%m-%d %H:%M")));
+                m_lbChartSources->SetItem(cat, 2, path);
+            }
+        }
 
         pPlugIn->SaveConfig();
         SetSource(cat);
