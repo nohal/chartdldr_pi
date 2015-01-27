@@ -196,6 +196,7 @@ private:
     void OnPopupClick(wxCommandEvent &evt);
     int GetSelectedCatalog();
     void AppendCatalog(ChartSource *cs);
+    void DoEditSource();
 
 protected:
       // Handlers for ChartDldrPanel events.
@@ -208,6 +209,7 @@ protected:
 	void DownloadCharts( wxCommandEvent& event );
     void OnShowLocalDir( wxCommandEvent& event );
     void OnPaint( wxPaintEvent& event );
+    void OnLeftDClick( wxMouseEvent& event );
       
     void CleanForm();
     void FillFromFile(wxString url, wxString dir, bool selnew = false, bool selupd = false);

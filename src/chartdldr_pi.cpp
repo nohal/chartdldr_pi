@@ -763,7 +763,7 @@ void ChartDldrPanelImpl::AddSource( wxCommandEvent& event )
     event.Skip();
 }
 
-void ChartDldrPanelImpl::EditSource( wxCommandEvent& event )
+void ChartDldrPanelImpl::DoEditSource()
 {
     if (!m_lbChartSources->GetSelectedItemCount())
         return;
@@ -800,7 +800,18 @@ void ChartDldrPanelImpl::EditSource( wxCommandEvent& event )
     }
     dialog->Close();
     dialog->Destroy();
-    wxDELETE(dialog);
+    wxDELETE(dialog);    
+}
+
+void ChartDldrPanelImpl::EditSource( wxCommandEvent& event )
+{
+    DoEditSource();
+    event.Skip();
+}
+
+void ChartDldrPanelImpl::OnLeftDClick( wxMouseEvent& event )
+{
+    DoEditSource();
     event.Skip();
 }
 
