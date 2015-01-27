@@ -622,8 +622,9 @@ bool ChartDldrPanelImpl::DownloadChart(wxString url, wxString file, wxString tit
             return true;
         case wxCDRF_FAILED:
         {
-            wxMessageBox(wxString::Format( _("Failed to Download: %s \nVerify there is a working Internet connection."), url.c_str() ), 
-            _("Chart Downloader"), wxOK | wxICON_ERROR);
+//            wxMessageBox(wxString::Format( _("Failed to Download: %s \nVerify there is a working Internet connection."), url.c_str() ), 
+//            _("Chart Downloader"), wxOK | wxICON_ERROR);
+            failed_downloads++;
             wxRemoveFile( file );
             return false;
         }
@@ -637,6 +638,7 @@ bool ChartDldrPanelImpl::DownloadChart(wxString url, wxString file, wxString tit
 
 void ChartDldrPanelImpl::DownloadCharts( wxCommandEvent& event )
 {
+      failed_downloads = 0;
       cancelled = false;
       if (!m_lbChartSources->GetSelectedItemCount())
       {
@@ -683,6 +685,9 @@ void ChartDldrPanelImpl::DownloadCharts( wxCommandEvent& event )
             }
       }
       SetSource(GetSelectedCatalog());
+      if( failed_downloads > 0 )
+      wxMessageBox( wxString::Format( _("%d out of %d charts failed to download.\nCheck the list, verify there is a working Internet connection and repeat the operation if needed."), failed_downloads ,downloading ), 
+                    _("Chart Downloader"), wxOK | wxICON_ERROR );
 }
 
 ChartDldrPanelImpl::~ChartDldrPanelImpl()

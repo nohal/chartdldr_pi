@@ -189,6 +189,7 @@ private:
     bool downloadInProgress;
     int to_download;
     int downloading;
+    int failed_downloads;
     bool cancelled;
     chartdldr_pi      *pPlugIn;
     bool m_populated;
