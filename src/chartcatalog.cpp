@@ -185,6 +185,7 @@ Chart::Chart(TiXmlNode * xmldata)
       lnm = NULL;
       coverage = new wxArrayOfPanels();
       TiXmlNode *child;
+      target_filename = wxEmptyString;
       for ( child = xmldata->FirstChild(); child != 0; child = child->NextSibling())
       {
             wxString s = wxString::FromUTF8(child->Value());
@@ -252,11 +253,17 @@ Chart::Chart(TiXmlNode * xmldata)
                         coverage->Add(new Panel(mychild));
                   }
             }
+            if (s == _T("target_filename"))
+            {
+                  target_filename = wxString::FromUTF8(child->FirstChild()->Value());
+            }
       }
 }
 
 wxString Chart::GetChartFilename()
 {
+      if( target_filename != wxEmptyString )
+            return target_filename;
       wxString file;
       wxStringTokenizer tk(zipfile_location, _T("/"));
       do

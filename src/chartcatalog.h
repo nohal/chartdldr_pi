@@ -93,6 +93,7 @@ public:
       wxArrayString *states;
       wxArrayString *regions;
       wxString zipfile_location;
+      wxString target_filename;
       wxDateTime zipfile_datetime;
       wxDateTime zipfile_datetime_iso8601;
       int zipfile_size;

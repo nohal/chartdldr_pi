@@ -86,7 +86,8 @@ US ENC Region 34 - Alaska: The Aleutians and Bristol Bay|http://www.charts.noaa.
 US ENC Region 36 - Alaska: Norton Sound to Beaufort Sea|http://www.charts.noaa.gov/ENCs/36Region_ENCProdCat.xml|{USERDATA}/ENC/US_REGION36|\
 US ENC Region 40 - Hawaiian Islands and U.S. Territories|http://www.charts.noaa.gov/ENCs/40Region_ENCProdCat.xml|{USERDATA}/ENC/US_REGION40|\
 US ACE Inland ENC charts|http://inland.agc.army.mil/enc/echarts/catalog/iencu37productscatalog.xml|{USERDATA}/ENC/US_INLAND|\
-Brasil RNC Nautical Charts|https://raw.githubusercontent.com/chartcatalogs/catalogs/master/BR_RNC_Catalog.xml|{USERDATA}/RNC/BRASIL|"
+Brasil RNC Nautical Charts|https://raw.githubusercontent.com/chartcatalogs/catalogs/master/BR_RNC_Catalog.xml|{USERDATA}/RNC/BRASIL|\
+Czech Republic Inland ENC Charts|https://raw.githubusercontent.com/chartcatalogs/catalogs/master/CZ_IENC_Catalog.xml|{USERDATA}/ENC/CZ_INLAND|"
 
 #define USERDATA "{USERDATA}"
 
@@ -132,7 +133,8 @@ public:
 
 //    Other public methods
       bool              SaveConfig(void);
-      bool              ExtractZipFiles(const wxString& aZipFile, const wxString& aTargetDir, bool aStripPath = true, wxDateTime aMTime = wxDateTime::Now());
+      bool              ProcessFile(const wxString& aFile, const wxString& aTargetDir, bool aStripPath = true, wxDateTime aMTime = wxDateTime::Now());
+      bool              ExtractZipFiles(const wxString& aZipFile, const wxString& aTargetDir, bool aStripPath = true, wxDateTime aMTime = wxDateTime::Now(), bool aRemoveZip = false);
 
 //    Public properties
       wxArrayOfChartSources *m_chartSources;

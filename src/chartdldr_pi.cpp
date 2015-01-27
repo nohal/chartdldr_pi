@@ -666,7 +666,7 @@ void ChartDldrPanelImpl::DownloadCharts( wxCommandEvent& event )
                         this->Enable();
                         return;
                   }
-                  //construct local zipfile path
+                  //construct local file path
                   wxString file = pPlugIn->m_pChartCatalog->charts->Item(i).GetChartFilename();
                   wxFileName fn;
                   fn.SetFullName(file);
@@ -679,8 +679,7 @@ void ChartDldrPanelImpl::DownloadCharts( wxCommandEvent& event )
                   if( DownloadChart(url.BuildURI(), path, title) )
                   {
                         wxFileName fn(path);
-                        pPlugIn->ExtractZipFiles(path, fn.GetPath(), true, pPlugIn->m_pChartCatalog->charts->Item(i).GetUpdateDatetime());
-                        wxRemoveFile(path);
+                        pPlugIn->ProcessFile(path, fn.GetPath(), true, pPlugIn->m_pChartCatalog->charts->Item(i).GetUpdateDatetime());
                   }
             }
       }
@@ -820,7 +819,36 @@ void ChartDldrPanelImpl::OnLeftDClick( wxMouseEvent& event )
     event.Skip();
 }
 
-bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTargetDir, bool aStripPath, wxDateTime aMTime) {
+bool chartdldr_pi::ProcessFile(const wxString& aFile, const wxString& aTargetDir, bool aStripPath, wxDateTime aMTime)
+{
+    if( aFile.Lower().EndsWith(_T("zip")) ) //Zip compressed
+        return ExtractZipFiles( aFile, aTargetDir, aStripPath, aMTime, true);
+    else //Uncompressed
+    {
+        wxFileName fn(aFile);
+        if( fn.GetPath() != aTargetDir ) //We have to move the file somewhere
+        {
+            if( !wxDirExists(aTargetDir) )
+            {
+                if( wxFileName::Mkdir(aTargetDir, 0755, wxPATH_MKDIR_FULL) )
+                {
+                    if( !wxRenameFile(aFile, aTargetDir) )
+                        return false;
+                }
+                else
+                    return false;
+            }
+        }
+        wxString name = fn.GetFullName();
+        fn.Clear();
+        fn.Assign(aTargetDir, name);
+        fn.SetTimes(&aMTime, &aMTime, &aMTime);
+    }
+    return true;
+}
+
+bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTargetDir, bool aStripPath, wxDateTime aMTime, bool aRemoveZip)
+{
       bool ret = true;
 
       std::auto_ptr<wxZipEntry> entry(new wxZipEntry());
@@ -886,6 +914,9 @@ bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTa
             }
 
       } while(false);
+      
+      if( aRemoveZip )
+        wxRemoveFile(aZipFile);
 
       return ret;
 }
