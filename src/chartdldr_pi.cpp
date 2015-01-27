@@ -887,23 +887,24 @@ bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTa
 
 ChartDldrGuiAddSourceDlg::ChartDldrGuiAddSourceDlg( wxWindow* parent ) : AddSourceDlg( parent )
 {
-      m_base_path = wxEmptyString;
-      m_chartSources = new wxArrayOfChartSources();
-      wxStringTokenizer st(_T(NOAA_CHART_SOURCES), _T("|"), wxTOKEN_DEFAULT);
-      while ( st.HasMoreTokens() )
-      {
-            wxString s1 = st.GetNextToken();
-            wxString s2 = st.GetNextToken();
-            wxString s3 = st.GetNextToken();
-            m_chartSources->Add(new ChartSource(s1, s2, s3));
-      }
-      m_rbPredefined->SetValue(true);
+    m_base_path = wxEmptyString;
+    m_chartSources = new wxArrayOfChartSources();
+    wxStringTokenizer st(_T(NOAA_CHART_SOURCES), _T("|"), wxTOKEN_DEFAULT);
+    while ( st.HasMoreTokens() )
+    {
+        wxString s1 = st.GetNextToken();
+        wxString s2 = st.GetNextToken();
+        wxString s3 = st.GetNextToken();
+        m_chartSources->Add(new ChartSource(s1, s2, s3));
+    }
+    m_rbPredefined->SetValue(true);
 
-      for (size_t i = 0; i < m_chartSources->GetCount(); i++)
-      {
-            m_cbChartSources->Append(m_chartSources->Item(i)->GetName());
-      }
-
+    for (size_t i = 0; i < m_chartSources->GetCount(); i++)
+    {
+        m_cbChartSources->Append(m_chartSources->Item(i)->GetName());
+    }
+    if( parent )
+        SetSize(parent->GetSize().GetWidth(), GetSize().GetHeight());
 }
 
 ChartDldrGuiAddSourceDlg::~ChartDldrGuiAddSourceDlg()
