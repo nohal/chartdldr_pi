@@ -373,6 +373,7 @@ void ChartDldrPanelImpl::SetSource(int id)
     
     m_bDeleteSource->Enable( id >= 0 );
     m_bUpdateChartList->Enable( id >= 0 );
+    m_bEditSource->Enable( id >= 0 );
 
     CleanForm();
     if (id >= 0 && id < (int)pPlugIn->m_chartSources->Count())
