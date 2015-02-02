@@ -62,11 +62,34 @@ ChartCatalog::~ChartCatalog()
       wxDELETE(charts);
 }
 
-bool ChartCatalog::LoadFromXml(TiXmlDocument * doc, bool headerOnly)
+wxDateTime ChartCatalog::GetReleaseDate()
+{
+    if (!dt_valid.IsValid())
+    {
+        // date-time was invalid so we will create it from time_created and date_created
+        // If they are not valid then we return an invalid date for debugging purposes
+        if ( date_created.IsValid() && time_created.IsValid() )
+        {
+            dt_valid.ParseDate(date_created.FormatDate());
+            dt_valid.ParseTime(time_created.FormatTime());
+            dt_valid.MakeFromTimezone(wxDateTime::UTC);
+        }
+    }
+      wxASSERT(dt_valid.IsValid());
+      return dt_valid;
+}
+ 
+ bool ChartCatalog::LoadFromXml(TiXmlDocument * doc, bool headerOnly)
 {
       TiXmlElement * root = doc->RootElement();
       wxString rootName = wxString::FromUTF8( root->Value() );
       charts->Clear();
+        dt_valid = wxInvalidDateTime;      // Invalidate all dates
+        date_created = dt_valid;            // so dates of one catalog
+        time_created = dt_valid;            // don't propagate into another
+        date_valid = dt_valid;
+        title = _T("Title not found.");      // Invalidate the title incase we read a bad file
+
       if (rootName.StartsWith(_T("RncProductCatalog")))
       {
             if (!ParseNoaaHeader(root->FirstChildElement()))
@@ -126,18 +149,22 @@ bool ChartCatalog::ParseNoaaHeader(TiXmlElement * xmldata)
             if (s == _T("date_created"))
             {
                   date_created.ParseDate(wxString::FromUTF8(child->FirstChild()->Value()));
+                  wxASSERT(date_created.IsValid());
             }
             if (s == _T("time_created"))
             {
                   time_created.ParseTime(wxString::FromUTF8(child->FirstChild()->Value()));
+                  wxASSERT(time_created.IsValid());
             }
             if (s == _T("date_valid"))
             {
                   date_valid.ParseDate(wxString::FromUTF8(child->FirstChild()->Value()));
+                  wxASSERT(date_valid.IsValid());
             }
             if (s == _T("time_valid"))
             {
                   time_valid.ParseTime(wxString::FromUTF8(child->FirstChild()->Value()));
+                  wxASSERT(time_valid.IsValid());
             }
             if (s == _T("dt_valid"))
             {
@@ -145,6 +172,7 @@ bool ChartCatalog::ParseNoaaHeader(TiXmlElement * xmldata)
                   dt_valid.ParseDate(tk.GetNextToken());
                   dt_valid.ParseTime(tk.GetNextToken());
                   dt_valid.MakeFromTimezone(wxDateTime::UTC);
+                  wxASSERT(dt_valid.IsValid());
             }
             if (s == _T("ref_spec"))
             {

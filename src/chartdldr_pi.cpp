@@ -530,7 +530,7 @@ void ChartDldrPanelImpl::AppendCatalog(ChartSource *cs)
         if (pPlugIn->m_pChartCatalog->LoadFromFile(path, true))
         {
             m_lbChartSources->SetItem(id, 0, pPlugIn->m_pChartCatalog->title);
-            m_lbChartSources->SetItem(id, 1, pPlugIn->m_pChartCatalog->dt_valid.Format(_T("%Y-%m-%d %H:%M")));
+            m_lbChartSources->SetItem(id, 1, pPlugIn->m_pChartCatalog->GetReleaseDate().Format(_T("%Y-%m-%d %H:%M")));
             m_lbChartSources->SetItem(id, 2, path);
         }
     }
@@ -579,7 +579,7 @@ void ChartDldrPanelImpl::UpdateChartList( wxCommandEvent& event )
             FillFromFile(url.GetPath(), fn.GetPath() ,pPlugIn->m_preselect_new, pPlugIn->m_preselect_updated);
             long id = GetSelectedCatalog();
             m_lbChartSources->SetItem(id, 0, pPlugIn->m_pChartCatalog->title);
-            m_lbChartSources->SetItem(id, 1, pPlugIn->m_pChartCatalog->dt_valid.Format(_T("%Y-%m-%d %H:%M")));
+            m_lbChartSources->SetItem(id, 1, pPlugIn->m_pChartCatalog->GetReleaseDate().Format(_T("%Y-%m-%d %H:%M")));
             m_lbChartSources->SetItem(id, 2, cs->GetDir());
             break;
         }
@@ -797,7 +797,7 @@ void ChartDldrPanelImpl::DoEditSource()
             if (pPlugIn->m_pChartCatalog->LoadFromFile(path, true))
             {
                 m_lbChartSources->SetItem(cat, 0, pPlugIn->m_pChartCatalog->title);
-                m_lbChartSources->SetItem(cat, 1, pPlugIn->m_pChartCatalog->dt_valid.Format(_T("%Y-%m-%d %H:%M")));
+                m_lbChartSources->SetItem(cat, 1, pPlugIn->m_pChartCatalog->GetReleaseDate().Format(_T("%Y-%m-%d %H:%M")));
                 m_lbChartSources->SetItem(cat, 2, path);
             }
         }
