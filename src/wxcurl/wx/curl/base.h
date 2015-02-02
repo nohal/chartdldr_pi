@@ -64,7 +64,7 @@ class WXDLLIMPEXP_CURL wxCurlProgressBaseEvent : public wxEvent
 {
 public:
     wxCurlProgressBaseEvent(int id, wxEventType type,
-                        wxCurlBase *p = NULL, const wxString &url = wxEmptyString)
+                        wxCurlBase *p = NULL, const std::string &url = "")
         : wxEvent(id, type) { m_pCURL = p; m_szURL = url; m_dt = wxDateTime::Now(); }
 
 
@@ -101,18 +101,24 @@ public:     // wxTimeSpan getters
 public:     // wxString getters
 
     //! Returns the URL you are transfering from.
-    wxString GetURL() const { return m_szURL; }
+    std::string GetURL() const { return m_szURL; }
 
     //! Returns the current download/upload speed in a human readable format.
-    wxString GetHumanReadableSpeed(const wxString &inv = _("Not available"), int prec = 1) const;
+    std::string GetHumanReadableSpeed(const std::string &inv = GetNAText(), int prec = 1) const;
 
     //! Returns the total bytes to download in a human-readable format.
-    wxString GetHumanReadableTotalBytes(const wxString &inv = _("Not available"), int prec = 1) const
-        { return wxFileName::GetHumanReadableSize(wxULongLong((unsigned long)GetTotalBytes()), inv, prec); }
+    std::string GetHumanReadableTotalBytes(const std::string &inv = GetNAText(), int prec = 1) const
+        {
+            wxString s(inv.c_str(), wxConvUTF8);
+            return std::string(wxFileName::GetHumanReadableSize(wxULongLong((unsigned long)GetTotalBytes()), s, prec).mb_str());
+        }
 
     //! Returns the currently transferred bytes in a human-readable format.
-    wxString GetHumanReadableTransferredBytes(const wxString &inv = _("Not available"), int prec = 1) const
-        { return wxFileName::GetHumanReadableSize(wxULongLong((unsigned long)GetTransferredBytes()), inv, prec); }
+    std::string GetHumanReadableTransferredBytes(const std::string &inv = GetNAText(), int prec = 1) const
+        {
+            wxString s(inv.c_str(), wxConvUTF8);
+            return std::string(wxFileName::GetHumanReadableSize(wxULongLong((unsigned long)GetTransferredBytes()), s, prec).mb_str());
+        }
 
 
 public:     // pure virtual functions
@@ -125,12 +131,19 @@ public:     // pure virtual functions
 
 protected:
     wxCurlBase *m_pCURL;
-    wxString m_szURL;
+    std::string m_szURL;
 
     // NOTE: we need to store this date time to use it in GetElapsedTime:
     //       we cannot use wxDateTime::Now() there because once the event is constructed,
     //       GetElapsedTime() needs to return always the same value!
     wxDateTime m_dt;
+    
+public:
+    static std::string GetNAText()
+    {
+        wxString s = _("Not available");
+        return std::string(s.mb_str());
+    }
 };
 
 
@@ -149,7 +162,7 @@ public:
     wxCurlDownloadEvent();
     wxCurlDownloadEvent(int id, wxCurlBase *originator,
                         const double& rDownloadTotal, const double& rDownloadNow, 
-                        const wxString& szURL = wxEmptyString);
+                        const std::string& szURL = "");
     wxCurlDownloadEvent(const wxCurlDownloadEvent& event);
 
     virtual wxEvent* Clone() const { return new wxCurlDownloadEvent(*this); }
@@ -163,8 +176,11 @@ public:
     double GetTotalBytes() const { return m_rDownloadTotal; }
 
     //! Returns the currently downloaded bytes in a human-readable format.
-    wxString GetHumanReadableDownloadedBytes(const wxString &inv = _("Not available"), int prec = 1) const
-        { return wxFileName::GetHumanReadableSize(wxULongLong((unsigned long)m_rDownloadNow), inv, prec); }
+    std::string GetHumanReadableDownloadedBytes(const std::string &inv = wxCurlProgressBaseEvent::GetNAText(), int prec = 1) const
+        {
+            wxString s(inv.c_str(), wxConvUTF8);
+            return std::string(wxFileName::GetHumanReadableSize(wxULongLong((unsigned long)m_rDownloadNow), s, prec).mb_str());
+        }
 
 
 protected:
@@ -194,7 +210,7 @@ public:
     wxCurlUploadEvent();
     wxCurlUploadEvent(int id, wxCurlBase *originator,
                         const double& rUploadTotal, const double& rUploadNow, 
-                        const wxString& szURL = wxEmptyString);
+                        const std::string& szURL = "");
     wxCurlUploadEvent(const wxCurlUploadEvent& event);
 
     virtual wxEvent* Clone() const { return new wxCurlUploadEvent(*this); }
@@ -208,8 +224,11 @@ public:
     double GetTotalBytes() const { return m_rUploadTotal; }
 
     //! Returns the currently uploaded bytes in a human-readable format.
-    wxString GetHumanReadableUploadedBytes(const wxString &inv = _("Not available"), int prec = 1) const
-        { return wxFileName::GetHumanReadableSize(wxULongLong((unsigned long)m_rUploadNow), inv, prec); }
+    std::string GetHumanReadableUploadedBytes(const std::string &inv = wxCurlProgressBaseEvent::GetNAText(), int prec = 1) const
+        {
+            wxString s(inv.c_str(), wxConvUTF8);
+            return std::string(wxFileName::GetHumanReadableSize(wxULongLong((unsigned long)m_rUploadNow), s, prec).mb_str());
+        }
 
 protected:
     double m_rUploadTotal, m_rUploadNow;
@@ -238,16 +257,16 @@ class WXDLLIMPEXP_CURL wxCurlBeginPerformEvent : public wxEvent
 {
 public:
     wxCurlBeginPerformEvent();
-    wxCurlBeginPerformEvent(int id, const wxString& szURL);
+    wxCurlBeginPerformEvent(int id, const std::string& szURL);
     wxCurlBeginPerformEvent(const wxCurlBeginPerformEvent& event);
 
     virtual wxEvent* Clone() const { return new wxCurlBeginPerformEvent(*this); }
 
     //! Returns the URL you are going to transfering from/to.
-    wxString GetURL() const { return m_szURL; }
+    std::string GetURL() const { return m_szURL; }
 
 protected:
-    wxString m_szURL;
+    std::string m_szURL;
 
 private:
     DECLARE_DYNAMIC_CLASS(wxCurlBeginPerformEvent);
@@ -273,13 +292,13 @@ class WXDLLIMPEXP_CURL wxCurlEndPerformEvent : public wxEvent
 {
 public:
     wxCurlEndPerformEvent();
-    wxCurlEndPerformEvent(int id, const wxString& szURL, const long& iResponseCode);
+    wxCurlEndPerformEvent(int id, const std::string& szURL, const long& iResponseCode);
     wxCurlEndPerformEvent(const wxCurlEndPerformEvent& event);
 
     virtual wxEvent* Clone() const { return new wxCurlEndPerformEvent(*this); }
 
     //! Returns the URL you are going to transfering from/to.
-    wxString GetURL() const { return m_szURL; }
+    std::string GetURL() const { return m_szURL; }
 
     //! Returns the response code for the operation.
     long GetResponseCode() const { return m_iResponseCode; }
@@ -288,7 +307,7 @@ public:
     bool IsSuccessful() const { return ((m_iResponseCode > 199) && (m_iResponseCode < 300)); }
 
 protected:
-    wxString	m_szURL;
+    std::string	m_szURL;
     long		m_iResponseCode;
 
 private:
@@ -416,13 +435,13 @@ public:
     //! Sets the base URL. This allows you to specify a 'base' URL if you
     //! are performing multiple actions.
     void		SetBaseURL(const wxString& szBaseURL);
-    wxString	GetBaseURL() const;
+    std::string	GetBaseURL() const;
 
     //! Sets the current URL. The 'base url' will be prepended to the given string.
     void        SetURL(const wxString &szRelativeURL);
 
     //! Returns the current 'full' URL. I.e. the real URL being used for the transfer.
-    wxString    GetURL() const;
+    std::string    GetURL() const;
 
     //! Sets the host Port.  This allows you to specify a specific (non-
     //! default port) if you like.  The value -1 means that the default port
@@ -433,16 +452,16 @@ public:
     //! Sets the Username. If no username is
     //! needed, simply assign an empty string (which is the default).
     void		SetUsername(const wxString& szUsername);
-    wxString	GetUsername() const;
+    std::string	GetUsername() const;
 
     //! Sets the Password. If no password is
     //! needed, simply assign an empty string (which is the default).
     void		SetPassword(const wxString& szPassword);
-    wxString	GetPassword() const;
+    std::string	GetPassword() const;
 
     //! Returns the header of the response.
-    wxString	GetResponseHeader() const;
-    wxString	GetResponseBody() const;		// May only contain data on NON-GET calls.
+    std::string	GetResponseHeader() const;
+    std::string	GetResponseBody() const;		// May only contain data on NON-GET calls.
     long		GetResponseCode() const;
 
     //! Should the proxy be used?
@@ -451,15 +470,15 @@ public:
 
     //! Sets proxy host.
     void		SetProxyHost(const wxString& szProxyHost);
-    wxString	GetProxyHost() const;
+    std::string	GetProxyHost() const;
 
     //! Sets the username for proxy access (if needed).
     void		SetProxyUsername(const wxString& szProxyUsername);
-    wxString	GetProxyUsername() const;
+    std::string	GetProxyUsername() const;
 
     //! Sets the password for proxy access (if needed).
     void		SetProxyPassword(const wxString& szProxyPassword);
-    wxString	GetProxyPassword() const;
+    std::string	GetProxyPassword() const;
 
     //! Sets the port for proxy access.
     void		SetProxyPort(const long& iProxyPort);
@@ -478,12 +497,12 @@ public:
     bool		GetVerboseString(wxString& szStream) const;
 
     //! Returns a generic, short string describing the last occurred error.
-    wxString    GetErrorString() const;
+    std::string    GetErrorString() const;
 
     //! Returns a short string with a detailed description of last occurred error.
     //! This is typically something technical which you may want to hide from the
     //! end users of your application (and e.g. show only in log files).
-    wxString    GetDetailedErrorString() const;
+    std::string    GetDetailedErrorString() const;
 
 
     // Static LibCURL Initialization Methods - Call At Program Init and Close...
@@ -498,10 +517,10 @@ public:
     // Static LibCURL Utility Methods
 
     static wxDateTime GetDateFromString(const wxString& szDate);
-    static wxString GetURLEncodedString(const wxString& szData);
-    static wxString GetStringFromURLEncoded(const wxString& szData);
+    static std::string GetURLEncodedString(const wxString& szData);
+    static std::string GetStringFromURLEncoded(const wxString& szData);
 
-    static wxString GetCURLVersion();
+    static std::string GetCURLVersion();
 
 
 protected:      // protected utils used by wxCurl*Thread classes

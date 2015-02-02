@@ -241,14 +241,15 @@ wxTimeSpan wxCurlProgressBaseEvent::GetEstimatedRemainingTime() const
     return wxTimeSpan(0);       // probably est==0 because GetTotalBytes()==0
 }
 
-wxString wxCurlProgressBaseEvent::GetHumanReadableSpeed(const wxString &invalid, int precision) const
+std::string wxCurlProgressBaseEvent::GetHumanReadableSpeed(const std::string &invalid, int precision) const
 {
     double speed = GetSpeed();
     if (speed == 0 || wxIsNaN(speed))
         return invalid;
 
     wxULongLong ull((wxULongLong_t)speed);
-    return wxFileName::GetHumanReadableSize(ull, invalid, precision) + wxS("/s");
+    wxString s(invalid.c_str(), wxConvUTF8);
+    return std::string( wxFileName::GetHumanReadableSize(ull, s, precision).mb_str() ) + "/s";
 }
 
 
@@ -272,7 +273,7 @@ wxCurlDownloadEvent::wxCurlDownloadEvent()
 
 wxCurlDownloadEvent::wxCurlDownloadEvent(int id, wxCurlBase *originator,
                                         const double& rDownloadTotal, const double& rDownloadNow, 
-                                        const wxString& szURL /*= wxEmptyString*/)
+                                        const std::string& szURL /*= wxEmptyString*/)
 : wxCurlProgressBaseEvent(id, wxCURL_DOWNLOAD_EVENT, originator, szURL),
 m_rDownloadTotal(rDownloadTotal), m_rDownloadNow(rDownloadNow)
 {
@@ -307,7 +308,7 @@ wxCurlUploadEvent::wxCurlUploadEvent()
 
 wxCurlUploadEvent::wxCurlUploadEvent(int id, wxCurlBase *originator,
                                         const double& rUploadTotal, const double& rUploadNow, 
-                                        const wxString& szURL /*= wxEmptyString*/)
+                                        const std::string& szURL /*= wxEmptyString*/)
 : wxCurlProgressBaseEvent(id, wxCURL_UPLOAD_EVENT, originator, szURL),
 m_rUploadTotal(rUploadTotal), m_rUploadNow(rUploadNow)
 {
@@ -339,7 +340,7 @@ wxCurlBeginPerformEvent::wxCurlBeginPerformEvent()
 {
 }
 
-wxCurlBeginPerformEvent::wxCurlBeginPerformEvent(int id, const wxString& szURL)
+wxCurlBeginPerformEvent::wxCurlBeginPerformEvent(int id, const std::string& szURL)
 : wxEvent(id, wxCURL_BEGIN_PERFORM_EVENT),
 m_szURL(szURL)
 {
@@ -369,7 +370,7 @@ m_iResponseCode(0)
 {
 }
 
-wxCurlEndPerformEvent::wxCurlEndPerformEvent(int id, const wxString& szURL, const long& iResponseCode)
+wxCurlEndPerformEvent::wxCurlEndPerformEvent(int id, const std::string& szURL, const long& iResponseCode)
 : wxEvent(id, wxCURL_END_PERFORM_EVENT),
 m_szURL(szURL),
 m_iResponseCode(iResponseCode)
@@ -506,7 +507,8 @@ bool wxCurlBase::Perform()
 
     if((m_nFlags & wxCURL_SEND_BEGINEND_EVENTS) && m_pEvtHandler)
     {
-        wxCurlBeginPerformEvent bgnEvent(m_nId, wxCURL_BUF2STRING(m_szCurrFullURL));
+        wxString s = wxCURL_BUF2STRING(m_szCurrFullURL);
+        wxCurlBeginPerformEvent bgnEvent(m_nId, std::string(s.mb_str()));
         wxPostEvent(m_pEvtHandler, bgnEvent);
     }
 
@@ -522,7 +524,8 @@ bool wxCurlBase::Perform()
 
     if((m_nFlags & wxCURL_SEND_BEGINEND_EVENTS) && m_pEvtHandler)
     {
-        wxCurlEndPerformEvent endEvent(m_nId, wxCURL_BUF2STRING(m_szCurrFullURL), m_iResponseCode);
+        wxString s = wxCURL_BUF2STRING(m_szCurrFullURL);
+        wxCurlEndPerformEvent endEvent(m_nId, std::string(s.mb_str()), m_iResponseCode);
         wxPostEvent(m_pEvtHandler, endEvent);
     }
 
@@ -613,9 +616,10 @@ void wxCurlBase::SetBaseURL(const wxString& szBaseURL)
     m_szBaseURL = wxCURL_STRING2BUF(szBaseURL);
 }
 
-wxString wxCurlBase::GetBaseURL() const
+std::string wxCurlBase::GetBaseURL() const
 {
-    return wxCURL_BUF2STRING(m_szBaseURL);
+    wxString s = wxCURL_BUF2STRING(m_szBaseURL);
+    return std::string(s.mb_str());
 }
 
 void wxCurlBase::SetURL(const wxString& szRelativeURL)
@@ -624,9 +628,10 @@ void wxCurlBase::SetURL(const wxString& szRelativeURL)
     m_szCurrFullURL = wxCURL_STRING2BUF(str);
 }
 
-wxString wxCurlBase::GetURL() const
+std::string wxCurlBase::GetURL() const
 { 
-    return wxCURL_BUF2STRING(m_szCurrFullURL);
+    wxString s = wxCURL_BUF2STRING(m_szCurrFullURL);
+    return std::string(s.mb_str());
 }
 
 void wxCurlBase::SetPort(const long& iPort)
@@ -644,9 +649,10 @@ void wxCurlBase::SetUsername(const wxString& szUsername)
     m_szUsername = wxCURL_STRING2BUF(szUsername);
 }
 
-wxString wxCurlBase::GetUsername() const
+std::string wxCurlBase::GetUsername() const
 {
-    return wxCURL_BUF2STRING(m_szUsername);
+    wxString s = wxCURL_BUF2STRING(m_szUsername);
+    return std::string(s.mb_str());
 }
 
 void wxCurlBase::SetPassword(const wxString& szPassword)
@@ -654,19 +660,22 @@ void wxCurlBase::SetPassword(const wxString& szPassword)
     m_szPassword = wxCURL_STRING2BUF(szPassword);
 }
 
-wxString wxCurlBase::GetPassword() const
+std::string wxCurlBase::GetPassword() const
 {
-    return wxCURL_BUF2STRING(m_szPassword);
+    wxString s = wxCURL_BUF2STRING(m_szPassword);
+    return std::string(s.mb_str());
 }
 
-wxString wxCurlBase::GetResponseHeader() const
+std::string wxCurlBase::GetResponseHeader() const
 {
-    return wxCURL_BUF2STRING(m_szResponseHeader);
+    wxString s = wxCURL_BUF2STRING(m_szResponseHeader);
+    return std::string(s.mb_str());
 }
 
-wxString wxCurlBase::GetResponseBody() const
+std::string wxCurlBase::GetResponseBody() const
 {
-    return wxCURL_BUF2STRING(m_szResponseBody);
+    wxString s = wxCURL_BUF2STRING(m_szResponseBody);
+    return std::string(s.mb_str());
 }
 
 long wxCurlBase::GetResponseCode() const
@@ -674,14 +683,16 @@ long wxCurlBase::GetResponseCode() const
     return m_iResponseCode;
 }
 
-wxString wxCurlBase::GetDetailedErrorString() const
+std::string wxCurlBase::GetDetailedErrorString() const
 {
-    return wxString((const char*)m_szDetailedErrorBuffer, wxConvLibc);
+    wxString s = wxString((const char*)m_szDetailedErrorBuffer, wxConvLibc);
+    return std::string(s.mb_str());
 }
 
-wxString wxCurlBase::GetErrorString() const
+std::string wxCurlBase::GetErrorString() const
 {
-    return wxCURL_BUF2STRING(m_szLastError);
+    wxString s = wxCURL_BUF2STRING(m_szLastError);
+    return std::string(s.mb_str());
 }
 
 void wxCurlBase::UseProxy(const bool& bUseProxy)
@@ -699,9 +710,10 @@ void wxCurlBase::SetProxyHost(const wxString& szProxyHost)
     m_szProxyHost = wxCURL_STRING2BUF(szProxyHost);
 }
 
-wxString wxCurlBase::GetProxyHost() const
+std::string wxCurlBase::GetProxyHost() const
 {
-    return wxCURL_BUF2STRING(m_szProxyHost);
+    wxString s = wxCURL_BUF2STRING(m_szProxyHost);
+    return std::string(s.mb_str());
 }
 
 void wxCurlBase::SetProxyUsername(const wxString& szProxyUsername)
@@ -709,9 +721,10 @@ void wxCurlBase::SetProxyUsername(const wxString& szProxyUsername)
     m_szProxyUsername = wxCURL_STRING2BUF(szProxyUsername);
 }
 
-wxString wxCurlBase::GetProxyUsername() const
+std::string wxCurlBase::GetProxyUsername() const
 {
-    return wxCURL_BUF2STRING(m_szProxyUsername);
+    wxString s = wxCURL_BUF2STRING(m_szProxyUsername);
+    return std::string(s.mb_str());
 }
 
 void wxCurlBase::SetProxyPassword(const wxString& szProxyPassword)
@@ -719,9 +732,10 @@ void wxCurlBase::SetProxyPassword(const wxString& szProxyPassword)
     m_szProxyPassword = wxCURL_STRING2BUF(szProxyPassword);
 }
 
-wxString wxCurlBase::GetProxyPassword() const
+std::string wxCurlBase::GetProxyPassword() const
 {
-    return wxCURL_BUF2STRING(m_szProxyPassword);
+    wxString s = wxCURL_BUF2STRING(m_szProxyPassword);
+    return std::string(s.mb_str());
 }
 
 void wxCurlBase::SetProxyPort(const long& iProxyPort)
@@ -920,7 +934,7 @@ wxDateTime wxCurlBase::GetDateFromString(const wxString& szDate)
     return wxDateTime(curl_getdate((const char*)(szDate.c_str()), &now));
 }
 
-wxString wxCurlBase::GetURLEncodedString(const wxString& szData)
+std::string wxCurlBase::GetURLEncodedString(const wxString& szData)
 {
     char* pszRetVal = curl_escape((const char*)(szData.c_str()), szData.Len());
 
@@ -930,13 +944,13 @@ wxString wxCurlBase::GetURLEncodedString(const wxString& szData)
 
         curl_free(pszRetVal);
 
-        return szRetVal;
+        return std::string(szRetVal.mb_str());
     }
 
-    return wxEmptyString;
+    return "";
 }
 
-wxString wxCurlBase::GetStringFromURLEncoded(const wxString& szData)
+std::string wxCurlBase::GetStringFromURLEncoded(const wxString& szData)
 {
     char* pszRetVal = curl_unescape((const char*)(szData.c_str()), szData.Len());
 
@@ -946,13 +960,13 @@ wxString wxCurlBase::GetStringFromURLEncoded(const wxString& szData)
 
         curl_free(pszRetVal);
 
-        return szRetVal;
+        return std::string(szRetVal.mb_str());
     }
 
-    return wxEmptyString;
+    return "";
 }
 
-wxString wxCurlBase::GetCURLVersion()
+std::string wxCurlBase::GetCURLVersion()
 {
-    return wxString(curl_version(), wxConvUTF8);
+    return std::string(curl_version());
 }

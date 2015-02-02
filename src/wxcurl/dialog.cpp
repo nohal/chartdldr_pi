@@ -300,15 +300,18 @@ void wxCurlTransferDialog::UpdateLabels(wxCurlProgressBaseEvent *ev)
 
     if (m_pSize)
     {
-        wxString currsize = ev->GetHumanReadableTransferredBytes(),
-                totalsize = ev->GetHumanReadableTotalBytes();
+        wxString currsize(ev->GetHumanReadableTransferredBytes().c_str(), wxConvUTF8);
+        wxString totalsize(ev->GetHumanReadableTotalBytes().c_str(), wxConvUTF8);
         m_pSize->SetLabel(
             wxString::Format(wxS("%s / %s  (%0.1f%%)"),
                                 currsize.c_str(), totalsize.c_str(), ev->GetPercent()));
     }
 
     if (m_pSpeed)
-        m_pSpeed->SetLabel(ev->GetHumanReadableSpeed());
+    {
+        wxString s(ev->GetHumanReadableSpeed().c_str(), wxConvUTF8);
+        m_pSpeed->SetLabel(s);
+    }
 }
 
 bool wxCurlTransferDialog::HandleCurlThreadError(wxCurlThreadError err, wxCurlBaseThread *p, const wxString &url)
@@ -341,7 +344,7 @@ bool wxCurlTransferDialog::HandleCurlThreadError(wxCurlThreadError err, wxCurlBa
             {
                 wxString err = wxS("unknown");
                 if (p->GetCurlSession())
-                    err = p->GetCurlSession()->GetErrorString();
+                    err = wxString(p->GetCurlSession()->GetErrorString().c_str(), wxConvUTF8);
                 wxLogError(wxS("Network error: %s"), err.c_str());
             }
             break;
