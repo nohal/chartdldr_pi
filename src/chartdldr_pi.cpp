@@ -243,7 +243,7 @@ bool chartdldr_pi::LoadConfig(void)
             
             wxFileName fn(wxStandardPaths::Get().GetDocumentsDir(), wxEmptyString);
             fn.AppendDir(_T(CHART_DIR));
-            pConf->Read ( _T ( "BaseChartDir" ), &m_base_chart_dir,  fn.GetPath(true) );
+            pConf->Read ( _T ( "BaseChartDir" ), &m_base_chart_dir,  fn.GetPath() );
             pConf->Read ( _T ( "PreselectNew" ), &m_preselect_new, false );
             pConf->Read ( _T ( "PreselectUpdated" ), &m_preselect_updated, true );
             return true;
