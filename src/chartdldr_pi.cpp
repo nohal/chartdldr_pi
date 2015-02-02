@@ -34,6 +34,7 @@
 #endif //precompiled headers
 
 #include "chartdldr_pi.h"
+#include <wx/stdpaths.h>
 #include <wx/url.h>
 #include <wx/progdlg.h>
 #include <wx/sstream.h>
@@ -240,7 +241,9 @@ bool chartdldr_pi::LoadConfig(void)
             pConf->Read ( _T ( "ChartSources" ), &m_schartdldr_sources, wxEmptyString );
             pConf->Read ( _T ( "Source" ), &m_selected_source, -1 );
             
-            pConf->Read ( _T ( "BaseChartDir" ), &m_base_chart_dir, *GetpPrivateApplicationDataLocation() + _T(CHART_DIR) );
+            wxFileName fn(wxStandardPaths::Get().GetDocumentsDir(), wxEmptyString);
+            fn.AppendDir(_T(CHART_DIR));
+            pConf->Read ( _T ( "BaseChartDir" ), &m_base_chart_dir,  fn.GetPath(true) );
             pConf->Read ( _T ( "PreselectNew" ), &m_preselect_new, false );
             pConf->Read ( _T ( "PreselectUpdated" ), &m_preselect_updated, true );
             return true;
@@ -955,6 +958,7 @@ wxString ChartDldrGuiAddSourceDlg::FixPath(wxString path)
     wxString s = path;
     s.Replace(_T("/"), sep, true);
     s.Replace(_T(USERDATA), m_base_path);
+    s.Replace(sep + sep, sep);
     return s;
 }
 
