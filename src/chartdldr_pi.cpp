@@ -576,7 +576,7 @@ void ChartDldrPanelImpl::UpdateChartList( wxCommandEvent& event )
     {
         case wxCDRF_SUCCESS:
         {
-            FillFromFile(url.GetPath(), fn.GetPath());
+            FillFromFile(url.GetPath(), fn.GetPath() ,pPlugIn->m_preselect_new, pPlugIn->m_preselect_updated);
             long id = GetSelectedCatalog();
             m_lbChartSources->SetItem(id, 0, pPlugIn->m_pChartCatalog->title);
             m_lbChartSources->SetItem(id, 1, pPlugIn->m_pChartCatalog->dt_valid.Format(_T("%Y-%m-%d %H:%M")));
