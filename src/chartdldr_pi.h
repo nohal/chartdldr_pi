@@ -242,7 +242,7 @@ class ChartDldrGuiAddSourceDlg : public AddSourceDlg
     private:
         wxString m_base_path;
         wxString FixPath(wxString path);
-
+        wxString m_last_path;
 };
 
 class ChartDldrPrefsDlgImpl : public ChartDldrPrefsDlg

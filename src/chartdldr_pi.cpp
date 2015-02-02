@@ -927,6 +927,7 @@ bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTa
 ChartDldrGuiAddSourceDlg::ChartDldrGuiAddSourceDlg( wxWindow* parent ) : AddSourceDlg( parent )
 {
     m_base_path = wxEmptyString;
+    m_last_path = wxEmptyString;
     m_chartSources = new wxArrayOfChartSources();
     wxStringTokenizer st(_T(NOAA_CHART_SOURCES), _T("|"), wxTOKEN_DEFAULT);
     while ( st.HasMoreTokens() )
@@ -971,12 +972,15 @@ void ChartDldrGuiAddSourceDlg::OnChangeType( wxCommandEvent& event )
 
 void ChartDldrGuiAddSourceDlg::OnSourceSelected( wxCommandEvent& event )
 {
-      ChartSource *cs = m_chartSources->Item(m_cbChartSources->GetSelection());
-      m_tSourceName->SetValue(cs->GetName());
-      m_tChartSourceUrl->SetValue(cs->GetUrl());
-      m_dpChartDirectory->SetPath(FixPath(cs->GetDir()));
-
-      event.Skip();
+    ChartSource *cs = m_chartSources->Item(m_cbChartSources->GetSelection());
+    m_tSourceName->SetValue(cs->GetName());
+    m_tChartSourceUrl->SetValue(cs->GetUrl());
+    if( m_dpChartDirectory->GetPath() == m_last_path )
+    {
+        m_dpChartDirectory->SetPath(FixPath(cs->GetDir()));
+        m_last_path = m_dpChartDirectory->GetPath();
+    }
+    event.Skip();
 }
 
 void ChartDldrGuiAddSourceDlg::SetSourceEdit( ChartSource* cs )
