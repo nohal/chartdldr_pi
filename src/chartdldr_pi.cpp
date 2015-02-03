@@ -690,6 +690,9 @@ void ChartDldrPanelImpl::DownloadCharts( wxCommandEvent& event )
       if( failed_downloads > 0 )
       wxMessageBox( wxString::Format( _("%d out of %d charts failed to download.\nCheck the list, verify there is a working Internet connection and repeat the operation if needed."), failed_downloads ,downloading ), 
                     _("Chart Downloader"), wxOK | wxICON_ERROR );
+      if( downloading > 0 )
+            wxMessageBox( _("You have added/updated some of your charts.\nTo make sure OpenCPN knows about them, go to the 'Chart Files' tab and select the 'Scan Charts and Update Database' option."), 
+                    _("Chart Downloader"), wxOK | wxICON_INFORMATION );
 }
 
 ChartDldrPanelImpl::~ChartDldrPanelImpl()
@@ -761,6 +764,18 @@ void ChartDldrPanelImpl::AddSource( wxCommandEvent& event )
         ChartSource *cs = new ChartSource(dialog->m_tSourceName->GetValue(), dialog->m_tChartSourceUrl->GetValue(), dialog->m_dpChartDirectory->GetTextCtrlValue());
         pPlugIn->m_chartSources->Add(cs);
         AppendCatalog(cs);
+        bool covered = false;
+        for (size_t i = 0; i < GetChartDBDirArrayString().GetCount(); i++)
+        {
+            if( cs->GetDir().StartsWith((GetChartDBDirArrayString().Item(i))) )
+            {
+                covered = true;
+                break;
+            }
+        }
+        if( !covered )
+            wxMessageBox( wxString::Format(_("Path %s seems not to be covered by your configured Chart Directories.\nTo see the charts you have to adjust the configuration on the 'Chart Files' tab."), cs->GetDir().c_str()),
+                         _("Chart Downloader") );
 
         pPlugIn->SaveConfig();
     }
@@ -801,6 +816,18 @@ void ChartDldrPanelImpl::DoEditSource()
                 m_lbChartSources->SetItem(cat, 2, path);
             }
         }
+        bool covered = false;
+        for (size_t i = 0; i < GetChartDBDirArrayString().GetCount(); i++)
+        {
+            if( pPlugIn->m_chartSources->Item(cat)->GetDir().StartsWith((GetChartDBDirArrayString().Item(i))) )
+            {
+                covered = true;
+                break;
+            }
+        }
+        if( !covered )
+            wxMessageBox( wxString::Format(_("Path %s seems not to be covered by your configured Chart Directories.\nTo see the charts you have to adjust the configuration on the 'Chart Files' tab."), pPlugIn->m_chartSources->Item(cat)->GetDir().c_str()),
+                         _("Chart Downloader") );
 
         pPlugIn->SaveConfig();
         SetSource(cat);
