@@ -46,7 +46,7 @@
 #include <wx/zipstrm.h>
 #include <wx/wfstream.h>
 #include <memory>
-#include <wx/protocol/http.h>
+#include <wx/regex.h>
 
 #include <wx/arrimpl.cpp>
     WX_DEFINE_OBJARRAY(wxArrayOfChartSources);
@@ -1033,7 +1033,7 @@ void ChartDldrGuiAddSourceDlg::OnOkClick( wxCommandEvent& event )
     if( m_rbCustom->GetValue() && m_tSourceName->GetValue() == wxEmptyString )
         msg += _("The chart source must have a name.\n");
     wxURI url(m_tChartSourceUrl->GetValue());
-    if( m_rbCustom->GetValue() && ( m_tChartSourceUrl->GetValue() == wxEmptyString || url.IsReference() ) )
+    if( m_rbCustom->GetValue() && ( m_tChartSourceUrl->GetValue() == wxEmptyString || !ValidateUrl(m_tChartSourceUrl->GetValue()) ) )
         msg += _("The chart source must have a valid URL.\n");
     if( m_dpChartDirectory->GetPath() == wxEmptyString )
         msg += _("You must select a local folder to store the charts.\n");
@@ -1057,4 +1057,11 @@ void ChartDldrPrefsDlgImpl::OnOkClick( wxCommandEvent& event )
             return;
         }
     event.Skip();
+}
+
+
+bool ChartDldrGuiAddSourceDlg::ValidateUrl(const wxString Url)
+{
+    wxRegEx re(_T("^https?\\://[a-zA-Z0-9\\./_-]*$") ); //TODO: wxRegEx sucks a bit, this RE is way too naive
+    return re.Matches(Url);
 }
