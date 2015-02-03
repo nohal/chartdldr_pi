@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Jun  6 2014)
+// C++ code generated with wxFormBuilder (version Jun  5 2014)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -19,55 +19,51 @@ AddSourceDlg::AddSourceDlg( wxWindow* parent, wxWindowID id, const wxString& tit
 	wxStaticBoxSizer* sbSizerSourceSel;
 	sbSizerSourceSel = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Catalog") ), wxVERTICAL );
 	
-	wxBoxSizer* bSizerType;
-	bSizerType = new wxBoxSizer( wxHORIZONTAL );
+	m_nbChoice = new wxNotebook( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNB_TOP );
+	m_nbChoice->SetMinSize( wxSize( -1,200 ) );
 	
-	m_rbPredefined = new wxRadioButton( this, wxID_ANY, _("Predefined"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizerType->Add( m_rbPredefined, 0, wxALL|wxEXPAND, 5 );
+	m_panel1 = new wxPanel( m_nbChoice, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxBoxSizer* bSizer8;
+	bSizer8 = new wxBoxSizer( wxVERTICAL );
 	
-	m_rbCustom = new wxRadioButton( this, wxID_ANY, _("Custom"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizerType->Add( m_rbCustom, 0, wxALL, 5 );
+	m_treeCtrl1 = new wxTreeCtrl( m_panel1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE|wxTR_HIDE_ROOT );
+	bSizer8->Add( m_treeCtrl1, 1, wxALL|wxEXPAND, 5 );
 	
 	
-	sbSizerSourceSel->Add( bSizerType, 0, wxEXPAND, 5 );
-	
+	m_panel1->SetSizer( bSizer8 );
+	m_panel1->Layout();
+	bSizer8->Fit( m_panel1 );
+	m_nbChoice->AddPage( m_panel1, _("Predefined"), true );
+	m_panel2 = new wxPanel( m_nbChoice, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerSourceSel;
 	fgSizerSourceSel = new wxFlexGridSizer( 3, 2, 0, 0 );
 	fgSizerSourceSel->AddGrowableCol( 1 );
 	fgSizerSourceSel->SetFlexibleDirection( wxBOTH );
 	fgSizerSourceSel->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_stCatalog = new wxStaticText( this, wxID_ANY, _("Catalog"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_stCatalog->Wrap( -1 );
-	fgSizerSourceSel->Add( m_stCatalog, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-	
-	wxArrayString m_cbChartSourcesChoices;
-	m_cbChartSources = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_cbChartSourcesChoices, 0 );
-	m_cbChartSources->SetSelection( 0 );
-	fgSizerSourceSel->Add( m_cbChartSources, 0, wxALL|wxEXPAND, 5 );
-	
-	m_stName = new wxStaticText( this, wxID_ANY, _("Name"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_stName = new wxStaticText( m_panel2, wxID_ANY, _("Name"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_stName->Wrap( -1 );
 	fgSizerSourceSel->Add( m_stName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_tSourceName = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_tSourceName = new wxTextCtrl( m_panel2, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	m_tSourceName->SetMaxLength( 0 ); 
-	m_tSourceName->Enable( false );
-	
 	fgSizerSourceSel->Add( m_tSourceName, 0, wxALL|wxEXPAND, 5 );
 	
-	m_stUrl = new wxStaticText( this, wxID_ANY, _("URL"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_stUrl = new wxStaticText( m_panel2, wxID_ANY, _("URL"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_stUrl->Wrap( -1 );
 	fgSizerSourceSel->Add( m_stUrl, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_tChartSourceUrl = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( -1,-1 ), 0 );
+	m_tChartSourceUrl = new wxTextCtrl( m_panel2, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( -1,-1 ), 0 );
 	m_tChartSourceUrl->SetMaxLength( 0 ); 
-	m_tChartSourceUrl->Enable( false );
-	
 	fgSizerSourceSel->Add( m_tChartSourceUrl, 0, wxALL|wxEXPAND, 5 );
 	
 	
-	sbSizerSourceSel->Add( fgSizerSourceSel, 1, wxALL|wxEXPAND, 5 );
+	m_panel2->SetSizer( fgSizerSourceSel );
+	m_panel2->Layout();
+	fgSizerSourceSel->Fit( m_panel2 );
+	m_nbChoice->AddPage( m_panel2, _("Custom"), false );
+	
+	sbSizerSourceSel->Add( m_nbChoice, 1, wxEXPAND | wxALL, 5 );
 	
 	
 	bSizerMain->Add( sbSizerSourceSel, 1, wxALL|wxEXPAND, 5 );
@@ -98,18 +94,14 @@ AddSourceDlg::AddSourceDlg( wxWindow* parent, wxWindowID id, const wxString& tit
 	this->Centre( wxBOTH );
 	
 	// Connect Events
-	m_rbPredefined->Connect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( AddSourceDlg::OnChangeType ), NULL, this );
-	m_rbCustom->Connect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( AddSourceDlg::OnChangeType ), NULL, this );
-	m_cbChartSources->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( AddSourceDlg::OnSourceSelected ), NULL, this );
+	m_treeCtrl1->Connect( wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler( AddSourceDlg::OnSourceSelected ), NULL, this );
 	m_sdbSizerBtnsOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AddSourceDlg::OnOkClick ), NULL, this );
 }
 
 AddSourceDlg::~AddSourceDlg()
 {
 	// Disconnect Events
-	m_rbPredefined->Disconnect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( AddSourceDlg::OnChangeType ), NULL, this );
-	m_rbCustom->Disconnect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( AddSourceDlg::OnChangeType ), NULL, this );
-	m_cbChartSources->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( AddSourceDlg::OnSourceSelected ), NULL, this );
+	m_treeCtrl1->Disconnect( wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler( AddSourceDlg::OnSourceSelected ), NULL, this );
 	m_sdbSizerBtnsOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AddSourceDlg::OnOkClick ), NULL, this );
 	
 }

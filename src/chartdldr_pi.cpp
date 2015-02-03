@@ -966,29 +966,108 @@ ChartDldrGuiAddSourceDlg::ChartDldrGuiAddSourceDlg( wxWindow* parent ) : AddSour
 {
     m_base_path = wxEmptyString;
     m_last_path = wxEmptyString;
-    m_chartSources = new wxArrayOfChartSources();
-    wxStringTokenizer st(_T(NOAA_CHART_SOURCES), _T("|"), wxTOKEN_DEFAULT);
-    while ( st.HasMoreTokens() )
-    {
-        wxString s1 = st.GetNextToken();
-        wxString s2 = st.GetNextToken();
-        wxString s3 = st.GetNextToken();
-        m_chartSources->Add(new ChartSource(s1, s2, s3));
-    }
-    m_rbPredefined->SetValue(true);
-
-    for (size_t i = 0; i < m_chartSources->GetCount(); i++)
-    {
-        m_cbChartSources->Append(m_chartSources->Item(i)->GetName());
-    }
+    LoadSources();
+    m_nbChoice->SetSelection(0);
+    m_treeCtrl1->ExpandAll();
     if( parent )
         SetSize(parent->GetSize().GetWidth(), GetSize().GetHeight());
 }
 
+bool ChartDldrGuiAddSourceDlg::LoadSources()
+{
+    wxTreeItemId tree = m_treeCtrl1->AddRoot(_T("root"));
+
+    wxFileName fn;
+    fn.SetPath(*GetpSharedDataLocation());
+    fn.AppendDir(_T("plugins"));
+    fn.AppendDir(_T("chartdldr_pi"));
+    fn.AppendDir(_T("data"));
+    fn.SetFullName(_T("chart_sources.xml"));
+    if (!fn.FileExists())
+    {
+        wxLogMessage( _T("Error: chartdldr_pi::LoadSources() chart_sources.xml not found!") );
+        return false;
+    }
+    wxString path = fn.GetFullPath();
+    TiXmlDocument * doc = new TiXmlDocument();
+    bool ret = doc->LoadFile(path.mb_str(), TIXML_ENCODING_UTF8);
+    if (ret)
+    {
+        TiXmlElement * root = doc->RootElement();
+        wxString rootName = wxString::FromUTF8( root->Value() );
+        TiXmlNode *child;
+        for ( child = root->FirstChild(); child != 0; child = child->NextSibling())
+        {
+            wxString s = wxString::FromUTF8(child->Value());
+            if (s == _T("sections"))
+                LoadSections(tree, child);
+        }
+    }
+    doc->Clear();
+    wxDELETE(doc);
+    return true;
+}
+
+bool ChartDldrGuiAddSourceDlg::LoadSections(const wxTreeItemId &root, TiXmlNode *node)
+{
+    for ( TiXmlNode *child = node->FirstChild(); child != 0; child = child->NextSibling())
+    {
+        wxString s = wxString::FromUTF8(child->Value());
+        if (s == _T("section"))
+            LoadSection(root, child);
+    }
+    return true;
+}
+
+bool ChartDldrGuiAddSourceDlg::LoadSection(const wxTreeItemId &root, TiXmlNode *node)
+{
+    wxTreeItemId item;
+    for ( TiXmlNode *child = node->FirstChildElement(); child != 0; child = child->NextSibling())
+    {
+        wxString s = wxString::FromUTF8(child->Value());
+        if (s == _T("name"))
+            item = m_treeCtrl1->AppendItem(root, wxString::FromUTF8(child->FirstChild()->Value()));
+        if (s == _T("sections"))
+            LoadSections(item, child);
+        if (s == _T("catalogs"))
+            LoadCatalogs(item, child);
+    }
+    return true;
+}
+
+bool ChartDldrGuiAddSourceDlg::LoadCatalogs(const wxTreeItemId &root, TiXmlNode *node)
+{
+    for ( TiXmlNode *child = node->FirstChild(); child != 0; child = child->NextSibling())
+    {
+        wxString s = wxString::FromUTF8(child->Value());
+        if (s == _T("catalog"))
+            LoadCatalog(root, child);
+    }
+    return true;
+}
+
+bool ChartDldrGuiAddSourceDlg::LoadCatalog(const wxTreeItemId &root, TiXmlNode *node)
+{
+    wxString name, type, location, dir;
+    for ( TiXmlNode *child = node->FirstChild(); child != 0; child = child->NextSibling())
+    {
+        wxString s = wxString::FromUTF8(child->Value());
+        if (s == _T("name"))
+            name = wxString::FromUTF8(child->FirstChild()->Value());
+        if (s == _T("type"))
+            type = wxString::FromUTF8(child->FirstChild()->Value());
+        if (s == _T("location"))
+            location = wxString::FromUTF8(child->FirstChild()->Value());
+        if (s == _T("dir"))
+            dir = wxString::FromUTF8(child->FirstChild()->Value());
+    }
+    ChartSource *cs = new ChartSource(name, location, dir);
+    m_treeCtrl1->AppendItem(root, name, -1, -1, cs);
+    return true;
+}
+
 ChartDldrGuiAddSourceDlg::~ChartDldrGuiAddSourceDlg()
 {
-      m_chartSources->Clear();
-      wxDELETE(m_chartSources);
 }
 
 wxString ChartDldrGuiAddSourceDlg::FixPath(wxString path)
@@ -1003,30 +1082,32 @@ wxString ChartDldrGuiAddSourceDlg::FixPath(wxString path)
 
 void ChartDldrGuiAddSourceDlg::OnChangeType( wxCommandEvent& event )
 {
-      m_cbChartSources->Enable(m_rbPredefined->GetValue());
-      m_tSourceName->Enable(m_rbCustom->GetValue());
-      m_tChartSourceUrl->Enable(m_rbCustom->GetValue());
+      m_treeCtrl1->Enable(m_nbChoice->GetSelection()==0);
+      m_tSourceName->Enable(m_nbChoice->GetSelection()==1);
+      m_tChartSourceUrl->Enable(m_nbChoice->GetSelection()==1);
 }
 
-void ChartDldrGuiAddSourceDlg::OnSourceSelected( wxCommandEvent& event )
+void ChartDldrGuiAddSourceDlg::OnSourceSelected( wxTreeEvent& event )
 {
-    ChartSource *cs = m_chartSources->Item(m_cbChartSources->GetSelection());
-    m_tSourceName->SetValue(cs->GetName());
-    m_tChartSourceUrl->SetValue(cs->GetUrl());
-    if( m_dpChartDirectory->GetPath() == m_last_path )
-    {
-        m_dpChartDirectory->SetPath(FixPath(cs->GetDir()));
-        m_last_path = m_dpChartDirectory->GetPath();
+    wxTreeItemId item = m_treeCtrl1->GetSelection();
+    ChartSource *cs = (ChartSource *)(m_treeCtrl1->GetItemData(item));
+    if (cs) {
+        m_tSourceName->SetValue(cs->GetName());
+        m_tChartSourceUrl->SetValue(cs->GetUrl());
+        if( m_dpChartDirectory->GetPath() == m_last_path )
+        {
+            m_dpChartDirectory->SetPath(FixPath(cs->GetDir()));
+            m_last_path = m_dpChartDirectory->GetPath();
+        }
     }
     event.Skip();
 }
 
 void ChartDldrGuiAddSourceDlg::SetSourceEdit( ChartSource* cs )
 {
-    m_rbCustom->SetValue(true);
-    m_rbPredefined->Disable();
+    m_nbChoice->SetSelection(1);
     m_tChartSourceUrl->Enable();
-    m_cbChartSources->Disable();
+    m_treeCtrl1->Disable();
     m_tSourceName->SetValue(cs->GetName());
     m_tChartSourceUrl->SetValue(cs->GetUrl());
     m_dpChartDirectory->SetPath(FixPath(cs->GetDir()));
@@ -1066,12 +1147,22 @@ void ChartDldrGuiAddSourceDlg::OnOkClick( wxCommandEvent& event )
 {
     wxString msg = wxEmptyString;
     
-    if( m_rbPredefined->GetValue() && m_cbChartSources->GetSelection() < 0 )
-        msg += _("You must select one of the predefined chart sources or create one of your own.\n");
-    if( m_rbCustom->GetValue() && m_tSourceName->GetValue() == wxEmptyString )
+    if( m_nbChoice->GetSelection()==0 )
+    {
+        wxTreeItemId item = m_treeCtrl1->GetSelection();
+        if ( m_treeCtrl1->GetSelection().IsOk() )
+        {
+            ChartSource *cs = (ChartSource *)(m_treeCtrl1->GetItemData(item));
+            if ( !cs )
+                msg += _("You must select one of the predefined chart sources or create one of your own.\n");
+        }
+        else
+            msg += _("You must select one of the predefined chart sources or create one of your own.\n");
+    }
+    if( m_nbChoice->GetSelection()==1 && m_tSourceName->GetValue() == wxEmptyString )
         msg += _("The chart source must have a name.\n");
     wxURI url(m_tChartSourceUrl->GetValue());
-    if( m_rbCustom->GetValue() && ( m_tChartSourceUrl->GetValue() == wxEmptyString || !ValidateUrl(m_tChartSourceUrl->GetValue()) ) )
+    if( m_nbChoice->GetSelection()==1 && ( m_tChartSourceUrl->GetValue() == wxEmptyString || !ValidateUrl(m_tChartSourceUrl->GetValue()) ) )
         msg += _("The chart source must have a valid URL.\n");
     if( m_dpChartDirectory->GetPath() == wxEmptyString )
         msg += _("You must select a local folder to store the charts.\n");
