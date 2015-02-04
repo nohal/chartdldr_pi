@@ -449,7 +449,7 @@ wxString IEncCell::GetChartTitle()
 
 wxString IEncCell::GetChartFilename()
 {
-      return wxString::Format(_("%s.zip"), name.c_str());
+      return wxString::Format(_T("%s.zip"), name.c_str());
 }
 
 wxString IEncCell::GetDownloadLocation()
