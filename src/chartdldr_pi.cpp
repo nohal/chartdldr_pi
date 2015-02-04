@@ -722,6 +722,7 @@ ChartDldrPanelImpl::ChartDldrPanelImpl( chartdldr_pi* plugin, wxWindow* parent, 
       downloading = -1;
       pPlugIn = plugin;
       m_populated = false;
+      failed_downloads = 0;
 }
 
 void ChartDldrPanelImpl::OnPaint( wxPaintEvent& event )
