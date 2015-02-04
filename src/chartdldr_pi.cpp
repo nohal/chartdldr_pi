@@ -916,7 +916,12 @@ bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTa
                   // read 'zip' to access the entry's data
                   if (entry->IsDir()) {
                         int perm = entry->GetMode();
-                        wxFileName::Mkdir(name, perm, wxPATH_MKDIR_FULL);
+                        if( !wxFileName::Mkdir(name, perm, wxPATH_MKDIR_FULL) )
+                        {
+                            wxLogError(_T("Can not create directory '") + name + _T("'."));
+                            ret = false;
+                            break;
+                        }
                   } else {
                         zip.OpenEntry(*entry.get());
                         if (!zip.CanRead()) {
@@ -927,7 +932,12 @@ bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTa
 
                         wxFileName fn(name);
                         if (!fn.DirExists()) {
-                            wxFileName::Mkdir(fn.GetPath());
+                            if( !wxFileName::Mkdir(fn.GetPath()) )
+                            {
+                                wxLogError(_T("Can not create directory '") + fn.GetPath() + _T("'."));
+                                ret = false;
+                                break;
+                            }
                         }
 
                         wxFileOutputStream file(name);
