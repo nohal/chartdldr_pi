@@ -39,6 +39,7 @@
 #include <wx/tokenzr.h>
 #include <wx/event.h>
 #include "wx/curl/dialog.h"
+#include <wx/imaglist.h>
 
 #include "version.h"
 
@@ -204,6 +205,7 @@ class ChartDldrGuiAddSourceDlg : public AddSourceDlg
         wxString FixPath(wxString path);
         wxString m_last_path;
         bool ValidateUrl(const wxString Url);
+        wxImageList *p_iconList;
 };
 
 class ChartDldrPrefsDlgImpl : public ChartDldrPrefsDlg

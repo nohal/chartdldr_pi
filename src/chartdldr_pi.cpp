@@ -964,6 +964,17 @@ bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTa
 
 ChartDldrGuiAddSourceDlg::ChartDldrGuiAddSourceDlg( wxWindow* parent ) : AddSourceDlg( parent )
 {
+    p_iconList = new wxImageList(16, 16);
+    wxFileName fn;
+    fn.SetPath(*GetpSharedDataLocation());
+    fn.AppendDir(_T("plugins"));
+    fn.AppendDir(_T("chartdldr_pi"));
+    fn.AppendDir(_T("data"));
+    fn.SetFullName(_T("folder215.png"));
+    p_iconList->Add(wxBitmap(fn.GetFullPath(), wxBITMAP_TYPE_PNG));
+    fn.SetFullName(_T("open182.png"));
+    p_iconList->Add(wxBitmap(fn.GetFullPath(), wxBITMAP_TYPE_PNG));
+    m_treeCtrl1->AssignImageList(p_iconList);
     m_base_path = wxEmptyString;
     m_last_path = wxEmptyString;
     LoadSources();
@@ -985,7 +996,7 @@ bool ChartDldrGuiAddSourceDlg::LoadSources()
     fn.SetFullName(_T("chart_sources.xml"));
     if (!fn.FileExists())
     {
-        wxLogMessage( _T("Error: chartdldr_pi::LoadSources() chart_sources.xml not found!") );
+        wxLogMessage( wxString::Format(_T("Error: chartdldr_pi::LoadSources() %s not found!"), fn.GetFullPath().c_str()) );
         return false;
     }
     wxString path = fn.GetFullPath();
@@ -1026,7 +1037,7 @@ bool ChartDldrGuiAddSourceDlg::LoadSection(const wxTreeItemId &root, TiXmlNode *
     {
         wxString s = wxString::FromUTF8(child->Value());
         if (s == _T("name"))
-            item = m_treeCtrl1->AppendItem(root, wxString::FromUTF8(child->FirstChild()->Value()));
+            item = m_treeCtrl1->AppendItem(root, wxString::FromUTF8(child->FirstChild()->Value()), 0, 0);
         if (s == _T("sections"))
             LoadSections(item, child);
         if (s == _T("catalogs"))
@@ -1062,7 +1073,7 @@ bool ChartDldrGuiAddSourceDlg::LoadCatalog(const wxTreeItemId &root, TiXmlNode *
             dir = wxString::FromUTF8(child->FirstChild()->Value());
     }
     ChartSource *cs = new ChartSource(name, location, dir);
-    m_treeCtrl1->AppendItem(root, name, -1, -1, cs);
+    m_treeCtrl1->AppendItem(root, name, 1, 1, cs);
     return true;
 }
 
