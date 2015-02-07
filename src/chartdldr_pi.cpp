@@ -979,7 +979,7 @@ ChartDldrGuiAddSourceDlg::ChartDldrGuiAddSourceDlg( wxWindow* parent ) : AddSour
     m_last_path = wxEmptyString;
     LoadSources();
     m_nbChoice->SetSelection(0);
-    m_treeCtrl1->ExpandAll();
+    //m_treeCtrl1->ExpandAll();
     if( parent )
         SetSize(parent->GetSize().GetWidth(), GetSize().GetHeight());
 }
