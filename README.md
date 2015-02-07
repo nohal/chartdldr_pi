@@ -72,3 +72,5 @@ make create-pkg
 License
 =======
 The plugin code is licensed under the terms of the GPL v2 or, at your will, later.
+
+Icons made by Freepik (http://www.freepik.com) and Google (http://www.google.com) from Flaticon (http://www.flaticon.com) and are licensed under Creative Commons BY 3.0
