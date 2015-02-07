@@ -480,9 +480,10 @@ bool ChartSource::IsNewerThanLocal(wxString filename, wxDateTime validDate)
             {
                   wxDateTime ct, mt, at;
                   fn.GetTimes(&at, &mt, &ct);
-                  at = validDate;
-                  if (validDate.IsLaterThan(ct))
+                  if (validDate.IsLaterThan(mt))
+                  {
                     update_candidate = true;
+                  }
                   else
                     return false;
             }
