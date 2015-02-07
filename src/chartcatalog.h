@@ -84,7 +84,7 @@ public:
       // public methods
       virtual wxString GetChartTitle() { return title; }
       virtual wxString GetDownloadLocation() { return zipfile_location; }
-      virtual wxString GetChartFilename();
+      virtual wxString GetChartFilename(bool to_check = false);
       virtual wxDateTime GetUpdateDatetime() { return zipfile_datetime_iso8601; }
 
       // public properties

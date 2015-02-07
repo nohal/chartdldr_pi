@@ -296,11 +296,11 @@ Chart::Chart(TiXmlNode * xmldata)
       }
 }
 
-wxString Chart::GetChartFilename()
+wxString Chart::GetChartFilename(bool to_check)
 {
-      if( reference_file != wxEmptyString )
+      if( to_check && reference_file != wxEmptyString )
             return reference_file;
-      else if( target_filename != wxEmptyString )
+      if( target_filename != wxEmptyString )
             return target_filename;
       wxString file;
       wxStringTokenizer tk(zipfile_location, _T("/"));

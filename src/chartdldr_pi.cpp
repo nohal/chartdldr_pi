@@ -430,7 +430,7 @@ void ChartDldrPanelImpl::FillFromFile(wxString url, wxString dir, bool selnew, b
                   li.SetText(pPlugIn->m_pChartCatalog->charts->Item(i).GetChartTitle());
                   long x = m_clCharts->InsertItem(li);
                   m_clCharts->SetItem(x, 0, pPlugIn->m_pChartCatalog->charts->Item(i).GetChartTitle());
-                  wxString file = pPlugIn->m_pChartCatalog->charts->Item(i).GetChartFilename();
+                  wxString file = pPlugIn->m_pChartCatalog->charts->Item(i).GetChartFilename(true);
                   if (!pPlugIn->m_pChartSource->ExistsLocaly(file))
                   {
                         m_clCharts->SetItem(x, 1, _("New"));
