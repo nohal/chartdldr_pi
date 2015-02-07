@@ -1202,6 +1202,6 @@ void ChartDldrPrefsDlgImpl::OnOkClick( wxCommandEvent& event )
 
 bool ChartDldrGuiAddSourceDlg::ValidateUrl(const wxString Url)
 {
-    wxRegEx re(_T("^https?\\://[a-zA-Z0-9\\./_-]*$") ); //TODO: wxRegEx sucks a bit, this RE is way too naive
+    wxRegEx re(_T("^https?\\://[a-zA-Z0-9\\./_-]*\\.[xX][mM][lL]$") ); //TODO: wxRegEx sucks a bit, this RE is way too naive
     return re.Matches(Url);
 }
