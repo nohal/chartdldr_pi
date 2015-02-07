@@ -204,7 +204,7 @@ class ChartDldrGuiAddSourceDlg : public AddSourceDlg
         wxString m_base_path;
         wxString FixPath(wxString path);
         wxString m_last_path;
-        bool ValidateUrl(const wxString Url);
+        bool ValidateUrl(const wxString Url, bool catalog_xml = true);
         wxImageList *p_iconList;
 };
 

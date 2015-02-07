@@ -97,6 +97,7 @@ public:
       wxDateTime zipfile_datetime;
       wxDateTime zipfile_datetime_iso8601;
       int zipfile_size;
+      wxString reference_file;
 
       NoticeToMariners *nm;
       NoticeToMariners *lnm;

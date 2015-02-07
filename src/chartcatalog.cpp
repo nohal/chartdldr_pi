@@ -100,7 +100,8 @@ wxDateTime ChartCatalog::GetReleaseDate()
             TiXmlNode *child;
             for ( child = root->FirstChildElement()->NextSibling(); child != 0; child = child->NextSibling())
             {
-                  charts->Add(new RasterChart(child));
+                if( _T("chart") == wxString::FromUTF8( child->Value() ))
+                    charts->Add(new RasterChart(child));
             }
       }
       else if (rootName.StartsWith(_T("EncProductCatalog")))
@@ -113,7 +114,8 @@ wxDateTime ChartCatalog::GetReleaseDate()
             TiXmlNode *child;
             for ( child = root->FirstChildElement()->NextSibling(); child != 0; child = child->NextSibling())
             {
-                  charts->Add(new EncCell(child));
+                if( _T("cell") == wxString::FromUTF8( child->Value() ))
+                    charts->Add(new EncCell(child));
             }
       }
       else if (rootName.StartsWith(_T("IENCU37ProductCatalog")))
@@ -126,7 +128,8 @@ wxDateTime ChartCatalog::GetReleaseDate()
             TiXmlNode *child;
             for ( child = root->FirstChildElement()->NextSibling(); child != 0; child = child->NextSibling())
             {
-                  charts->Add(new IEncCell(child));
+                if( _T("Cell") == wxString::FromUTF8( child->Value() ))
+                    charts->Add(new IEncCell(child));
             }
       }
       else
@@ -214,6 +217,7 @@ Chart::Chart(TiXmlNode * xmldata)
       coverage = new wxArrayOfPanels();
       TiXmlNode *child;
       target_filename = wxEmptyString;
+      reference_file = wxEmptyString;
       for ( child = xmldata->FirstChild(); child != 0; child = child->NextSibling())
       {
             wxString s = wxString::FromUTF8(child->Value());
@@ -285,12 +289,18 @@ Chart::Chart(TiXmlNode * xmldata)
             {
                   target_filename = wxString::FromUTF8(child->FirstChild()->Value());
             }
+            if (s == _T("reference_file"))
+            {
+                  reference_file = wxString::FromUTF8(child->FirstChild()->Value());
+            }
       }
 }
 
 wxString Chart::GetChartFilename()
 {
-      if( target_filename != wxEmptyString )
+      if( reference_file != wxEmptyString )
+            return reference_file;
+      else if( target_filename != wxEmptyString )
             return target_filename;
       wxString file;
       wxStringTokenizer tk(zipfile_location, _T("/"));

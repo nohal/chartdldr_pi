@@ -480,6 +480,7 @@ bool ChartSource::IsNewerThanLocal(wxString filename, wxDateTime validDate)
             {
                   wxDateTime ct, mt, at;
                   fn.GetTimes(&at, &mt, &ct);
+                  at = validDate;
                   if (validDate.IsLaterThan(ct))
                     update_candidate = true;
                   else
@@ -665,7 +666,7 @@ void ChartDldrPanelImpl::DownloadCharts( wxCommandEvent& event )
                   wxURI url(pPlugIn->m_pChartCatalog->charts->Item(i).GetDownloadLocation());
                   if (url.IsReference())
                   {
-                        wxMessageBox(_("Error, the URL to the chart data seems wrong."), _("Error"));
+                        wxMessageBox(wxString::Format(_("Error, the URL to the chart (%s) data seems wrong."), url.BuildURI().c_str()), _("Error"));
                         this->Enable();
                         return;
                   }
@@ -853,7 +854,14 @@ void ChartDldrPanelImpl::OnLeftDClick( wxMouseEvent& event )
 bool chartdldr_pi::ProcessFile(const wxString& aFile, const wxString& aTargetDir, bool aStripPath, wxDateTime aMTime)
 {
     if( aFile.Lower().EndsWith(_T("zip")) ) //Zip compressed
-        return ExtractZipFiles( aFile, aTargetDir, aStripPath, aMTime, true);
+    {
+        bool ret = ExtractZipFiles( aFile, aTargetDir, aStripPath, aMTime, false);
+        if( ret )
+            wxRemoveFile(aFile);
+        else
+            wxLogError(_T("chartdldr_pi: Unable to extract: ") + aFile );
+        return ret;
+    }
     else //Uncompressed
     {
         wxFileName fn(aFile);
@@ -885,7 +893,7 @@ bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTa
       std::auto_ptr<wxZipEntry> entry(new wxZipEntry());
 
       do {
-
+            //wxLogError(_T("chartdldr_pi: Going to extract '")+aZipFile+_T("'."));
             wxFileInputStream in(aZipFile);
 
             if (!in) {
@@ -923,7 +931,11 @@ bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTa
                             break;
                         }
                   } else {
-                        zip.OpenEntry(*entry.get());
+                        if(!zip.OpenEntry(*entry.get())) {
+                            wxLogError(_T("Can not open zip entry '") + entry->GetName() + _T("'."));
+                            ret = false;
+                            break;
+                        }
                         if (!zip.CanRead()) {
                               wxLogError(_T("Can not read zip entry '") + entry->GetName() + _T("'."));
                               ret = false;
@@ -1200,8 +1212,12 @@ void ChartDldrPrefsDlgImpl::OnOkClick( wxCommandEvent& event )
 }
 
 
-bool ChartDldrGuiAddSourceDlg::ValidateUrl(const wxString Url)
+bool ChartDldrGuiAddSourceDlg::ValidateUrl(const wxString Url, bool catalog_xml)
 {
-    wxRegEx re(_T("^https?\\://[a-zA-Z0-9\\./_-]*\\.[xX][mM][lL]$") ); //TODO: wxRegEx sucks a bit, this RE is way too naive
+    wxRegEx re;
+    if( catalog_xml )
+        re.Compile( _T("^https?\\://[a-zA-Z0-9\\./_-]*\\.[xX][mM][lL]$") ); //TODO: wxRegEx sucks a bit, this RE is way too naive
+    else
+        re.Compile( _T("^https?\\://[a-zA-Z0-9\\./_-]*$") ); //TODO: wxRegEx sucks a bit, this RE is way too naive
     return re.Matches(Url);
 }
