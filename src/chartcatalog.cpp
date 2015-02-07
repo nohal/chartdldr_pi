@@ -149,27 +149,27 @@ bool ChartCatalog::ParseNoaaHeader(TiXmlElement * xmldata)
             {
                   title = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("date_created"))
+            else if (s == _T("date_created"))
             {
                   date_created.ParseDate(wxString::FromUTF8(child->FirstChild()->Value()));
                   wxASSERT(date_created.IsValid());
             }
-            if (s == _T("time_created"))
+            else if (s == _T("time_created"))
             {
                   time_created.ParseTime(wxString::FromUTF8(child->FirstChild()->Value()));
                   wxASSERT(time_created.IsValid());
             }
-            if (s == _T("date_valid"))
+            else if (s == _T("date_valid"))
             {
                   date_valid.ParseDate(wxString::FromUTF8(child->FirstChild()->Value()));
                   wxASSERT(date_valid.IsValid());
             }
-            if (s == _T("time_valid"))
+            else if (s == _T("time_valid"))
             {
                   time_valid.ParseTime(wxString::FromUTF8(child->FirstChild()->Value()));
                   wxASSERT(time_valid.IsValid());
             }
-            if (s == _T("dt_valid"))
+            else if (s == _T("dt_valid"))
             {
                   wxStringTokenizer tk(wxString::FromUTF8(child->FirstChild()->Value()), _T("TZ"));
                   dt_valid.ParseDate(tk.GetNextToken());
@@ -177,15 +177,15 @@ bool ChartCatalog::ParseNoaaHeader(TiXmlElement * xmldata)
                   dt_valid.MakeFromTimezone(wxDateTime::UTC);
                   wxASSERT(dt_valid.IsValid());
             }
-            if (s == _T("ref_spec"))
+            else if (s == _T("ref_spec"))
             {
                   ref_spec = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("ref_spec_vers"))
+            else if (s == _T("ref_spec_vers"))
             {
                   ref_spec_vers = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("s62AgencyCode"))
+            else if (s == _T("s62AgencyCode"))
             {
                   s62AgencyCode = wxString::FromUTF8(child->FirstChild()->Value());
             }
@@ -218,6 +218,13 @@ Chart::Chart(TiXmlNode * xmldata)
       TiXmlNode *child;
       target_filename = wxEmptyString;
       reference_file = wxEmptyString;
+      title = wxEmptyString;
+      zipfile_location = wxEmptyString;
+      zipfile_size = -1;
+      zipfile_datetime = wxInvalidDateTime;
+      zipfile_datetime_iso8601 = wxInvalidDateTime;
+      nm = NULL;
+      lnm = NULL;
       for ( child = xmldata->FirstChild(); child != 0; child = child->NextSibling())
       {
             wxString s = wxString::FromUTF8(child->Value());
@@ -225,7 +232,7 @@ Chart::Chart(TiXmlNode * xmldata)
             {
                   title = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("coast_guard_districts"))
+            else if (s == _T("coast_guard_districts"))
             {
                   TiXmlNode *mychild;
                   for ( mychild = child->FirstChild(); mychild != 0; mychild = mychild->NextSibling())
@@ -233,7 +240,7 @@ Chart::Chart(TiXmlNode * xmldata)
                         coast_guard_districts->Add(wxString::FromUTF8(mychild->FirstChild()->Value()));
                   }
             }
-            if (s == _T("states"))
+            else if (s == _T("states"))
             {
                   TiXmlNode *mychild;
                   for ( mychild = child->FirstChild(); mychild != 0; mychild = mychild->NextSibling())
@@ -241,7 +248,7 @@ Chart::Chart(TiXmlNode * xmldata)
                         states->Add(wxString::FromUTF8(mychild->FirstChild()->Value()));
                   }
             }
-            if (s == _T("regions"))
+            else if (s == _T("regions"))
             {
                   TiXmlNode *mychild;
                   for ( mychild = child->FirstChild(); mychild != 0; mychild = mychild->NextSibling())
@@ -249,35 +256,35 @@ Chart::Chart(TiXmlNode * xmldata)
                         regions->Add(wxString::FromUTF8(mychild->FirstChild()->Value()));
                   }
             }
-            if (s == _T("zipfile_location"))
+            else if (s == _T("zipfile_location"))
             {
                   zipfile_location = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("zipfile_datetime"))
+            else if (s == _T("zipfile_datetime"))
             {
                   if( zipfile_datetime.ParseFormat(wxString::FromUTF8(child->FirstChild()->Value()), _T("%Y%m%d_%H%M%S")) )
                     zipfile_datetime.MakeFromTimezone(wxDateTime::UTC);
             }
-            if (s == _T("zipfile_datetime_iso8601"))
+            else if (s == _T("zipfile_datetime_iso8601"))
             {
                   wxStringTokenizer tk(wxString::FromUTF8(child->FirstChild()->Value()), _T("TZ"));
                   zipfile_datetime_iso8601.ParseDate(tk.GetNextToken());
                   zipfile_datetime_iso8601.ParseTime(tk.GetNextToken());
                   zipfile_datetime_iso8601.MakeFromTimezone(wxDateTime::UTC);
             }
-            if (s == _T("zipfile_size"))
+            else if (s == _T("zipfile_size"))
             {
                   zipfile_size = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
             }
-            if (s == _T("nm"))
+            else if (s == _T("nm"))
             {
                   nm = new NoticeToMariners(child);
             }
-            if (s == _T("lnm"))
+            else if (s == _T("lnm"))
             {
                   lnm = new NoticeToMariners(child);
             }
-            if (s == _T("cov"))
+            else if (s == _T("cov"))
             {
                   TiXmlNode *mychild;
                   for ( mychild = child->FirstChild(); mychild != 0; mychild = mychild->NextSibling())
@@ -285,11 +292,11 @@ Chart::Chart(TiXmlNode * xmldata)
                         coverage->Add(new Panel(mychild));
                   }
             }
-            if (s == _T("target_filename"))
+            else if (s == _T("target_filename"))
             {
                   target_filename = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("reference_file"))
+            else if (s == _T("reference_file"))
             {
                   reference_file = wxString::FromUTF8(child->FirstChild()->Value());
             }
@@ -314,6 +321,15 @@ wxString Chart::GetChartFilename(bool to_check)
 RasterChart::RasterChart(TiXmlNode * xmldata) : Chart(xmldata)
 {
       TiXmlNode *child;
+      number = wxEmptyString;
+      source_edition = -1;
+      raster_edition = -1;
+      ntm_edition = -1;
+      source_date = wxEmptyString;
+      ntm_date = wxEmptyString;
+      source_edition_last_correction = wxEmptyString;
+      raster_edition_last_correction = wxEmptyString;
+      ntm_edition_last_correction = wxEmptyString;
       for ( child = xmldata->FirstChild(); child != 0; child = child->NextSibling())
       {
             wxString s = wxString::FromUTF8(child->Value());
@@ -321,35 +337,35 @@ RasterChart::RasterChart(TiXmlNode * xmldata) : Chart(xmldata)
             {
                   number = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("source_edition"))
+            else if (s == _T("source_edition"))
             {
                   source_edition = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
             }
-            if (s == _T("raster_edition"))
+            else if (s == _T("raster_edition"))
             {
                   raster_edition = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
             }
-            if (s == _T("ntm_edition"))
+            else if (s == _T("ntm_edition"))
             {
                   ntm_edition = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
             }
-            if (s == _T("source_date"))
+            else if (s == _T("source_date"))
             {
                   source_date = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("ntm_date"))
+            else if (s == _T("ntm_date"))
             {
                   ntm_date = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("source_edition_last_correction"))
+            else if (s == _T("source_edition_last_correction"))
             {
                   source_edition_last_correction = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("raster_edition_last_correction"))
+            else if (s == _T("raster_edition_last_correction"))
             {
                   raster_edition_last_correction = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("ntm_edition_last_correction"))
+            else if (s == _T("ntm_edition_last_correction"))
             {
                   ntm_edition_last_correction = wxString::FromUTF8(child->FirstChild()->Value());
             }
@@ -359,6 +375,14 @@ RasterChart::RasterChart(TiXmlNode * xmldata) : Chart(xmldata)
 EncCell::EncCell(TiXmlNode * xmldata) : Chart(xmldata)
 {
       TiXmlNode *child;
+      name = wxEmptyString;
+      src_chart = wxEmptyString;
+      cscale = -1;
+      status = wxEmptyString;
+      edtn = -1;
+      updn = -1;
+      uadt = wxInvalidDateTime;
+      isdt = wxInvalidDateTime;
       for ( child = xmldata->FirstChild(); child != 0; child = child->NextSibling())
       {
             wxString s = wxString::FromUTF8(child->Value());
@@ -366,31 +390,31 @@ EncCell::EncCell(TiXmlNode * xmldata) : Chart(xmldata)
             {
                   name = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("src_chart"))
+            else if (s == _T("src_chart"))
             {
                   src_chart = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("cscale"))
+            else if (s == _T("cscale"))
             {
                   cscale = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
             }
-            if (s == _T("status"))
+            else if (s == _T("status"))
             {
                   status = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("edtn"))
+            else if (s == _T("edtn"))
             {
                   edtn = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
             }
-            if (s == _T("updn"))
+            else if (s == _T("updn"))
             {
                   updn = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
             }
-            if (s == _T("uadt"))
+            else if (s == _T("uadt"))
             {
                   uadt.ParseDateTime(wxString::FromUTF8(child->FirstChild()->Value()));
             }
-            if (s == _T("isdt"))
+            else if (s == _T("isdt"))
             {
                   isdt.ParseDateTime(wxString::FromUTF8(child->FirstChild()->Value()));
             }
@@ -399,6 +423,15 @@ EncCell::EncCell(TiXmlNode * xmldata) : Chart(xmldata)
 
 IEncCell::IEncCell(TiXmlNode * xmldata) : Chart(xmldata)
 {
+      name = wxEmptyString;
+      location = NULL;
+      river_name = wxEmptyString;
+      river_miles = NULL;
+      area = NULL;
+      edition = wxEmptyString;
+      shp_file = NULL;
+      s57_file = NULL;
+      kml_file = NULL;
       TiXmlNode *child;
       for ( child = xmldata->FirstChild(); child != 0; child = child->NextSibling())
       {
@@ -407,35 +440,35 @@ IEncCell::IEncCell(TiXmlNode * xmldata) : Chart(xmldata)
             {
                   name = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("location"))
+            else if (s == _T("location"))
             {
                   location = new Location(child);
             }
-            if (s == _T("river_name"))
+            else if (s == _T("river_name"))
             {
                   river_name = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("river_miles"))
+            else if (s == _T("river_miles"))
             {
                   river_miles = new RiverMiles(child);
             }
-            if (s == _T("area"))
+            else if (s == _T("area"))
             {
                   area = new Area(child);
             }
-            if (s == _T("edition"))
+            else if (s == _T("edition"))
             {
                   edition = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("shp_file"))
+            else if (s == _T("shp_file"))
             {
                   shp_file = new File(child);
             }
-            if (s == _T("s57_file"))
+            else if (s == _T("s57_file"))
             {
                   s57_file = new File(child);
             }
-            if (s == _T("kml_file"))
+            else if (s == _T("kml_file"))
             {
                   kml_file = new File(child);
             }
@@ -474,6 +507,10 @@ wxDateTime IEncCell::GetUpdateDatetime()
 
 File::File(TiXmlNode * xmldata)
 {
+      file_size = -1;
+      location = wxEmptyString;
+      date_posted = wxInvalidDateTime;
+      time_posted = wxInvalidDateTime;
       TiXmlNode *child;
       for ( child = xmldata->FirstChild(); child != 0; child = child->NextSibling())
       {
@@ -482,18 +519,18 @@ File::File(TiXmlNode * xmldata)
             {
                   location = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("date_posted"))
+            else if (s == _T("date_posted"))
             {
                   date_posted.ParseDate(wxString::FromUTF8(child->FirstChild()->Value()));
             }
-            if (s == _T("time_posted"))
+            else if (s == _T("time_posted"))
             {
                   if (!child->NoChildren())
                         time_posted.ParseTime(wxString::FromUTF8(child->FirstChild()->Value()));
                   else
                         time_posted.ParseTime(_T("00:00:00"));
             }
-            if (s == _T("file_size"))
+            else if (s == _T("file_size"))
             {
                   if (!child->NoChildren())
                         file_size = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
@@ -505,6 +542,10 @@ File::File(TiXmlNode * xmldata)
 
 Area::Area(TiXmlNode * xmldata)
 {
+      north = 0.0;
+      south = 0.0;
+      east = 0.0;
+      west = 0.0;
       TiXmlNode *child;
       for ( child = xmldata->FirstChild(); child != 0; child = child->NextSibling())
       {
@@ -513,15 +554,15 @@ Area::Area(TiXmlNode * xmldata)
             {
                   north = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
             }
-            if (s == _T("south"))
+            else if (s == _T("south"))
             {
                   south = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
             }
-            if (s == _T("east"))
+            else if (s == _T("east"))
             {
                   east = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
             }
-            if (s == _T("west"))
+            else if (s == _T("west"))
             {
                   west = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
             }
@@ -530,6 +571,8 @@ Area::Area(TiXmlNode * xmldata)
 
 RiverMiles::RiverMiles(TiXmlNode * xmldata)
 {
+      begin = -1;
+      end = -1;
       TiXmlNode *child;
       for ( child = xmldata->FirstChild(); child != 0; child = child->NextSibling())
       {
@@ -538,7 +581,7 @@ RiverMiles::RiverMiles(TiXmlNode * xmldata)
             {
                   begin = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
             }
-            if (s == _T("end"))
+            else if (s == _T("end"))
             {
                   end = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
             }
@@ -547,6 +590,8 @@ RiverMiles::RiverMiles(TiXmlNode * xmldata)
 
 Location::Location(TiXmlNode * xmldata)
 {
+      from = wxEmptyString;
+      to = wxEmptyString;
       TiXmlNode *child;
       for ( child = xmldata->FirstChild(); child != 0; child = child->NextSibling())
       {
@@ -555,7 +600,7 @@ Location::Location(TiXmlNode * xmldata)
             {
                   from = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("to"))
+            else if (s == _T("to"))
             {
                   to = wxString::FromUTF8(child->FirstChild()->Value());
             }
@@ -565,6 +610,9 @@ Location::Location(TiXmlNode * xmldata)
 
 NoticeToMariners::NoticeToMariners(TiXmlNode * xmldata)
 {
+      agency = wxEmptyString;
+      doc = wxEmptyString;
+      date = wxInvalidDateTime;
       TiXmlNode *child;
       for ( child = xmldata->FirstChild(); child != 0; child = child->NextSibling())
       {
@@ -573,11 +621,11 @@ NoticeToMariners::NoticeToMariners(TiXmlNode * xmldata)
             {
                   agency = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("doc"))
+            else if (s == _T("doc"))
             {
                   doc = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("date"))
+            else if (s == _T("date"))
             {
                   date.ParseDate(wxString::FromUTF8(child->FirstChild()->Value()));
             }
@@ -586,6 +634,7 @@ NoticeToMariners::NoticeToMariners(TiXmlNode * xmldata)
 
 Panel::Panel(TiXmlNode * xmldata)
 {
+      panel_no = -1;
       vertexes = new wxArrayOfVertexes();
       TiXmlNode *child;
       for ( child = xmldata->FirstChild(); child != 0; child = child->NextSibling())
@@ -595,7 +644,7 @@ Panel::Panel(TiXmlNode * xmldata)
             {
                   panel_no = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
             }
-            if (s == _T("vertex"))
+            else if (s == _T("vertex"))
             {
                   
                   vertexes->Add(new Vertex(child));
@@ -611,6 +660,9 @@ Panel::~Panel()
 
 RncPanel::RncPanel(TiXmlNode * xmldata) : Panel(xmldata)
 {
+      panel_title = wxEmptyString;
+      file_name = wxEmptyString;
+      scale = 0;
       TiXmlNode *child;
       for ( child = xmldata->FirstChild(); child != 0; child = child->NextSibling())
       {
@@ -619,11 +671,11 @@ RncPanel::RncPanel(TiXmlNode * xmldata) : Panel(xmldata)
             {
                   panel_title = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("file_name"))
+            else if (s == _T("file_name"))
             {
                   file_name = wxString::FromUTF8(child->FirstChild()->Value());
             }
-            if (s == _T("scale"))
+            else if (s == _T("scale"))
             {
                   scale = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
             }
@@ -632,6 +684,7 @@ RncPanel::RncPanel(TiXmlNode * xmldata) : Panel(xmldata)
 
 EncPanel::EncPanel(TiXmlNode * xmldata) : Panel(xmldata)
 {
+      type = wxEmptyString;
       TiXmlNode *child;
       for ( child = xmldata->FirstChild(); child != 0; child = child->NextSibling())
       {
@@ -645,6 +698,9 @@ EncPanel::EncPanel(TiXmlNode * xmldata) : Panel(xmldata)
 
 Vertex::Vertex(TiXmlNode * xmldata)
 {
+      //Init properties
+      lat = 999.0;
+      lon = 999.0;
       TiXmlNode *child;
       for ( child = xmldata->FirstChild(); child != 0; child = child->NextSibling())
       {
@@ -654,12 +710,9 @@ Vertex::Vertex(TiXmlNode * xmldata)
                   wxString::FromUTF8(child->FirstChild()->Value()).ToDouble(&lat);
             }
 
-            if (s == _T("long"))
+            else if (s == _T("long"))
             {
                   wxString::FromUTF8(child->FirstChild()->Value()).ToDouble(&lon);
             }
       }
-      //Init properties
-      lat = 999.0;
-      lon = 999.0;
 }

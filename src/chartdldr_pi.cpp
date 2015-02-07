@@ -107,6 +107,11 @@ chartdldr_pi::chartdldr_pi(void *ppimgr)
       m_pChartCatalog = NULL;
       m_pChartSource = NULL;
       m_pconfig = NULL;
+      m_preselect_new = false;
+      m_preselect_updated = false;
+      m_pOptionsPage = NULL;
+      m_selected_source = -1;
+      m_dldrpanel = NULL;
       m_leftclick_tool_id = -1;
       m_schartdldr_sources = wxEmptyString;
       wxCurlBase::Init();
