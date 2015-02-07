@@ -2,7 +2,7 @@
 <ChartCatalog>
   <sections>
     <section>
-      <name>NOAA</name>
+      <name>USA - NOAA &amp; Inland charts</name>
       <sections>
         <section>
           <name>RNC</name>
@@ -14,7 +14,7 @@
                   <name>All</name>
                   <type>RNC</type>
                   <location>http://www.charts.noaa.gov/RNCs/RNCProdCat_19115.xml</location>
-                  <dir>{USERDATA}/RNC</dir>
+                  <dir>{USERDATA}/RNC/US</dir>
                 </catalog>
               </catalogs>
             </section>
@@ -429,7 +429,7 @@
                   <name>All</name>
                   <type>ENC</type>
                   <location>http://www.charts.noaa.gov/ENCs/ENCProdCat_19115.xml</location>
-                  <dir>{USERDATA}/ENC</dir>
+                  <dir>{USERDATA}/ENC/US</dir>
                 </catalog>
               </catalogs>
             </section>
