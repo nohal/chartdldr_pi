@@ -39,16 +39,21 @@
 // Chart Catalog implementation
 bool ChartCatalog::LoadFromFile(wxString path, bool headerOnly)
 {
-      if (!wxFileExists(path))
-            return false;
-      TiXmlDocument * doc = new TiXmlDocument();
-      bool ret = doc->LoadFile(path.mb_str(), TIXML_ENCODING_UTF8);
-      if (ret)
-            ret = LoadFromXml(doc, headerOnly);
-      doc->Clear();
-      wxDELETE(doc);
-      
-      return ret;
+    dt_valid = wxInvalidDateTime;      // Invalidate all dates
+    date_created = dt_valid;            // so dates of one catalog
+    time_created = dt_valid;            // don't propagate into another
+    date_valid = dt_valid;
+    title = _("Catalog is not valid.");      // Invalidate the title in case we read a bad file
+    if (!wxFileExists(path))
+        return false;
+    TiXmlDocument * doc = new TiXmlDocument();
+    bool ret = doc->LoadFile(path.mb_str(), TIXML_ENCODING_UTF8);
+    if (ret)
+        ret = LoadFromXml(doc, headerOnly);
+    doc->Clear();
+    wxDELETE(doc);
+
+    return ret;
 }
 
 ChartCatalog::ChartCatalog()
@@ -84,11 +89,6 @@ wxDateTime ChartCatalog::GetReleaseDate()
       TiXmlElement * root = doc->RootElement();
       wxString rootName = wxString::FromUTF8( root->Value() );
       charts->Clear();
-        dt_valid = wxInvalidDateTime;      // Invalidate all dates
-        date_created = dt_valid;            // so dates of one catalog
-        time_created = dt_valid;            // don't propagate into another
-        date_valid = dt_valid;
-        title = _T("Title not found.");      // Invalidate the title incase we read a bad file
 
       if (rootName.StartsWith(_T("RncProductCatalog")))
       {
