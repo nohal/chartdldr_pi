@@ -853,10 +853,34 @@
           <dir>{USERDATA}/RNC/ARGENTINA</dir>
         </catalog>
         <catalog>
+          <name>Austria Inland ENC Charts</name>
+          <type>ENC</type>
+          <location>https://raw.githubusercontent.com/chartcatalogs/catalogs/master/AT_IENC_Catalog.xml</location>
+          <dir>{USERDATA}/ENC/AT_INLAND</dir>
+        </catalog>
+        <catalog>
+          <name>Belgium Inland ENC Charts</name>
+          <type>ENC</type>
+          <location>https://raw.githubusercontent.com/chartcatalogs/catalogs/master/BE_IENC_Catalog.xml</location>
+          <dir>{USERDATA}/ENC/BE_INLAND</dir>
+        </catalog>
+        <catalog>
           <name>Brasil RNC Nautical Charts</name>
           <type>RNC</type>
           <location>https://raw.githubusercontent.com/chartcatalogs/catalogs/master/BR_RNC_Catalog.xml</location>
           <dir>{USERDATA}/RNC/BRASIL</dir>
+        </catalog>
+        <catalog>
+          <name>Bulgaria Inland ENC Charts</name>
+          <type>ENC</type>
+          <location>https://raw.githubusercontent.com/chartcatalogs/catalogs/master/BG_IENC_Catalog.xml</location>
+          <dir>{USERDATA}/ENC/BG_INLAND</dir>
+        </catalog>
+        <catalog>
+          <name>Croatia Inland ENC Charts</name>
+          <type>ENC</type>
+          <location>https://raw.githubusercontent.com/chartcatalogs/catalogs/master/HR_IENC_Catalog.xml</location>
+          <dir>{USERDATA}/ENC/HR_INLAND</dir>
         </catalog>
         <catalog>
           <name>Czech Republic Inland ENC Charts</name>
@@ -871,10 +895,46 @@
           <dir>{USERDATA}/ENC/FR_INLAND</dir>
         </catalog>
         <catalog>
+          <name>Hungary Inland ENC Charts</name>
+          <type>ENC</type>
+          <location>https://raw.githubusercontent.com/chartcatalogs/catalogs/master/HU_IENC_Catalog.xml</location>
+          <dir>{USERDATA}/ENC/HU_INLAND</dir>
+        </catalog>
+        <catalog>
+          <name>Netherland Inland ENC Charts</name>
+          <type>ENC</type>
+          <location>https://raw.githubusercontent.com/chartcatalogs/catalogs/master/NL_IENC_Catalog.xml</location>
+          <dir>{USERDATA}/ENC/NL_INLAND</dir>
+        </catalog>
+        <catalog>
           <name>New Zealand RNC Nautical Charts</name>
           <type>RNC</type>
           <location>https://raw.githubusercontent.com/chartcatalogs/catalogs/master/NZ_RNC_Catalog.xml</location>
           <dir>{USERDATA}/RNC/NZ</dir>
+        </catalog>
+        <catalog>
+          <name>Poland Inland ENC Charts</name>
+          <type>ENC</type>
+          <location>https://raw.githubusercontent.com/chartcatalogs/catalogs/master/PL_IENC_Catalog.xml</location>
+          <dir>{USERDATA}/ENC/PL_INLAND</dir>
+        </catalog>
+        <catalog>
+          <name>Romania Inland ENC Charts</name>
+          <type>ENC</type>
+          <location>https://raw.githubusercontent.com/chartcatalogs/catalogs/master/RO_IENC_Catalog.xml</location>
+          <dir>{USERDATA}/ENC/RO_INLAND</dir>
+        </catalog>
+        <catalog>
+          <name>Serbia Inland ENC Charts</name>
+          <type>ENC</type>
+          <location>https://raw.githubusercontent.com/chartcatalogs/catalogs/master/RS_IENC_Catalog.xml</location>
+          <dir>{USERDATA}/ENC/RS_INLAND</dir>
+        </catalog>
+        <catalog>
+          <name>Swotzerland Inland ENC Charts</name>
+          <type>ENC</type>
+          <location>https://raw.githubusercontent.com/chartcatalogs/catalogs/master/CH_IENC_Catalog.xml</location>
+          <dir>{USERDATA}/ENC/CH_INLAND</dir>
         </catalog>
       </catalogs>
     </section>
