@@ -1026,7 +1026,7 @@ bool chartdldr_pi::ExtractRarFiles(const wxString& aRarFile, const wxString& aTa
         Shutdown();
 #endif
     ErrHandler.MainExit=true;
-    return ErrHandler.GetErrorCode();
+    //return ErrHandler.GetErrorCode();
   
     if( aRemoveRar )
         wxRemoveFile(aRarFile);
