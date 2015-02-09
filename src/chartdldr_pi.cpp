@@ -47,6 +47,7 @@
 #include <wx/wfstream.h>
 #include <memory>
 #include <wx/regex.h>
+#include "unrar/rar.hpp"
 
 #include <wx/arrimpl.cpp>
     WX_DEFINE_OBJARRAY(wxArrayOfChartSources);
@@ -69,6 +70,21 @@
 
 #define CHART_DIR "Charts"
 
+void write_file(const wxString extract_file, char *data, unsigned long datasize)
+{
+    wxFileName fn(extract_file);
+    if( wxDirExists( fn.GetPath() ) )
+    {
+        if( !wxFileName::Mkdir(fn.GetPath(), 0755, wxPATH_MKDIR_FULL) )
+        {
+            wxLogError(_T("Can not create directory '") + fn.GetPath() + _T("'."));
+            return;
+        }
+    }
+    wxFileOutputStream f(extract_file);
+    f.Write(data, datasize);
+    f.Close();
+}
 
 // the class factories, used to create and destroy instances of the PlugIn
 
@@ -868,6 +884,15 @@ bool chartdldr_pi::ProcessFile(const wxString& aFile, const wxString& aTargetDir
             wxLogError(_T("chartdldr_pi: Unable to extract: ") + aFile );
         return ret;
     }
+    else if( aFile.Lower().EndsWith(_T("rar")) ) //Rar compressed
+    {
+        bool ret = ExtractRarFiles( aFile, aTargetDir, aStripPath, aMTime, false);
+        if( ret )
+            wxRemoveFile(aFile);
+        else
+            wxLogError(_T("chartdldr_pi: Unable to extract: ") + aFile );
+        return ret;
+    }
     else //Uncompressed
     {
         wxFileName fn(aFile);
@@ -889,6 +914,123 @@ bool chartdldr_pi::ProcessFile(const wxString& aFile, const wxString& aTargetDir
         fn.Assign(aTargetDir, name);
         fn.SetTimes(&aMTime, &aMTime, &aMTime);
     }
+    return true;
+}
+
+bool chartdldr_pi::ExtractRarFiles(const wxString& aRarFile, const wxString& aTargetDir, bool aStripPath, wxDateTime aMTime, bool aRemoveRar)
+{
+    wxString cmd;
+    if (aStripPath)
+        cmd = _T("e");
+    else
+        cmd = _T("x");
+    int argc = 5;
+
+    char command[2];
+    strncpy(command, (const char*)cmd.mb_str(wxConvUTF8), 1);
+    char file[1024];
+    strncpy(file, (const char*)aRarFile.mb_str(wxConvUTF8), 1023);
+    char target[1024];
+    strncpy(target, (const char*)aTargetDir.mb_str(wxConvUTF8), 1023);
+    char *argv[] = {const_cast<char *>("unrar"), command, const_cast<char *>("-y"), file, target};
+#ifdef _UNIX
+    setlocale(LC_ALL,"");
+#endif
+
+    InitConsole();
+    ErrHandler.SetSignalHandlers(true);
+
+#ifdef SFX_MODULE
+    wchar ModuleName[NM];
+#ifdef _WIN_ALL
+    GetModuleFileName(NULL,ModuleName,ASIZE(ModuleName));
+#else
+    CharToWide(argv[0],ModuleName,ASIZE(ModuleName));
+#endif
+#endif
+
+#ifdef _WIN_ALL
+    SetErrorMode(SEM_NOALIGNMENTFAULTEXCEPT|SEM_FAILCRITICALERRORS|SEM_NOOPENFILEERRORBOX);
+
+#endif
+
+#if defined(_WIN_ALL) && !defined(SFX_MODULE) && !defined(SHELL_EXT)
+    // Must be initialized, normal initialization can be skipped in case of
+    // exception.
+    bool ShutdownOnClose=false;
+#endif
+
+    try 
+    {
+  
+        CommandData *Cmd=new CommandData;
+#ifdef SFX_MODULE
+        wcscpy(Cmd->Command,L"X");
+        char *Switch=argc>1 ? argv[1]:NULL;
+        if (Switch!=NULL && Cmd->IsSwitch(Switch[0]))
+        {
+            int UpperCmd=etoupper(Switch[1]);
+            switch(UpperCmd)
+            {
+                case 'T':
+                case 'V':
+                    Cmd->Command[0]=UpperCmd;
+                    break;
+                case '?':
+                    Cmd->OutHelp(RARX_SUCCESS);
+                break;
+            }
+        }
+        Cmd->AddArcName(ModuleName);
+        Cmd->ParseDone();
+#else // !SFX_MODULE
+        Cmd->ParseCommandLine(true,argc,argv);
+        if (!Cmd->ConfigDisabled)
+        {
+            Cmd->ReadConfig();
+            Cmd->ParseEnvVar();
+        }
+        Cmd->ParseCommandLine(false,argc,argv);
+#endif
+
+#if defined(_WIN_ALL) && !defined(SFX_MODULE) && !defined(SHELL_EXT)
+        ShutdownOnClose=Cmd->Shutdown;
+#endif
+
+        uiInit(Cmd->Sound);
+        InitConsoleOptions(Cmd->MsgStream);
+        InitLogOptions(Cmd->LogName,Cmd->ErrlogCharset);
+        ErrHandler.SetSilent(Cmd->AllYes || Cmd->MsgStream==MSG_NULL);
+        ErrHandler.SetShutdown(Cmd->Shutdown);
+
+        Cmd->OutTitle();
+        Cmd->ProcessCommand();
+        delete Cmd;
+    }
+    catch (RAR_EXIT ErrCode)
+    {
+        ErrHandler.SetErrorCode(ErrCode);
+    }
+    catch (std::bad_alloc&)
+    {
+        ErrHandler.MemoryErrorMsg();
+        ErrHandler.SetErrorCode(RARX_MEMORY);
+    }
+    catch (...)
+    {
+        ErrHandler.SetErrorCode(RARX_FATAL);
+    }
+
+#if defined(_WIN_ALL) && !defined(SFX_MODULE) && !defined(SHELL_EXT)
+    if (ShutdownOnClose)
+        Shutdown();
+#endif
+    ErrHandler.MainExit=true;
+    return ErrHandler.GetErrorCode();
+  
+    if( aRemoveRar )
+        wxRemoveFile(aRarFile);
+
     return true;
 }
 
@@ -966,7 +1108,6 @@ bool chartdldr_pi::ExtractZipFiles(const wxString& aZipFile, const wxString& aTa
                               break;
                         }
                         zip.Read(file);
-                        wxString s = aMTime.Format(_T("%Y-%m-%d %H:%M"));
                         fn.SetTimes(&aMTime, &aMTime, &aMTime);
                   }
 

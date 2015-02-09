@@ -462,15 +462,15 @@ IEncCell::IEncCell(TiXmlNode * xmldata) : Chart(xmldata)
             }
             else if (s == _T("shp_file"))
             {
-                  shp_file = new File(child);
+                  shp_file = new ChartFile(child);
             }
             else if (s == _T("s57_file"))
             {
-                  s57_file = new File(child);
+                  s57_file = new ChartFile(child);
             }
             else if (s == _T("kml_file"))
             {
-                  kml_file = new File(child);
+                  kml_file = new ChartFile(child);
             }
       }
 }
@@ -505,7 +505,7 @@ wxDateTime IEncCell::GetUpdateDatetime()
       return s57_file->date_posted;
 }
 
-File::File(TiXmlNode * xmldata)
+ChartFile::ChartFile(TiXmlNode * xmldata)
 {
       file_size = -1;
       location = wxEmptyString;

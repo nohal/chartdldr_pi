@@ -45,7 +45,7 @@ class Chart;
 class Location;
 class RiverMiles;
 class Area;
-class File;
+class ChartFile;
 //WX_DECLARE_OBJARRAY(NoticeToMariners *, wxArrayOfNoticeToMariners);
 WX_DECLARE_OBJARRAY(Vertex, wxArrayOfVertexes);
 WX_DECLARE_OBJARRAY(Panel, wxArrayOfPanels);
@@ -157,15 +157,15 @@ public:
       RiverMiles *river_miles;
       Area *area;
       wxString edition;
-      File *shp_file;
-      File *s57_file;
-      File *kml_file;
+      ChartFile *shp_file;
+      ChartFile *s57_file;
+      ChartFile *kml_file;
 };
 
-class File
+class ChartFile
 {
 public:
-      File(TiXmlNode * xmldata);
+      ChartFile(TiXmlNode * xmldata);
       // public methods
 
       //public properties

@@ -931,7 +931,7 @@
           <dir>{USERDATA}/ENC/RS_INLAND</dir>
         </catalog>
         <catalog>
-          <name>Swotzerland Inland ENC Charts</name>
+          <name>Switzerland Inland ENC Charts</name>
           <type>ENC</type>
           <location>https://raw.githubusercontent.com/chartcatalogs/catalogs/master/CH_IENC_Catalog.xml</location>
           <dir>{USERDATA}/ENC/CH_INLAND</dir>

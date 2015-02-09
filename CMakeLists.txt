@@ -19,6 +19,16 @@ SET(VERSION_MINOR "7")
 
 #SET(CMAKE_BUILD_TYPE Debug)
 
+# Definitions
+add_definitions (
+-D_FILE_OFFSET_BITS=64
+-D_LARGEFILE_SOURCE
+-DLIBUNRAR_BUILD
+-DRARDLL
+-DUNRAR
+-DSILENT
+)
+
 INCLUDE("cmake/PluginConfigure.cmake")
 
 SET(SRC_CHARTDLDR
@@ -46,6 +56,55 @@ SET(SRC_CHARTDLDR
             src/wxcurl/telnet.cpp
             src/wxcurl/thread.cpp
             src/wxcurl/utils.cpp
+
+            src/unrar/rar.cpp
+            src/unrar/strlist.cpp
+            src/unrar/strfn.cpp
+            src/unrar/pathfn.cpp
+            src/unrar/smallfn.cpp
+            src/unrar/global.cpp
+            src/unrar/file.cpp
+            src/unrar/filefn.cpp
+            src/unrar/filcreat.cpp
+            src/unrar/archive.cpp
+            src/unrar/arcread.cpp
+            src/unrar/unicode.cpp
+            src/unrar/system.cpp
+            src/unrar/isnt.cpp
+            src/unrar/crypt.cpp
+            src/unrar/crc.cpp
+            src/unrar/rawread.cpp
+            src/unrar/encname.cpp
+            src/unrar/resource.cpp
+            src/unrar/match.cpp
+            src/unrar/timefn.cpp
+            src/unrar/rdwrfn.cpp
+            src/unrar/consio.cpp
+            src/unrar/options.cpp
+            src/unrar/errhnd.cpp
+            src/unrar/rarvm.cpp
+            src/unrar/secpassword.cpp
+            src/unrar/rijndael.cpp
+            src/unrar/getbits.cpp
+            src/unrar/sha1.cpp
+            src/unrar/sha256.cpp
+            src/unrar/blake2s.cpp
+            src/unrar/hash.cpp
+            src/unrar/extinfo.cpp
+            src/unrar/extract.cpp
+            src/unrar/volume.cpp
+            src/unrar/list.cpp
+            src/unrar/find.cpp
+            src/unrar/unpack.cpp
+            src/unrar/headers.cpp
+            src/unrar/threadpool.cpp
+            src/unrar/rs16.cpp
+            src/unrar/cmddata.cpp
+            src/unrar/ui.cpp
+            src/unrar/filestr.cpp
+            src/unrar/scantree.cpp
+            #src/unrar/dll.cpp
+            src/unrar/qopen.cpp
         )
 
 IF(UNIX)
@@ -53,11 +112,13 @@ IF(UNIX)
  FIND_PACKAGE(TinyXML QUIET)
 ENDIF(UNIX)
 
+INCLUDE_DIRECTORIES(src/unrar/)
+
 IF(TINYXML_FOUND)
  message (STATUS "Building with system tinyxml")
  INCLUDE_DIRECTORIES(${TINYXML_INCLUDE_DIR})
  ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_CHARTDLDR})
- TARGET_LINK_LIBRARIES(${PACKAGE_NAME} ${TINYXML_LIBRARIES} )
+ TARGET_LINK_LIBRARIES(${PACKAGE_NAME} ${TINYXML_LIBRARIES})
 ELSE(TINYXML_FOUND)
  message (STATUS "Building with embedded tinyxml")
  INCLUDE_DIRECTORIES(src/tinyxml/)

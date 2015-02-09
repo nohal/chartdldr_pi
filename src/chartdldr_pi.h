@@ -92,6 +92,7 @@ public:
       bool              SaveConfig(void);
       bool              ProcessFile(const wxString& aFile, const wxString& aTargetDir, bool aStripPath = true, wxDateTime aMTime = wxDateTime::Now());
       bool              ExtractZipFiles(const wxString& aZipFile, const wxString& aTargetDir, bool aStripPath = true, wxDateTime aMTime = wxDateTime::Now(), bool aRemoveZip = false);
+      bool              ExtractRarFiles(const wxString& aRarFile, const wxString& aTargetDir, bool aStripPath = true, wxDateTime aMTime = wxDateTime::Now(), bool aRemoveRar = false);
 
 //    Public properties
       wxArrayOfChartSources *m_chartSources;

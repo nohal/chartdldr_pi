@@ -74,3 +74,18 @@ License
 The plugin code is licensed under the terms of the GPL v2 or, at your will, later.
 
 Icons made by Freepik (http://www.freepik.com) and Google (http://www.google.com) from Flaticon (http://www.flaticon.com) and are licensed under Creative Commons BY 3.0
+
+UnRAR source code by Alexander L. Roshal      
+      UnRAR source code may be used in any software to handle
+      RAR archives without limitations free of charge, but cannot be
+      used to develop RAR (WinRAR) compatible archiver and to
+      re-create RAR compression algorithm, which is proprietary.
+      Distribution of modified UnRAR source code in separate form
+      or as a part of other software is permitted, provided that
+      full text of this paragraph, starting from "UnRAR source code"
+      words, is included in license, or in documentation if license
+      is not available, and in source code comments of resulting package.
+
+wxCurl licensed under wxWidgets Licence - Copyright (c) 2004 Casey O'Donnell. All rights reserved.
+
+tinyxml - licensed under zlib license, original code by Lee Thomason (www.grinninglizard.com)
