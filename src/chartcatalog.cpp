@@ -439,6 +439,7 @@ IEncCell::IEncCell(TiXmlNode * xmldata) : Chart(xmldata)
             if (s == _T("name"))
             {
                   name = wxString::FromUTF8(child->FirstChild()->Value());
+				  zipfile_location = wxString::Format(_T("%s.zip"), name.c_str());
             }
             else if (s == _T("location"))
             {
@@ -488,11 +489,6 @@ IEncCell::~IEncCell()
 wxString IEncCell::GetChartTitle()
 {
       return wxString::Format(_("%s (%s to %s), river miles %3.1f - %3.1f"), river_name.c_str(), location->from.c_str(), location->to.c_str(), river_miles->begin, river_miles->end);
-}
-
-wxString IEncCell::GetChartFilename()
-{
-      return wxString::Format(_T("%s.zip"), name.c_str());
 }
 
 wxString IEncCell::GetDownloadLocation()

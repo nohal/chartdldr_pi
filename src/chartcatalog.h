@@ -147,7 +147,6 @@ public:
       // public methods
       wxString GetChartTitle();
       wxString GetDownloadLocation();
-      wxString GetChartFilename();
       wxDateTime GetUpdateDatetime();
 
       //public properties
