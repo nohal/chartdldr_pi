@@ -149,6 +149,9 @@ private:
     bool downloadInProgress;
     int to_download;
     int downloading;
+	int updating;
+	int failed_to_update;
+	int attempted_to_update;
     int failed_downloads;
     bool cancelled;
     chartdldr_pi      *pPlugIn;
@@ -168,7 +171,8 @@ protected:
 	void EditSource( wxCommandEvent& event );
 	void UpdateChartList( wxCommandEvent& event );
 	void DownloadCharts( wxCommandEvent& event );
-    void OnShowLocalDir( wxCommandEvent& event );
+    void UpdateAllCharts( wxCommandEvent& event );
+	void OnShowLocalDir( wxCommandEvent& event );
     void OnPaint( wxPaintEvent& event );
     void OnLeftDClick( wxMouseEvent& event );
       
