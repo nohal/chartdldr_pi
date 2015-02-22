@@ -561,22 +561,27 @@ void ChartDldrPanelImpl::AppendCatalog(ChartSource *cs)
 
 void ChartDldrPanelImpl::UpdateAllCharts( wxCommandEvent& event )
 {
-	updating = true;
-	failed_to_update = 0;
-	attempted_to_update = 0;
-	for (long chartIndex = 0; chartIndex < m_lbChartSources->GetItemCount(); chartIndex++)
+    wxMessageDialog mess(this, _("You have chosen to update all chart catalogs.\nThis can take a long time."), 
+		_("Update All Charts"), wxOK | wxCANCEL);
+	if (mess.ShowModal() == wxID_OK)
 	{
-		SetSource( chartIndex );
-		UpdateChartList( event );
-		DownloadCharts( event );
+		updating = true;
+		failed_to_update = 0;
+		attempted_to_update = 0;
+		for (long chartIndex = 0; chartIndex < m_lbChartSources->GetItemCount(); chartIndex++)
+		{
+			m_lbChartSources->SetItemState(chartIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+			UpdateChartList( event );
+			DownloadCharts( event );
+		}
+		if (failed_to_update > 0)
+				  wxMessageBox( wxString::Format( _("%d out of %d charts failed to download.\nCheck the list, verify there is a working Internet connection and repeat the operation if needed."), failed_downloads ,downloading ), 
+						_("Chart Downloader"), wxOK | wxICON_ERROR );
+		if (attempted_to_update > 0)
+				wxMessageBox( _("You have added/updated some of your charts.\nTo make sure OpenCPN knows about them, go to the 'Chart Files' tab and select the 'Scan Charts and Update Database' option."), 
+						_("Chart Downloader"), wxOK | wxICON_INFORMATION );
+		updating = false;
 	}
-	if (failed_to_update > 0)
-			  wxMessageBox( wxString::Format( _("%d out of %d charts failed to download.\nCheck the list, verify there is a working Internet connection and repeat the operation if needed."), failed_downloads ,downloading ), 
-                    _("Chart Downloader"), wxOK | wxICON_ERROR );
-	if (attempted_to_update > 0)
-            wxMessageBox( _("You have added/updated some of your charts.\nTo make sure OpenCPN knows about them, go to the 'Chart Files' tab and select the 'Scan Charts and Update Database' option."), 
-                    _("Chart Downloader"), wxOK | wxICON_INFORMATION );
-	updating = false;
 }
 
 void ChartDldrPanelImpl::UpdateChartList( wxCommandEvent& event )
