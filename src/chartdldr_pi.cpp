@@ -561,7 +561,7 @@ void ChartDldrPanelImpl::AppendCatalog(ChartSource *cs)
 
 void ChartDldrPanelImpl::UpdateAllCharts( wxCommandEvent& event )
 {
-    wxMessageDialog mess(this, _("You have chosen to update all chart catalogs.\nThis can take a long time."), 
+    wxMessageDialog mess(this, _("You have chosen to update all chart catalogs.\nThen download all charts.\nThis may take a long time."), 
 		_("Update All Charts"), wxOK | wxCANCEL);
 	if (mess.ShowModal() == wxID_OK)
 	{
