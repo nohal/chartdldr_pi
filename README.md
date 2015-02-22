@@ -32,7 +32,7 @@ http://sourceforge.net/projects/opencpnplugins/files/weatherfax_pi/wf_depends.7z
 
 On Windows, also the CA certificates bundle must be part of the package. Get it from http://sourceforge.net/projects/opencpnplugins/files/chartdldr_pi/curl-ca-bundle.crt/download and place into the buildwin directory
 
-For Mingw, only a single file "libcurl.dll" is needed for libcurl, for visual studio, several files.
+For Mingw, only a single file "libcurl.dll" is needed for libcurl, for visual studio, several files. For visual Studio put all the files in opencpn\build\plugins\buildwin. You may have to create the buildwin directory first.
 
 ###Build on Mac OS X:
 Tools: Can be installed either manually or from Homebrew (http://brew.sh)
