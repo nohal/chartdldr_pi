@@ -561,28 +561,39 @@ void ChartDldrPanelImpl::AppendCatalog(ChartSource *cs)
 
 void ChartDldrPanelImpl::UpdateAllCharts( wxCommandEvent& event )
 {
-    wxMessageDialog mess(this, _("You have chosen to update all chart catalogs.\nThen download all charts.\nThis may take a long time."), 
-		_("Update All Charts"), wxOK | wxCANCEL);
-	if (mess.ShowModal() == wxID_OK)
-	{
-		updating = true;
-		failed_to_update = 0;
-		attempted_to_update = 0;
-		for (long chartIndex = 0; chartIndex < m_lbChartSources->GetItemCount(); chartIndex++)
-		{
-			m_lbChartSources->SetItemState(chartIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-			UpdateChartList( event );
-			DownloadCharts( event );
-		}
-		if (failed_to_update > 0)
-				  wxMessageBox( wxString::Format( _("%d out of %d charts failed to download.\nCheck the list, verify there is a working Internet connection and repeat the operation if needed."), failed_downloads ,downloading ), 
-						_("Chart Downloader"), wxOK | wxICON_ERROR );
-		if (attempted_to_update > 0)
-				wxMessageBox( _("You have added/updated some of your charts.\nTo make sure OpenCPN knows about them, go to the 'Chart Files' tab and select the 'Scan Charts and Update Database' option."), 
-						_("Chart Downloader"), wxOK | wxICON_INFORMATION );
-		updating = false;
-	}
+    if ( (pPlugIn->m_preselect_new) && (pPlugIn->m_preselect_updated) ) {
+        wxMessageDialog mess(this, _("You have chosen to update all chart catalogs.\nThen download all new and updated charts.\nThis may take a long time."), 
+                                     _("Chart Downloader"), wxOK | wxCANCEL);
+        if (mess.ShowModal() == wxID_CANCEL) return;
+    }
+    else if (pPlugIn->m_preselect_new) {
+        wxMessageDialog mess(this, _("You have chosen to update all chart catalogs.\nThen download only new (but not updated) charts.\nThis may take a long time."), 
+                                    _("Chart Downloader"), wxOK | wxCANCEL);
+        if (mess.ShowModal() == wxID_CANCEL) return;
+    }
+    else if (pPlugIn->m_preselect_updated) {
+        wxMessageDialog mess(this, _("You have chosen to update all chart catalogs.\nThen download only updated (but not new) charts.\nThis may take a long time."), 
+                                     _("Chart Downloader"), wxOK | wxCANCEL);
+        if (mess.ShowModal() == wxID_CANCEL) return;
+    }
+    updating = true;
+    failed_to_update = 0;
+    attempted_to_update = 0;
+    for (long chartIndex = 0; chartIndex < m_lbChartSources->GetItemCount(); chartIndex++)
+    {
+        m_lbChartSources->SetItemState(chartIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+        UpdateChartList( event );
+        DownloadCharts( event );
+    }
+    if (failed_to_update > 0)
+                wxMessageBox( wxString::Format( _("%d out of %d charts failed to download.\nCheck the list, verify there is a working Internet connection and repeat the operation if needed."), failed_downloads ,downloading ), 
+                    _("Chart Downloader"), wxOK | wxICON_ERROR );
+    if (attempted_to_update > 0)
+            wxMessageBox( _("You have added/updated some of your charts.\nTo make sure OpenCPN knows about them, go to the 'Chart Files' tab and select the 'Scan Charts and Update Database' option."), 
+                    _("Chart Downloader"), wxOK | wxICON_INFORMATION );
+    updating = false;
 }
+
 
 void ChartDldrPanelImpl::UpdateChartList( wxCommandEvent& event )
 {
