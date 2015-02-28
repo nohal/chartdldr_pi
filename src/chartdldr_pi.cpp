@@ -584,6 +584,8 @@ void ChartDldrPanelImpl::UpdateAllCharts( wxCommandEvent& event )
         m_lbChartSources->SetItemState(chartIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
         UpdateChartList( event );
         DownloadCharts( event );
+		if (cancelled)
+			break;
     }
     if (failed_to_update > 0)
                 wxMessageBox( wxString::Format( _("%d out of %d charts failed to download.\nCheck the list, verify there is a working Internet connection and repeat the operation if needed."), failed_downloads ,downloading ), 
@@ -650,7 +652,10 @@ void ChartDldrPanelImpl::UpdateChartList( wxCommandEvent& event )
             break;
         }
         case wxCDRF_USER_ABORTED:
-            break;
+		{
+			cancelled = true;
+			break;
+		}
     }
 }
 
@@ -744,6 +749,8 @@ void ChartDldrPanelImpl::DownloadCharts( wxCommandEvent& event )
                         pPlugIn->ProcessFile(path, fn.GetPath(), true, pPlugIn->m_pChartCatalog->charts->Item(i).GetUpdateDatetime());
                   }
             }
+	        if (cancelled)
+                break;
       }
 	  if (updating)
 	  {
