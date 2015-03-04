@@ -836,7 +836,7 @@
           <catalogs>
             <catalog>
               <name>US ACE Inland ENC charts</name>
-              <location>http://inland.agc.army.mil/enc/echarts/catalog/iencu37productscatalog.xml</location>
+              <location>http://www.ienccloud.us/ienc/products/catalog/IENCU37ProductsCatalog.xml
               <dir>{USERDATA}/ENC/US_INLAND</dir>
             </catalog>
           </catalogs>
