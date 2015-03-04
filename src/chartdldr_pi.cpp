@@ -819,8 +819,10 @@ void ChartDldrPanelImpl::DeleteSource( wxCommandEvent& event )
     if( wxYES != wxMessageBox(_("Do you really want to remove the chart source?\nThe local chart files will not be removed, but you will not be able to update the charts anymore."),
                                  _("Chart Downloader"), wxYES_NO | wxCENTRE, this) )
         return;
-    pPlugIn->m_chartSources->RemoveAt(GetSelectedCatalog());
-    m_lbChartSources->DeleteItem(GetSelectedCatalog());
+	int ToBeRemoved = GetSelectedCatalog();
+	m_lbChartSources->SetItemState(ToBeRemoved,  0, wxLIST_STATE_SELECTED|wxLIST_STATE_FOCUSED);
+    pPlugIn->m_chartSources->RemoveAt(ToBeRemoved);
+    m_lbChartSources->DeleteItem(ToBeRemoved);
     CleanForm();
     pPlugIn->SetSourceId(-1);
     SelectCatalog(-1);
