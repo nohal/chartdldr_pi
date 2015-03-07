@@ -587,7 +587,8 @@ void ChartDldrPanelImpl::UpdateAllCharts( wxCommandEvent& event )
 		if (cancelled)
 			break;
     }
-    if (failed_to_update > 0)
+    wxLogMessage( wxString::Format(_T("chartdldr_pi::UpdateAllCharts() downloaded %d out of %d charts."), attempted_to_update - failed_to_update, attempted_to_update) );
+	if (failed_to_update > 0)
                 wxMessageBox( wxString::Format( _("%d out of %d charts failed to download.\nCheck the list, verify there is a working Internet connection and repeat the operation if needed."),
 				              failed_to_update, attempted_to_update ), _("Chart Downloader"), wxOK | wxICON_ERROR );
     if (attempted_to_update > 0)
@@ -754,8 +755,8 @@ void ChartDldrPanelImpl::DownloadCharts( wxCommandEvent& event )
       }
 	  if (updating)
 	  {
-          attempted_to_update = attempted_to_update + downloading;
-          failed_to_update = failed_to_update + failed_downloads;
+          attempted_to_update += downloading;
+          failed_to_update += failed_downloads;
 	  }
       SetSource(GetSelectedCatalog());
       if( failed_downloads > 0 && !updating)
