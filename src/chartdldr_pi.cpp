@@ -588,8 +588,8 @@ void ChartDldrPanelImpl::UpdateAllCharts( wxCommandEvent& event )
 			break;
     }
     if (failed_to_update > 0)
-                wxMessageBox( wxString::Format( _("%d out of %d charts failed to download.\nCheck the list, verify there is a working Internet connection and repeat the operation if needed."), failed_downloads ,downloading ), 
-                    _("Chart Downloader"), wxOK | wxICON_ERROR );
+                wxMessageBox( wxString::Format( _("%d out of %d charts failed to download.\nCheck the list, verify there is a working Internet connection and repeat the operation if needed."),
+				              failed_to_update, attempted_to_update ), _("Chart Downloader"), wxOK | wxICON_ERROR );
     if (attempted_to_update > 0)
             wxMessageBox( _("You have added/updated some of your charts.\nTo make sure OpenCPN knows about them, go to the 'Chart Files' tab and select the 'Scan Charts and Update Database' option."), 
                     _("Chart Downloader"), wxOK | wxICON_INFORMATION );
