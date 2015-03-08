@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-08 15:28-0600\n"
-"PO-Revision-Date: 2015-03-08 17:31-0400\n"
+"PO-Revision-Date: 2015-03-08 17:56-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -18,12 +18,12 @@ msgstr ""
 
 #: src/chartcatalog.cpp:46
 msgid "Catalog is not valid."
-msgstr ""
+msgstr "Katalog není platný."
 
 #: src/chartcatalog.cpp:497
 #, c-format
 msgid "%s (%s to %s), river miles %3.1f - %3.1f"
-msgstr ""
+msgstr "%s (z %s do %s), říční míle %3.1f - %3.1f"
 
 #: src/chartdldr_pi.cpp:216
 msgid "ChartDownloader"
@@ -48,15 +48,15 @@ msgstr "Manažer map"
 
 #: src/chartdldr_pi.cpp:369
 msgid "Select all"
-msgstr "Vyber složku"
+msgstr "Vyber vše"
 
 #: src/chartdldr_pi.cpp:370
 msgid "Deselect all"
-msgstr ""
+msgstr "Zrušit vyběr všech"
 
 #: src/chartdldr_pi.cpp:371
 msgid "Invert selection"
-msgstr ""
+msgstr "Invertovat výběr"
 
 #: src/chartdldr_pi.cpp:372
 msgid "Select updated"
@@ -80,7 +80,7 @@ msgstr "Aktuální"
 
 #: src/chartdldr_pi.cpp:542 src/chartdldr_pi.cpp:905
 msgid "(Please update first)"
-msgstr ""
+msgstr "(Prosím nejprve aktualizovat)"
 
 #: src/chartdldr_pi.cpp:547 src/chartdldr_pi.cpp:617
 msgid "Error, the URL to the chart source data seems wrong."
@@ -92,29 +92,29 @@ msgstr "Chyba"
 
 #: src/chartdldr_pi.cpp:569
 msgid "You have chosen to update all chart catalogs.\nThen download all new and updated charts.\nThis may take a long time."
-msgstr ""
+msgstr "Rozhodl jsi se aktualizovat všechny katalogy map. \nStáhnou se všechny nové a aktualizované mapy. \nTo může pochopitelně trvat zatraceně dlouhou dobu."
 
 #: src/chartdldr_pi.cpp:574
 msgid "You have chosen to update all chart catalogs.\nThen download only new (but not updated) charts.\nThis may take a long time."
-msgstr ""
+msgstr "Rozhodl jsi se aktualizovat všechny katalogy map. \nStáhnou se všechny nové (ale ne aktualizované) mapy. \nTo může pochopitelně trvat zatraceně dlouhou dobu."
 
 #: src/chartdldr_pi.cpp:579
 msgid "You have chosen to update all chart catalogs.\nThen download only updated (but not new) charts.\nThis may take a long time."
-msgstr ""
+msgstr "Rozhodl jsi se aktualizovat všechny katalogy map. \nStáhnou se všechny atualizované (ale ne nové) mapy. \nTo může pochopitelně trvat zatraceně dlouhou dobu."
 
 #: src/chartdldr_pi.cpp:598 src/chartdldr_pi.cpp:788
 #, c-format
 msgid "%d out of %d charts failed to download.\nCheck the list, verify there is a working Internet connection and repeat the operation if needed."
-msgstr ""
+msgstr "%d z %d map se nepodařilo stáhnout. \nZkontroluj seznam, ověř, zda je funkční připojení k Internetu a opakuj operaci, je-li zapotřebí."
 
 #: src/chartdldr_pi.cpp:601 src/chartdldr_pi.cpp:791
 msgid "You have added/updated some of your charts.\nTo make sure OpenCPN knows about them, go to the 'Chart Files' tab and select the 'Scan Charts and Update Database' option."
-msgstr ""
+msgstr "Přidals/aktualizovals některé své mapy. \nAby o nich OpenCPN vědělo, přejdi na kartu Mapy - Soubory map a vyber možnost \"Projít mapy a aktualizovat databázi\"."
 
 #: src/chartdldr_pi.cpp:633 src/chartdldr_pi.cpp:1419 src/chartdldr_pi.cpp:1432
 #, c-format
 msgid "Directory %s can't be created."
-msgstr ""
+msgstr "Nelze vytvořit adresář %s."
 
 #: src/chartdldr_pi.cpp:639
 msgid "Downloading file"
@@ -122,53 +122,53 @@ msgstr "Stahování..."
 
 #: src/chartdldr_pi.cpp:640
 msgid "Reading Headers: "
-msgstr ""
+msgstr "Čtení hlaviček: "
 
 #: src/chartdldr_pi.cpp:658
 #, c-format
 msgid "Failed to Find New Catalog: %s "
-msgstr ""
+msgstr "Nepodařilo se najít nový katalog: %s "
 
 #: src/chartdldr_pi.cpp:664
 #, c-format
 msgid "Failed to Download Catalog: %s \nVerify there is a working Internet connection."
-msgstr ""
+msgstr "Nepodařilo se stáhnout katalog: %s \nOvěř že je funkční připojení k Internetu."
 
 #: src/chartdldr_pi.cpp:697
 #, c-format
 msgid "Downloading file %d of %d"
-msgstr ""
+msgstr "Stahování souboru %d z %d"
 
 #: src/chartdldr_pi.cpp:698
 #, c-format
 msgid "Chart: %s"
-msgstr ""
+msgstr "Mapa: %s"
 
 #: src/chartdldr_pi.cpp:730 src/chartdldr_pi.cpp:736
 msgid "No charts selected for download."
-msgstr ""
+msgstr "Žádné mapy ke stažení."
 
 #: src/chartdldr_pi.cpp:750
 #, c-format
 msgid "The selected chart '%s' can't be downloaded automatically, do you want me to open a browser window and download them manually?\n\n After downloading the charts, please extract them to %s"
-msgstr ""
+msgstr "Vybraná mapa '%s' nelze stáhnout automaticky, chceš otevřít okno prohlížeče a stáhnout ručně? \n\nPo stažení map je prosím rozbal do %s"
 
 #: src/chartdldr_pi.cpp:762
 #, c-format
 msgid "Error, the URL to the chart (%s) data seems wrong."
-msgstr ""
+msgstr "Chyba, URL dat mapy (%s) se zdá špatné."
 
 #: src/chartdldr_pi.cpp:807 src/chartdldrgui.cpp:20
 msgid "Catalog"
-msgstr ""
+msgstr "Katalog"
 
 #: src/chartdldr_pi.cpp:808
 msgid "Released"
-msgstr ""
+msgstr "Vydáno"
 
 #: src/chartdldr_pi.cpp:809
 msgid "Local path"
-msgstr ""
+msgstr "Místní cesta"
 
 #: src/chartdldr_pi.cpp:812
 msgid "Title"
@@ -180,60 +180,60 @@ msgstr "Stav"
 
 #: src/chartdldr_pi.cpp:814
 msgid "Latest"
-msgstr ""
+msgstr "Nejnovější"
 
 #: src/chartdldr_pi.cpp:845
 msgid "Do you really want to remove the chart source?\nThe local chart files will not be removed, but you will not be able to update the charts anymore."
-msgstr ""
+msgstr "Opravdu chcete odstranit zdroj map? \nLokální soubory mpa nebudou odstraněny, ale už je tu nebudeš moci aktualizovat."
 
 #: src/chartdldr_pi.cpp:878 src/chartdldr_pi.cpp:930
 #, c-format
 msgid "Path %s seems not to be covered by your configured Chart Directories.\nTo see the charts you have to adjust the configuration on the 'Chart Files' tab."
-msgstr ""
+msgstr "Cesta %s se nezdá být pokryta tvým nastavením adresářu s mapami. \nBudeš muset upravit konfiguraci na kartě Soubory map."
 
 #: src/chartdldr_pi.cpp:897
 msgid "Edit Chart Source"
-msgstr ""
+msgstr "Upravit zdroj map"
 
 #: src/chartdldr_pi.cpp:1404 src/chartdldr_pi.cpp:1407
 msgid "You must select one of the predefined chart sources or create one of your own.\n"
-msgstr ""
+msgstr "Musíš vybrat jeden z předdefinovaných zdrojů nebo vytvořit vlastní.\n"
 
 #: src/chartdldr_pi.cpp:1410
 msgid "The chart source must have a name.\n"
-msgstr ""
+msgstr "Zdroj map musí mít název.\n"
 
 #: src/chartdldr_pi.cpp:1413
 msgid "The chart source must have a valid URL.\n"
-msgstr ""
+msgstr "Zdroj map musí mít platnou adresu (URL).\n"
 
 #: src/chartdldr_pi.cpp:1415
 msgid "You must select a local folder to store the charts.\n"
-msgstr ""
+msgstr "Musíte vybrat místní složku pro ukládání map. \n"
 
 #: src/chartdldr_pi.cpp:1422
 msgid "Chart source definition problem"
-msgstr ""
+msgstr "Problém definice zdroj map"
 
 #: src/chartdldrgui.cpp:36
 msgid "Predefined"
-msgstr ""
+msgstr "Předdefinované"
 
 #: src/chartdldrgui.cpp:44
 msgid "Name"
-msgstr ""
+msgstr "Jméno"
 
 #: src/chartdldrgui.cpp:52
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: src/chartdldrgui.cpp:64
 msgid "Custom"
-msgstr ""
+msgstr "Vlastní"
 
 #: src/chartdldrgui.cpp:72
 msgid "Chart Directory"
-msgstr ""
+msgstr "Složka map"
 
 #: src/chartdldrgui.cpp:74
 msgid "Select a folder"
@@ -241,15 +241,15 @@ msgstr "Vyber složku"
 
 #: src/chartdldrgui.cpp:115
 msgid "Catalogs"
-msgstr ""
+msgstr "Katalogy"
 
 #: src/chartdldrgui.cpp:126
 msgid "Add"
-msgstr ""
+msgstr "Přidat"
 
 #: src/chartdldrgui.cpp:127
 msgid "Add a new chart catalog."
-msgstr ""
+msgstr "Přidáte nový katalog map."
 
 #: src/chartdldrgui.cpp:131
 msgid "Delete"
@@ -257,11 +257,11 @@ msgstr "Smaž zdroj"
 
 #: src/chartdldrgui.cpp:132
 msgid "Delete the chart catalog. The downloaded charts are not deleted."
-msgstr ""
+msgstr "Odstranit katalog map. Již stažené mapy nebudou odstraněny."
 
 #: src/chartdldrgui.cpp:136
 msgid "Edit..."
-msgstr ""
+msgstr "Upravit..."
 
 #: src/chartdldrgui.cpp:139
 msgid "Update"
@@ -269,11 +269,11 @@ msgstr "Aktuální"
 
 #: src/chartdldrgui.cpp:141
 msgid "Download the current chart catalog and update the data."
-msgstr ""
+msgstr "Stáhnout aktuální katalog map a aktualizovat data."
 
 #: src/chartdldrgui.cpp:145
 msgid "Update All"
-msgstr ""
+msgstr "Aktualizovat vše"
 
 #: src/chartdldrgui.cpp:158
 msgid "Charts"
@@ -281,7 +281,7 @@ msgstr "MApy"
 
 #: src/chartdldrgui.cpp:168
 msgid "Help"
-msgstr ""
+msgstr "Nápověda"
 
 #: src/chartdldrgui.cpp:174
 msgid "Download selected charts"
@@ -289,31 +289,31 @@ msgstr "Stáhni vybrané mapy"
 
 #: src/chartdldrgui.cpp:177
 msgid "Show local files"
-msgstr ""
+msgstr "Zobrazit místní soubory"
 
 #: src/chartdldrgui.cpp:232
 msgid "Default Path to Charts"
-msgstr ""
+msgstr "Výchozí cesta k mapám"
 
 #: src/chartdldrgui.cpp:234
 msgid "Select a root folder for your charts"
-msgstr ""
+msgstr "Vyber kořenovou složku pro mapy"
 
 #: src/chartdldrgui.cpp:241
 msgid "Preferences"
-msgstr ""
+msgstr "Volby"
 
 #: src/chartdldrgui.cpp:243
 msgid "After catalog update select for download"
-msgstr ""
+msgstr "Po katalogu aktualizovat výběr ke stažení"
 
 #: src/chartdldrgui.cpp:247
 msgid "All updated charts"
-msgstr ""
+msgstr "Všechny aktualizované mapy"
 
 #: src/chartdldrgui.cpp:251
 msgid "All new charts"
-msgstr ""
+msgstr "Všechny nové mapy"
 
 #: src/chartdldrgui.h:68
 msgid "New chart source"
@@ -321,7 +321,7 @@ msgstr "Nový zdroj map"
 
 #: src/chartdldrgui.h:137
 msgid "Chart Downloader Preferences"
-msgstr ""
+msgstr "Chart Downloader předvolby"
 
 #: src/wxcurl/dialog.cpp:137
 msgid "Not available"
@@ -329,63 +329,63 @@ msgstr "Má aktualizaci"
 
 #: src/wxcurl/dialog.cpp:168
 msgid "URL:"
-msgstr ""
+msgstr "URL:"
 
 #: src/wxcurl/dialog.cpp:187
 msgid "Speed:"
-msgstr ""
+msgstr "Rychlost:"
 
 #: src/wxcurl/dialog.cpp:196
 msgid "Elapsed time:"
-msgstr ""
+msgstr "Uplynulý čas:"
 
 #: src/wxcurl/dialog.cpp:198
 msgid "Estimated total time:"
-msgstr ""
+msgstr "Odhadovaný celkový čas:"
 
 #: src/wxcurl/dialog.cpp:200
 msgid "Estimated remaining time:"
-msgstr ""
+msgstr "Odhad zbývajícího času:"
 
 #: src/wxcurl/dialog.cpp:243 src/wxcurl/dialog.cpp:395
 msgid "Abort"
-msgstr ""
+msgstr "Přerušit"
 
 #: src/wxcurl/dialog.cpp:245
 msgid "Settings"
-msgstr ""
+msgstr "Nastavení"
 
 #: src/wxcurl/dialog.cpp:250 src/wxcurl/dialog.cpp:416
 msgid "Pause"
-msgstr ""
+msgstr "Pozastavit"
 
 #: src/wxcurl/dialog.cpp:252
 msgid "Start"
-msgstr ""
+msgstr "Začít"
 
 #: src/wxcurl/dialog.cpp:395
 msgid "Close"
-msgstr ""
+msgstr "Zavřít"
 
 #: src/wxcurl/dialog.cpp:406
 msgid "Resume"
-msgstr ""
+msgstr "Pokračovat"
 
 #: src/wxcurl/dialog.cpp:409
 msgid "0 (transfer paused)"
-msgstr ""
+msgstr "0 (přenos pozastaven)"
 
 #: src/wxcurl/dialog.cpp:457
 msgid "Connection settings"
-msgstr ""
+msgstr "Nastavení připojení"
 
 #: src/wxcurl/dialog.cpp:457
 msgid "Connection settings used for the transfer:"
-msgstr ""
+msgstr "Nastavení připojení pro přenos:"
 
 #: src/wxcurl/dialog.cpp:512
 msgid "0 (transfer completed)"
-msgstr ""
+msgstr "0 (přenos dokončen)"
 
 #: src/wxcurl/dialog.cpp:533
 msgid "Downloaded:"
@@ -393,41 +393,41 @@ msgstr "Správce map"
 
 #: src/wxcurl/dialog.cpp:581
 msgid "Uploaded:"
-msgstr ""
+msgstr "Odesláno:"
 
 #: src/wxcurl/panel.cpp:111
 msgid "Username:"
-msgstr ""
+msgstr "Uživatelské jméno:"
 
 #: src/wxcurl/panel.cpp:112
 msgid "Password:"
-msgstr ""
+msgstr "Heslo:"
 
 #: src/wxcurl/panel.cpp:120
 msgid "Port:"
-msgstr ""
+msgstr "Port:"
 
 #: src/wxcurl/panel.cpp:134
 msgid "Proxy settings"
-msgstr ""
+msgstr "Nastavení proxy"
 
 #: src/wxcurl/panel.cpp:136
 msgid "Use proxy"
-msgstr ""
+msgstr "Použít server proxy"
 
 #: src/wxcurl/panel.cpp:141
 msgid "Proxy host:"
-msgstr ""
+msgstr "Proxy server:"
 
 #: src/wxcurl/panel.cpp:142
 msgid "Proxy username:"
-msgstr ""
+msgstr "Proxy uživatelské jméno:"
 
 #: src/wxcurl/panel.cpp:143
 msgid "Proxy password:"
-msgstr ""
+msgstr "Proxy heslo:"
 
 #: src/wxcurl/panel.cpp:144
 msgid "Proxy port:"
-msgstr ""
+msgstr "Proxy port:"
 
