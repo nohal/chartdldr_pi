@@ -84,7 +84,6 @@ public:     // misc getters
     virtual double GetSpeed() const
         { return GetTransferredBytes()/GetElapsedTime().GetSeconds().ToDouble(); }
 
-
 public:     // wxTimeSpan getters
 
     //! Returns the time elapsed since the beginning of the download up
@@ -416,7 +415,6 @@ public:
     //! Is the underlying libCURL handle valid?
     bool IsOk() const { return m_pCURL != NULL; }
 
-
     // Member Data Access Methods (MDA)
 
     //! Sets the event handler to which the wxCurlDownloadEvent, wxCurlBeginPerformEvent and
@@ -424,6 +422,8 @@ public:
     bool			SetEvtHandler(wxEvtHandler* pParent, int id = wxID_ANY);
     wxEvtHandler*	GetEvtHandler() const;
     int             GetId() const;
+	void SetAbort(bool a);
+	bool GetAbort() const;
 
     //! Sets the "event policy" of wxCURL: if you pass zero, then no events will ever be sent.
     //! The wxCURL_SEND_PROGRESS_EVENTS and wxCURL_SEND_BEGINEND_EVENTS flags instead tell
@@ -563,7 +563,8 @@ protected:
 
     // The internal pointer to the libCURL session.
     CURL*                   m_pCURL;
-
+	// Flag for terminating a possibly hung transfer
+	bool                    m_bAbortHungTransfer;
 
     // libCURL <-> wxString conversions helpers (see below)
 

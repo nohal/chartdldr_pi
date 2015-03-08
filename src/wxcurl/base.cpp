@@ -44,6 +44,7 @@ extern "C"
                                  double rUlTotal, double rUlNow)
     {
         wxCurlBase *curl = wx_static_cast(wxCurlBase*, ptr);
+		int res = 0;
         if(curl)
         {
             if (rUlTotal == 0 || rUlNow == 0)
@@ -59,9 +60,11 @@ extern "C"
                 wxCurlDownloadEvent evt(curl->GetId(), curl, rUlTotal, rUlNow, curl->GetURL());
                 wxPostEvent(curl->GetEvtHandler(), evt);
             }
-        }
 
-        return 0;
+            if ( curl->GetAbort() )
+                res = 1;    // This will cause curl_easy_perform() to return CURLE_WRITE_ERROR immediately
+        }
+        return res;
     }
 
     int wxcurl_verbose_stream_write(CURL * crlptr, curl_infotype info,
@@ -409,6 +412,7 @@ m_pHeaders(NULL),
 m_bUseProxy(false), m_iProxyPort(-1), 
 m_bVerbose(false),
 m_pEvtHandler(pEvtHandler), m_nId(id),
+m_bAbortHungTransfer(false),
 m_nFlags(flags)
 {
     m_szDetailedErrorBuffer[0] = '\0';
@@ -786,6 +790,15 @@ bool wxCurlBase::GetVerboseString(wxString& szStream) const
     return false;
 }
 
+void wxCurlBase::SetAbort(bool a)
+{
+    m_bAbortHungTransfer = a;
+}
+
+bool wxCurlBase::GetAbort() const
+{
+    return m_bAbortHungTransfer;
+}
 //////////////////////////////////////////////////////////////////////
 // Helper Methods
 //////////////////////////////////////////////////////////////////////
@@ -804,7 +817,6 @@ void wxCurlBase::SetCurlHandleToDefaults(const wxString& relativeURL)
         SetOpt(CURLOPT_HEADERFUNCTION, wxcurl_header_func);
         SetOpt(CURLOPT_WRITEHEADER, &m_szResponseHeader);
         SetOpt(CURLOPT_ERRORBUFFER, m_szDetailedErrorBuffer);
-        
         SetOpt(CURLOPT_USERAGENT, "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:35.0) Gecko/20100101 Firefox/35.0\r\n" \
                     "Accept: application/xml,text/html,application/xhtml+xml;q=0.9,*/*;q=0.8\r\n" \
                     "Connection: keep-alive"); //Pretend we are a normal browser

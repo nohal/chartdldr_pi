@@ -135,6 +135,9 @@ void wxCurlBaseThread::Abort()
 
     if (IsPaused())
         Resume();
+	else
+        if (m_pCurl)
+            m_pCurl->SetAbort(true);
 
     Wait();     // should always return wxCTE_ABORTED in this case
 }

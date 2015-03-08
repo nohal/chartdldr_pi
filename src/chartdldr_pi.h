@@ -149,9 +149,7 @@ private:
     bool downloadInProgress;
     int to_download;
     int downloading;
-	int updating;
-	int failed_to_update;
-	int attempted_to_update;
+	int updating_all;
     int failed_downloads;
     bool cancelled;
     chartdldr_pi      *pPlugIn;
