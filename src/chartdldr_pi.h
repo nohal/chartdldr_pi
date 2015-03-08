@@ -171,6 +171,7 @@ protected:
 	void EditSource( wxCommandEvent& event );
 	void UpdateChartList( wxCommandEvent& event );
 	void DownloadCharts( wxCommandEvent& event );
+	void DoHelp( wxCommandEvent& event ) { wxLaunchDefaultBrowser( _T("https://github.com/rgleason/chartdldr_pi/wiki") ); }
     void UpdateAllCharts( wxCommandEvent& event );
 	void OnShowLocalDir( wxCommandEvent& event );
     void OnPaint( wxPaintEvent& event );
