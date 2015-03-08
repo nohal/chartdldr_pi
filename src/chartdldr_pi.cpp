@@ -580,7 +580,7 @@ void ChartDldrPanelImpl::UpdateAllCharts( wxCommandEvent& event )
                                      _("Chart Downloader"), wxOK | wxCANCEL);
         if (mess.ShowModal() == wxID_CANCEL) return;
     }
-    updating_all = true;
+    updatingAll = true;
     for (long chartIndex = 0; chartIndex < m_lbChartSources->GetItemCount(); chartIndex++)
     {
         m_lbChartSources->SetItemState(chartIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
@@ -600,7 +600,7 @@ void ChartDldrPanelImpl::UpdateAllCharts( wxCommandEvent& event )
     if ( attempted_to_update > failed_to_update )
             wxMessageBox( _("You have added/updated some of your charts.\nTo make sure OpenCPN knows about them, go to the 'Chart Files' tab and select the 'Scan Charts and Update Database' option."), 
                     _("Chart Downloader"), wxOK | wxICON_INFORMATION );
-    updating_all = false;
+    updatingAll = false;
 	cancelled = false;
 }
 
@@ -725,13 +725,13 @@ void ChartDldrPanelImpl::DownloadCharts( wxCommandEvent& event )
 {
       failed_downloads = 0;
       cancelled = false;
-      if (!m_lbChartSources->GetSelectedItemCount() && !updating_all)
+      if (!m_lbChartSources->GetSelectedItemCount() && !updatingAll)
       {
           wxMessageBox(_("No charts selected for download."));
           return;
       }
       ChartSource *cs = pPlugIn->m_chartSources->Item(GetSelectedCatalog());
-      if (m_clCharts->GetCheckedItemCount() == 0 && !updating_all)
+      if (m_clCharts->GetCheckedItemCount() == 0 && !updatingAll)
       {
           wxMessageBox(_("No charts selected for download."));
           return;
@@ -784,10 +784,10 @@ After downloading the charts, please extract them to %s"), pPlugIn->m_pChartCata
                 break;
       }
       SetSource(GetSelectedCatalog());
-      if( failed_downloads > 0 && !updating_all)
+      if( failed_downloads > 0 && !updatingAll)
             wxMessageBox( wxString::Format( _("%d out of %d charts failed to download.\nCheck the list, verify there is a working Internet connection and repeat the operation if needed."), failed_downloads ,downloading ), 
                     _("Chart Downloader"), wxOK | wxICON_ERROR );
-      if( (downloading-failed_downloads > 0) && !updating_all)
+      if( (downloading-failed_downloads > 0) && !updatingAll)
             wxMessageBox( _("You have added/updated some of your charts.\nTo make sure OpenCPN knows about them, go to the 'Chart Files' tab and select the 'Scan Charts and Update Database' option."), 
                     _("Chart Downloader"), wxOK | wxICON_INFORMATION );
 }
@@ -817,7 +817,7 @@ ChartDldrPanelImpl::ChartDldrPanelImpl( chartdldr_pi* plugin, wxWindow* parent, 
       cancelled = false;
       to_download = -1;
       downloading = -1;
-	  updating_all = false;
+	  updatingAll = false;
       pPlugIn = plugin;
       m_populated = false;
       failed_downloads = 0;
