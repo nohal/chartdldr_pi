@@ -218,6 +218,7 @@ Chart::Chart(TiXmlNode * xmldata)
       TiXmlNode *child;
       target_filename = wxEmptyString;
       reference_file = wxEmptyString;
+      manual_download_url = wxEmptyString;
       title = wxEmptyString;
       zipfile_location = wxEmptyString;
       zipfile_size = -1;
@@ -258,7 +259,8 @@ Chart::Chart(TiXmlNode * xmldata)
             }
             else if (s == _T("zipfile_location"))
             {
-                  zipfile_location = wxString::FromUTF8(child->FirstChild()->Value());
+                  if( !child->NoChildren() )
+                        zipfile_location = wxString::FromUTF8(child->FirstChild()->Value());
             }
             else if (s == _T("zipfile_datetime"))
             {
@@ -299,6 +301,10 @@ Chart::Chart(TiXmlNode * xmldata)
             else if (s == _T("reference_file"))
             {
                   reference_file = wxString::FromUTF8(child->FirstChild()->Value());
+            }
+            else if (s == _T("manual_download_url"))
+            {
+                  manual_download_url = wxString::FromUTF8(child->FirstChild()->Value());
             }
       }
 }

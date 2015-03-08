@@ -895,6 +895,12 @@
           <dir>{USERDATA}/ENC/FR_INLAND</dir>
         </catalog>
         <catalog>
+          <name>Germany Inland ENC Charts</name>
+          <type>ENC</type>
+          <location>https://raw.githubusercontent.com/chartcatalogs/catalogs/master/DE_IENC_Catalog.xml</location>
+          <dir>{USERDATA}/ENC/DE_INLAND</dir>
+        </catalog>
+        <catalog>
           <name>Hungary Inland ENC Charts</name>
           <type>ENC</type>
           <location>https://raw.githubusercontent.com/chartcatalogs/catalogs/master/HU_IENC_Catalog.xml</location>

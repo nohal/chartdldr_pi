@@ -726,28 +726,41 @@ void ChartDldrPanelImpl::DownloadCharts( wxCommandEvent& event )
             //Prepare download queues
             if(m_clCharts->IsChecked(i))
             {
-                  //download queue
-                  wxURI url(pPlugIn->m_pChartCatalog->charts->Item(i).GetDownloadLocation());
-                  if (url.IsReference())
+                  if( pPlugIn->m_pChartCatalog->charts->Item(i).NeedsManualDownload() )
                   {
-                        wxMessageBox(wxString::Format(_("Error, the URL to the chart (%s) data seems wrong."), url.BuildURI().c_str()), _("Error"));
-                        this->Enable();
-                        return;
+                      if( wxYES == 
+                         wxMessageBox( 
+                                      wxString::Format( _("The selected chart '%s' can't be downloaded automatically, do you want me to open a browser window and download them manually?\n\n \
+After downloading the charts, please extract them to %s"), pPlugIn->m_pChartCatalog->charts->Item(i).title.c_str(), pPlugIn->m_pChartSource->GetDir().c_str() ), _("Chart Downloader"), wxYES_NO | wxCENTRE | wxICON_QUESTION ) )
+                      {
+                          wxLaunchDefaultBrowser( pPlugIn->m_pChartCatalog->charts->Item(i).GetManualDownloadUrl() );
+                      }
                   }
-                  //construct local file path
-                  wxString file = pPlugIn->m_pChartCatalog->charts->Item(i).GetChartFilename();
-                  wxFileName fn;
-                  fn.SetFullName(file);
-                  fn.SetPath(cs->GetDir());
-                  wxString path = fn.GetFullPath();
-                  if (wxFileExists(path))
-                        wxRemoveFile(path);
-                  wxString title = pPlugIn->m_pChartCatalog->charts->Item(i).GetChartTitle();
-
-                  if( DownloadChart(url.BuildURI(), path, title) )
+                  else
                   {
-                        wxFileName fn(path);
-                        pPlugIn->ProcessFile(path, fn.GetPath(), true, pPlugIn->m_pChartCatalog->charts->Item(i).GetUpdateDatetime());
+                      //download queue
+                      wxURI url(pPlugIn->m_pChartCatalog->charts->Item(i).GetDownloadLocation());
+                      if (url.IsReference())
+                      {
+                            wxMessageBox(wxString::Format(_("Error, the URL to the chart (%s) data seems wrong."), url.BuildURI().c_str()), _("Error"));
+                            this->Enable();
+                            return;
+                      }
+                      //construct local file path
+                      wxString file = pPlugIn->m_pChartCatalog->charts->Item(i).GetChartFilename();
+                      wxFileName fn;
+                      fn.SetFullName(file);
+                      fn.SetPath(cs->GetDir());
+                      wxString path = fn.GetFullPath();
+                      if (wxFileExists(path))
+                            wxRemoveFile(path);
+                      wxString title = pPlugIn->m_pChartCatalog->charts->Item(i).GetChartTitle();
+
+                      if( DownloadChart(url.BuildURI(), path, title) )
+                      {
+                            wxFileName fn(path);
+                            pPlugIn->ProcessFile(path, fn.GetPath(), true, pPlugIn->m_pChartCatalog->charts->Item(i).GetUpdateDatetime());
+                      }
                   }
             }
 	        if (cancelled)

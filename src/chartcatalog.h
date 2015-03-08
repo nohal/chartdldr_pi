@@ -84,6 +84,8 @@ public:
       // public methods
       virtual wxString GetChartTitle() { return title; }
       virtual wxString GetDownloadLocation() { return zipfile_location; }
+      virtual bool NeedsManualDownload() { return manual_download_url != wxEmptyString; }
+      virtual wxString GetManualDownloadUrl() { return manual_download_url; }
       virtual wxString GetChartFilename(bool to_check = false);
       virtual wxDateTime GetUpdateDatetime() { return zipfile_datetime_iso8601; }
 
@@ -98,6 +100,7 @@ public:
       wxDateTime zipfile_datetime_iso8601;
       int zipfile_size;
       wxString reference_file;
+      wxString manual_download_url;
 
       NoticeToMariners *nm;
       NoticeToMariners *lnm;
