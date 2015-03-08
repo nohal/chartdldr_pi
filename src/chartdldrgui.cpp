@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Jun  5 2014)
+// C++ code generated with wxFormBuilder (version Jun  6 2014)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -134,7 +134,7 @@ ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& 
 	bSizer8->Add( m_bDeleteSource, 0, wxALL|wxEXPAND, 5 );
 	
 	m_bEditSource = new wxButton( this, wxID_ANY, _("Edit..."), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer8->Add( m_bEditSource, 0, wxALL, 5 );
+	bSizer8->Add( m_bEditSource, 0, wxALL|wxEXPAND, 5 );
 	
 	m_bUpdateChartList = new wxButton( this, wxID_ANY, _("Update"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_bUpdateChartList->SetDefault(); 
@@ -143,7 +143,7 @@ ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& 
 	bSizer8->Add( m_bUpdateChartList, 0, wxALL|wxEXPAND, 5 );
 	
 	m_bUpdateAllCharts = new wxButton( this, wxID_ANY, _("Update All"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer8->Add( m_bUpdateAllCharts, 0, wxALL|wxALIGN_BOTTOM, 5 );
+	bSizer8->Add( m_bUpdateAllCharts, 0, wxALIGN_BOTTOM|wxALL|wxEXPAND, 5 );
 	
 	
 	bSizer4->Add( bSizer8, 0, wxEXPAND, 5 );
