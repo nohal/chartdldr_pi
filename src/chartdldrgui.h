@@ -33,6 +33,7 @@
 #include <wx/combobox.h>
 #include "checkedlistctrl.h"
 #include <wx/checkbox.h>
+#include <wx/statline.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -123,6 +124,8 @@ class ChartDldrPrefsDlg : public wxDialog
 		wxStaticText* m_stPreselect;
 		wxCheckBox* m_cbSelectUpdated;
 		wxCheckBox* m_cbSelectNew;
+		wxStaticLine* m_staticline1;
+		wxCheckBox* m_cbBulkUpdate;
 		wxStdDialogButtonSizer* m_sdbSizerBtns;
 		wxButton* m_sdbSizerBtnsOK;
 		wxButton* m_sdbSizerBtnsCancel;

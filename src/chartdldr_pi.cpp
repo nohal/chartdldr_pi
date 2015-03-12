@@ -125,6 +125,7 @@ chartdldr_pi::chartdldr_pi(void *ppimgr)
       m_pconfig = NULL;
       m_preselect_new = false;
       m_preselect_updated = false;
+      m_allow_bulk_update = false;
       m_pOptionsPage = NULL;
       m_selected_source = -1;
       m_dldrpanel = NULL;
@@ -242,6 +243,7 @@ void chartdldr_pi::OnSetupOptions(void)
       m_dldrpanel = new ChartDldrPanelImpl( this, m_pOptionsPage, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE );
 
       sizer->Add( m_dldrpanel, 1, wxALL | wxEXPAND );
+      m_dldrpanel->SetBulkUpdate( m_allow_bulk_update );
       m_dldrpanel->FitInside();
 }
 
@@ -267,6 +269,7 @@ bool chartdldr_pi::LoadConfig(void)
             pConf->Read ( _T ( "BaseChartDir" ), &m_base_chart_dir,  fn.GetPath() );
             pConf->Read ( _T ( "PreselectNew" ), &m_preselect_new, false );
             pConf->Read ( _T ( "PreselectUpdated" ), &m_preselect_updated, true );
+            pConf->Read ( _T ( "AllowBulkUpdate" ), &m_allow_bulk_update, false );
             return true;
       }
       else
@@ -293,6 +296,7 @@ bool chartdldr_pi::SaveConfig(void)
             pConf->Write ( _T ( "BaseChartDir" ), m_base_chart_dir );
             pConf->Write ( _T ( "PreselectNew" ), m_preselect_new );
             pConf->Write ( _T ( "PreselectUpdated" ), m_preselect_updated );
+            pConf->Write ( _T ( "AllowBulkUpdate" ), m_allow_bulk_update );
 
             return true;
       }
@@ -304,12 +308,13 @@ void chartdldr_pi::ShowPreferencesDialog( wxWindow* parent )
 {
     ChartDldrPrefsDlgImpl *dialog = new ChartDldrPrefsDlgImpl(m_parent_window);
     dialog->SetPath(m_base_chart_dir);
-    dialog->SetPreferences(m_preselect_new, m_preselect_updated);
+    dialog->SetPreferences(m_preselect_new, m_preselect_updated, m_allow_bulk_update);
     if( wxID_OK == dialog->ShowModal() )
     {
         m_base_chart_dir = dialog->GetPath();
-        dialog->GetPreferences(m_preselect_new, m_preselect_updated);
+        dialog->GetPreferences(m_preselect_new, m_preselect_updated, m_allow_bulk_update);
         SaveConfig();
+        m_dldrpanel->SetBulkUpdate( m_allow_bulk_update );
     }
     dialog->Close();
     dialog->Destroy();
@@ -420,6 +425,13 @@ void ChartDldrPanelImpl::SelectSource( wxListEvent& event )
 {
     SetSource(GetSelectedCatalog());
     event.Skip();
+}
+
+void ChartDldrPanelImpl::SetBulkUpdate( bool bulk_update )
+{
+    m_bUpdateAllCharts->Enable( bulk_update );
+    m_bUpdateAllCharts->Show( bulk_update );
+    Layout();
 }
 
 void ChartDldrPanelImpl::CleanForm()
@@ -1379,15 +1391,17 @@ void ChartDldrPrefsDlgImpl::SetPath(const wxString path)
     m_dpDefaultDir->SetPath(path);
 }
 
-void ChartDldrPrefsDlgImpl::GetPreferences(bool &preselect_new, bool &preselect_updated)
+void ChartDldrPrefsDlgImpl::GetPreferences(bool &preselect_new, bool &preselect_updated, bool &bulk_update)
 {
     preselect_new = m_cbSelectNew->GetValue();
     preselect_updated = m_cbSelectUpdated->GetValue();
+    bulk_update = m_cbBulkUpdate->GetValue();
 }
-void ChartDldrPrefsDlgImpl::SetPreferences(bool preselect_new, bool preselect_updated)
+void ChartDldrPrefsDlgImpl::SetPreferences(bool preselect_new, bool preselect_updated, bool bulk_update)
 {
     m_cbSelectNew->SetValue(preselect_new);
     m_cbSelectUpdated->SetValue(preselect_updated);
+    m_cbBulkUpdate->SetValue(bulk_update);
 }
 
 void ChartDldrGuiAddSourceDlg::OnOkClick( wxCommandEvent& event )
