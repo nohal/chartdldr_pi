@@ -872,6 +872,7 @@ void ChartDldrPanelImpl::AddSource( wxCommandEvent& event )
 {
     ChartDldrGuiAddSourceDlg *dialog = new ChartDldrGuiAddSourceDlg(this);
     dialog->SetBasePath(pPlugIn->GetBaseChartDir());
+    dialog->CenterOnScreen();
     if(dialog->ShowModal() == wxID_OK)
     {
         ChartSource *cs = new ChartSource(dialog->m_tSourceName->GetValue(), dialog->m_tChartSourceUrl->GetValue(), dialog->m_dpChartDirectory->GetTextCtrlValue());
@@ -907,6 +908,7 @@ void ChartDldrPanelImpl::DoEditSource()
     dialog->SetBasePath(pPlugIn->GetBaseChartDir());
     dialog->SetSourceEdit(pPlugIn->m_chartSources->Item(cat));
     dialog->SetTitle(_("Edit Chart Source"));
+    dialog->CenterOnScreen();
     if(dialog->ShowModal() == wxID_OK)
     {
         pPlugIn->m_chartSources->Item(cat)->SetName(dialog->m_tSourceName->GetValue());
