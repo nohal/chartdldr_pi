@@ -162,7 +162,7 @@ ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& 
 	//m_clCharts>UpdateStyle();
 	sbSCharts->Add( m_clCharts, 1, wxALL|wxEXPAND, 5 );
 	
-	m_stCatalogInfo = new wxStaticText( this, wxID_ANY, _("%d charts total, %d updated, %d new"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_stCatalogInfo = new wxStaticText( this, wxID_ANY, _("%u charts total, %u updated, %u new"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_stCatalogInfo->Wrap( -1 );
 	sbSCharts->Add( m_stCatalogInfo, 0, wxALL, 5 );
 	
