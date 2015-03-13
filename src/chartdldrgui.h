@@ -85,6 +85,7 @@ class ChartDldrPanel : public wxPanel
 		wxButton* m_bEditSource;
 		wxButton* m_bUpdateChartList;
 		wxButton* m_bUpdateAllCharts;
+		wxStaticText* m_stCatalogInfo;
 		wxButton* m_bHelp;
 		wxButton* m_bDnldCharts;
 		wxButton* m_bShowLocal;

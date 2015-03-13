@@ -162,6 +162,10 @@ ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& 
 	//m_clCharts>UpdateStyle();
 	sbSCharts->Add( m_clCharts, 1, wxALL|wxEXPAND, 5 );
 	
+	m_stCatalogInfo = new wxStaticText( this, wxID_ANY, _("%d charts total, %d updated, %d new"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_stCatalogInfo->Wrap( -1 );
+	sbSCharts->Add( m_stCatalogInfo, 0, wxALL, 5 );
+	
 	wxBoxSizer* bSizerBtns;
 	bSizerBtns = new wxBoxSizer( wxHORIZONTAL );
 	
@@ -254,7 +258,7 @@ ChartDldrPrefsDlg::ChartDldrPrefsDlg( wxWindow* parent, wxWindowID id, const wxS
 	m_staticline1 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
 	sbSizerBehavior->Add( m_staticline1, 0, wxEXPAND | wxALL, 5 );
 	
-	m_cbBulkUpdate = new wxCheckBox( this, wxID_ANY, _("Allow bulk update of all configured charts sources and charts"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_cbBulkUpdate = new wxCheckBox( this, wxID_ANY, _("Allow bulk update of all configured chart sources and charts"), wxDefaultPosition, wxDefaultSize, 0 );
 	sbSizerBehavior->Add( m_cbBulkUpdate, 0, wxALL, 5 );
 	
 	
