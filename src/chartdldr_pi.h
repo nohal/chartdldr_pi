@@ -59,6 +59,7 @@ class ChartDldrPanelImpl;
 class ChartDldrGuiAddSourceDlg;
 
 WX_DECLARE_OBJARRAY(ChartSource *, wxArrayOfChartSources);
+WX_DECLARE_OBJARRAY(wxDateTime, wxArrayOfDateTime);
 
 //----------------------------------------------------------------------------------------------------------
 //    The PlugIn Class Definition
@@ -132,10 +133,11 @@ public:
       void SetUrl(wxString url) { m_url = url; }
       bool ExistsLocaly(wxString filename);
       bool IsNewerThanLocal(wxString filename, wxDateTime validDate);
-      void UpdateLocalFiles() { m_localfiles = GetLocalFiles(); }
+      void UpdateLocalFiles() { GetLocalFiles(); }
 private:
       wxArrayString m_localfiles;
-      wxArrayString GetLocalFiles();
+      wxArrayOfDateTime m_localdt;
+      void GetLocalFiles();
       wxString m_name;
       wxString m_url;
       wxString m_dir;

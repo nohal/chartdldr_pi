@@ -51,6 +51,7 @@
 
 #include <wx/arrimpl.cpp>
     WX_DEFINE_OBJARRAY(wxArrayOfChartSources);
+    WX_DEFINE_OBJARRAY(wxArrayOfDateTime);
     
 #ifdef __WXMAC__
 #define CATALOGS_NAME_WIDTH 300
@@ -503,8 +504,7 @@ bool ChartSource::ExistsLocaly(wxString filename)
       wxString file = tk.GetNextToken().MakeLower();
       for (size_t i = 0; i < m_localfiles.Count(); i++)
       {
-            wxFileName fn(m_localfiles.Item(i));
-            if(fn.GetName().MakeLower() == file)
+            if (m_localfiles.Item(i) == file)
                   return true;
       }
       return false;
@@ -517,12 +517,9 @@ bool ChartSource::IsNewerThanLocal(wxString filename, wxDateTime validDate)
       wxString file = tk.GetNextToken().MakeLower();
       for (size_t i = 0; i < m_localfiles.Count(); i++)
       {
-            wxFileName fn(m_localfiles.Item(i));
-            if(fn.GetName().MakeLower() == file)
+            if (m_localfiles.Item(i) == file)
             {
-                  wxDateTime ct, mt, at;
-                  fn.GetTimes(&at, &mt, &ct);
-                  if (validDate.IsLaterThan(mt))
+                  if (validDate.IsLaterThan(m_localdt.Item(i)))
                   {
                     update_candidate = true;
                   }
@@ -615,7 +612,7 @@ void ChartDldrPanelImpl::UpdateAllCharts( wxCommandEvent& event )
     wxLogMessage( wxString::Format(_T("chartdldr_pi::UpdateAllCharts() downloaded %d out of %d charts."), attempted_to_update - failed_to_update, attempted_to_update) );
 	if ( failed_to_update > 0 )
                 wxMessageBox( wxString::Format( _("%d out of %d charts failed to download.\nCheck the list, verify there is a working Internet connection and repeat the operation if needed."),
-				              failed_to_update, attempted_to_update ), _("Chart Downloader"), wxOK | wxICON_ERROR );
+                        failed_to_update, attempted_to_update ), _("Chart Downloader"), wxOK | wxICON_ERROR );
     if ( attempted_to_update > failed_to_update )
             wxMessageBox( _("You have added/updated some of your charts.\nTo make sure OpenCPN knows about them, go to the 'Chart Files' tab and select the 'Scan Charts and Update Database' option."), 
                     _("Chart Downloader"), wxOK | wxICON_INFORMATION );
@@ -695,14 +692,31 @@ void ChartDldrPanelImpl::UpdateChartList( wxCommandEvent& event )
     wxRemoveFile ( tfn.GetFullPath() );
 }
 
-wxArrayString ChartSource::GetLocalFiles()
+void ChartSource::GetLocalFiles()
 {
-      wxArrayString *ret = new wxArrayString();
+      wxArrayString *allFiles = new wxArrayString;
       if( wxDirExists(GetDir()) )
-        wxDir::GetAllFiles(GetDir(), ret);
-      wxArrayString r(*ret);
-      wxDELETE(ret);
-      return r;
+        wxDir::GetAllFiles(GetDir(), allFiles);
+      m_localdt.Clear();
+      m_localfiles.Clear();
+      wxDateTime ct, mt, at;
+      wxString name;
+      for (size_t i = 0; i < allFiles->Count(); i++)
+      {
+            wxFileName fn(allFiles->Item(i));
+            name = fn.GetFullName().Lower();
+            // Only add unique files names to the local list.
+            // This is safe because all chart names within a catalog
+            // are necessarily unique.
+            if (!ExistsLocaly(name))
+            {
+                  fn.GetTimes(&at, &mt, &ct);
+                  m_localdt.Add(mt);
+                  m_localfiles.Add(fn.GetName().Lower());
+            }
+      }
+      allFiles->Clear();
+      wxDELETE(allFiles);
 }
 
 bool ChartDldrPanelImpl::DownloadChart(wxString url, wxString file, wxString title)
@@ -898,7 +912,7 @@ void ChartDldrPanelImpl::AddSource( wxCommandEvent& event )
         if( !covered )
             wxMessageBox( wxString::Format(_("Path %s seems not to be covered by your configured Chart Directories.\nTo see the charts you have to adjust the configuration on the 'Chart Files' tab."), cs->GetDir().c_str()),
                          _("Chart Downloader") );
-
+        SelectCatalog(m_lbChartSources->GetItemCount() - 1);
         pPlugIn->SaveConfig();
     }
     dialog->Close();
