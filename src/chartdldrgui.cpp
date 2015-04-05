@@ -160,6 +160,8 @@ ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& 
 	m_clCharts = new wxCheckedListCtrl(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL);
 	//m_clCharts>SetImagesForList(wxLC_REPORT|wxLC_SINGLE_SEL);
 	//m_clCharts>UpdateStyle();
+	m_clCharts->SetMinSize( wxSize( -1,100 ) );
+	
 	sbSCharts->Add( m_clCharts, 1, wxALL|wxEXPAND, 5 );
 	
 	m_stCatalogInfo = new wxStaticText( this, wxID_ANY, _("%u charts total, %u updated, %u new"), wxDefaultPosition, wxDefaultSize, 0 );
