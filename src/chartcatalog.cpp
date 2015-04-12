@@ -395,6 +395,7 @@ EncCell::EncCell(TiXmlNode * xmldata) : Chart(xmldata)
             if (s == _T("name"))
             {
                   name = wxString::FromUTF8(child->FirstChild()->Value());
+                  number = name;
             }
             else if (s == _T("src_chart"))
             {

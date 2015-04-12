@@ -41,6 +41,8 @@
 #include "wx/curl/dialog.h"
 #include <wx/imaglist.h>
 
+#include <map>
+
 #include "version.h"
 
 #define     MY_API_VERSION_MAJOR    1
@@ -52,6 +54,8 @@
 
 #include "chartdldrgui.h"
 #include "chartcatalog.h"
+
+#define UPDATE_DATA_FILENAME "chartdldr_pi.dat"
 
 // forward declarations
 class ChartSource;
@@ -131,9 +135,14 @@ public:
       void SetDir(wxString dir) { m_dir = dir; }
       void SetName(wxString name) { m_name = name; }
       void SetUrl(wxString url) { m_url = url; }
-      bool ExistsLocaly(wxString filename);
-      bool IsNewerThanLocal(wxString filename, wxDateTime validDate);
+      bool ExistsLocaly(wxString chart_number, wxString filename);
+      bool IsNewerThanLocal(wxString chart_number, wxString filename, wxDateTime validDate);
       void UpdateLocalFiles() { GetLocalFiles(); }
+      
+      bool UpdateDataExists();
+      void LoadUpdateData();
+      void SaveUpdateData();
+      void ChartUpdated( wxString chart_number, time_t timestamp);
 private:
       wxArrayString m_localfiles;
       wxArrayOfDateTime m_localdt;
@@ -141,6 +150,7 @@ private:
       wxString m_name;
       wxString m_url;
       wxString m_dir;
+      std::map<std::string, time_t> m_update_data;
 };
 
 /** Implementing ChartDldrPanel */

@@ -90,6 +90,7 @@ public:
       virtual wxDateTime GetUpdateDatetime() { return zipfile_datetime_iso8601; }
 
       // public properties
+      wxString number;
       wxString title; //RNC: <title>, ENC:<lname>
       wxArrayString *coast_guard_districts;
       wxArrayString *states;
@@ -114,7 +115,6 @@ public:
       // public methods
 
       //public properties
-      wxString number;
       int source_edition;
       int raster_edition;
       int ntm_edition;

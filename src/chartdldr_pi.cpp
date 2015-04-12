@@ -52,7 +52,9 @@
 #include <wx/arrimpl.cpp>
     WX_DEFINE_OBJARRAY(wxArrayOfChartSources);
     WX_DEFINE_OBJARRAY(wxArrayOfDateTime);
-    
+
+#include <fstream>
+
 #ifdef __WXMAC__
 #define CATALOGS_NAME_WIDTH 300
 #define CATALOGS_DATE_WIDTH 120
@@ -471,7 +473,7 @@ void ChartDldrPanelImpl::FillFromFile(wxString url, wxString dir, bool selnew, b
                   long x = m_clCharts->InsertItem(li);
                   m_clCharts->SetItem(x, 0, pPlugIn->m_pChartCatalog->charts->Item(i).GetChartTitle());
                   wxString file = pPlugIn->m_pChartCatalog->charts->Item(i).GetChartFilename(true);
-                  if (!pPlugIn->m_pChartSource->ExistsLocaly(file))
+                  if (!pPlugIn->m_pChartSource->ExistsLocaly(pPlugIn->m_pChartCatalog->charts->Item(i).number, file))
                   {
                         new_charts++;
                         m_clCharts->SetItem(x, 1, _("New"));
@@ -480,7 +482,7 @@ void ChartDldrPanelImpl::FillFromFile(wxString url, wxString dir, bool selnew, b
                   }
                   else
                   {
-                        if(pPlugIn->m_pChartSource->IsNewerThanLocal(file, pPlugIn->m_pChartCatalog->charts->Item(i).GetUpdateDatetime()))
+                        if(pPlugIn->m_pChartSource->IsNewerThanLocal(pPlugIn->m_pChartCatalog->charts->Item(i).number, file, pPlugIn->m_pChartCatalog->charts->Item(i).GetUpdateDatetime()))
                         {
                               updated_charts++;
                               m_clCharts->SetItem(x, 1, _("Update available"));
@@ -499,10 +501,14 @@ void ChartDldrPanelImpl::FillFromFile(wxString url, wxString dir, bool selnew, b
       }
 }
 
-bool ChartSource::ExistsLocaly(wxString filename)
+bool ChartSource::ExistsLocaly(wxString chart_number, wxString filename)
 {
       wxStringTokenizer tk(filename, _T("."));
       wxString file = tk.GetNextToken().MakeLower();
+      if( !m_update_data.empty() )
+      {
+          return m_update_data.find(std::string(chart_number.mb_str())) != m_update_data.end() || m_update_data.find(std::string(file.mb_str())) != m_update_data.end();
+      }
       for (size_t i = 0; i < m_localfiles.Count(); i++)
       {
             if (m_localfiles.Item(i) == file)
@@ -511,11 +517,19 @@ bool ChartSource::ExistsLocaly(wxString filename)
       return false;
 }
 
-bool ChartSource::IsNewerThanLocal(wxString filename, wxDateTime validDate)
+bool ChartSource::IsNewerThanLocal(wxString chart_number, wxString filename, wxDateTime validDate)
 {
-      bool update_candidate = false;
       wxStringTokenizer tk(filename, _T("."));
       wxString file = tk.GetNextToken().MakeLower();
+      if( !m_update_data.empty() )
+      {
+          if( m_update_data[std::string(chart_number.Lower().mbc_str())] < validDate.GetTicks() && m_update_data[std::string(file.mbc_str())] < validDate.GetTicks() )
+              return true;
+          else
+              return false;
+      }
+      bool update_candidate = false;
+      
       for (size_t i = 0; i < m_localfiles.Count(); i++)
       {
             if (m_localfiles.Item(i) == file)
@@ -695,29 +709,88 @@ void ChartDldrPanelImpl::UpdateChartList( wxCommandEvent& event )
 
 void ChartSource::GetLocalFiles()
 {
-      wxArrayString *allFiles = new wxArrayString;
-      if( wxDirExists(GetDir()) )
-        wxDir::GetAllFiles(GetDir(), allFiles);
-      m_localdt.Clear();
-      m_localfiles.Clear();
-      wxDateTime ct, mt, at;
-      wxString name;
-      for (size_t i = 0; i < allFiles->Count(); i++)
+      if( !UpdateDataExists() || m_update_data.empty() )
       {
-            wxFileName fn(allFiles->Item(i));
-            name = fn.GetFullName().Lower();
-            // Only add unique files names to the local list.
-            // This is safe because all chart names within a catalog
-            // are necessarily unique.
-            if (!ExistsLocaly(name))
-            {
-                  fn.GetTimes(&at, &mt, &ct);
-                  m_localdt.Add(mt);
-                  m_localfiles.Add(fn.GetName().Lower());
-            }
+          wxArrayString *allFiles = new wxArrayString;
+          if( wxDirExists(GetDir()) )
+            wxDir::GetAllFiles(GetDir(), allFiles);
+          m_localdt.Clear();
+          m_localfiles.Clear();
+          wxDateTime ct, mt, at;
+          wxString name;
+          for (size_t i = 0; i < allFiles->Count(); i++)
+          {
+                wxFileName fn(allFiles->Item(i));
+                name = fn.GetFullName().Lower();
+                // Only add unique files names to the local list.
+                // This is safe because all chart names within a catalog
+                // are necessarily unique.
+                if (!ExistsLocaly(wxEmptyString, name))
+                {
+                      fn.GetTimes(&at, &mt, &ct);
+                      m_localdt.Add(mt);
+                      m_localfiles.Add(fn.GetName().Lower());
+                      
+                      wxStringTokenizer tk(name, _T("."));
+                      wxString file = tk.GetNextToken().MakeLower();
+                      m_update_data[std::string(file.mbc_str())] = mt.GetTicks();
+                }
+          }
+          allFiles->Clear();
+          wxDELETE(allFiles);
+          SaveUpdateData();
       }
-      allFiles->Clear();
-      wxDELETE(allFiles);
+      else
+      {
+          LoadUpdateData();
+      }
+}
+
+bool ChartSource::UpdateDataExists()
+{
+    return wxFileExists( GetDir() + wxFileName::GetPathSeparator() + _T(UPDATE_DATA_FILENAME) );
+}
+
+void ChartSource::LoadUpdateData()
+{
+    m_update_data.clear();
+    wxString fn = GetDir() + wxFileName::GetPathSeparator() + _T(UPDATE_DATA_FILENAME);
+
+    if( !wxFileExists( fn ) )
+        return;
+    
+    std::ifstream infile( fn.mb_str() );
+    
+    std::string key;
+    long value;
+
+    while (infile >> key >> value)
+        m_update_data[key] = value;
+    
+    infile.close();
+}
+
+void ChartSource::SaveUpdateData()
+{
+    wxString fn = GetDir() + wxFileName::GetPathSeparator() + _T(UPDATE_DATA_FILENAME);
+
+    std::ofstream outfile( fn.mb_str() );
+    if( !outfile.is_open() )
+        return;
+    
+    std::map<std::string, time_t>::iterator iter;
+    for (iter = m_update_data.begin(); iter != m_update_data.end(); ++iter)
+    {
+        outfile << iter->first << " " << iter->second << "\n";
+    }
+    
+    outfile.close();
+}
+
+void ChartSource::ChartUpdated( wxString chart_number, time_t timestamp)
+{
+    m_update_data[std::string(chart_number.Lower().mb_str())] = timestamp;
+    SaveUpdateData();
 }
 
 bool ChartDldrPanelImpl::DownloadChart(wxString url, wxString file, wxString title)
@@ -811,6 +884,7 @@ After downloading the charts, please extract them to %s"), pPlugIn->m_pChartCata
                       {
                             wxFileName fn(path);
                             pPlugIn->ProcessFile(path, fn.GetPath(), true, pPlugIn->m_pChartCatalog->charts->Item(i).GetUpdateDatetime());
+                            cs->ChartUpdated( pPlugIn->m_pChartCatalog->charts->Item(i).number, pPlugIn->m_pChartCatalog->charts->Item(i).GetUpdateDatetime().GetTicks() );
                       }
                   }
             }
