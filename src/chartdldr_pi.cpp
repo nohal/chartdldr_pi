@@ -435,6 +435,7 @@ void ChartDldrPanelImpl::SetBulkUpdate( bool bulk_update )
 {
     m_bUpdateAllCharts->Enable( bulk_update );
     m_bUpdateAllCharts->Show( bulk_update );
+    Layout();
     m_parent->Layout();
 }
 
