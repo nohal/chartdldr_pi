@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-08 15:28-0600\n"
-"PO-Revision-Date: 2015-03-08 17:31-0400\n"
+"POT-Creation-Date: 2015-04-12 15:18-0500\n"
+"PO-Revision-Date: 2015-04-12 16:19-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -20,198 +20,204 @@ msgstr ""
 msgid "Catalog is not valid."
 msgstr "Le catalogue n'est pas valide."
 
-#: src/chartcatalog.cpp:497
+#: src/chartcatalog.cpp:498
 #, c-format
 msgid "%s (%s to %s), river miles %3.1f - %3.1f"
 msgstr " Rivière %s (de %s à %s). Du point %3.1f au point  %3.1f  (en miles terrestre)"
 
-#: src/chartdldr_pi.cpp:216
+#: src/chartdldr_pi.cpp:220
 msgid "ChartDownloader"
 msgstr "Téléchargeur de cartes"
 
-#: src/chartdldr_pi.cpp:222
+#: src/chartdldr_pi.cpp:226
 msgid "Chart Downloader PlugIn for OpenCPN"
 msgstr "Complément, permettant le téléchargement de cartes, pour OpenCPN"
 
-#: src/chartdldr_pi.cpp:227
+#: src/chartdldr_pi.cpp:231
 msgid "Chart Downloader PlugIn for OpenCPN\nManages chart downloads and updates from sources supporting\nNOAA Chart Catalog format"
 msgstr "Le complément Téléchargeur de cartes pour OpenCPN\ngère le téléchargement et la mise à jour des cartes à partir de \ncatalogues de cartes structurés comme celui du NOAA"
 
-#: src/chartdldr_pi.cpp:234 src/chartdldr_pi.cpp:570 src/chartdldr_pi.cpp:575
-#: src/chartdldr_pi.cpp:580 src/chartdldr_pi.cpp:599 src/chartdldr_pi.cpp:602
-#: src/chartdldr_pi.cpp:633 src/chartdldr_pi.cpp:659 src/chartdldr_pi.cpp:665
-#: src/chartdldr_pi.cpp:751 src/chartdldr_pi.cpp:789 src/chartdldr_pi.cpp:792
-#: src/chartdldr_pi.cpp:846 src/chartdldr_pi.cpp:879 src/chartdldr_pi.cpp:931
-#: src/chartdldr_pi.cpp:1432
+#: src/chartdldr_pi.cpp:238 src/chartdldr_pi.cpp:601 src/chartdldr_pi.cpp:606
+#: src/chartdldr_pi.cpp:611 src/chartdldr_pi.cpp:630 src/chartdldr_pi.cpp:633
+#: src/chartdldr_pi.cpp:664 src/chartdldr_pi.cpp:690 src/chartdldr_pi.cpp:696
+#: src/chartdldr_pi.cpp:858 src/chartdldr_pi.cpp:897 src/chartdldr_pi.cpp:900
+#: src/chartdldr_pi.cpp:955 src/chartdldr_pi.cpp:989 src/chartdldr_pi.cpp:1042
+#: src/chartdldr_pi.cpp:1545
 msgid "Chart Downloader"
 msgstr "Télécharger des cartes"
 
-#: src/chartdldr_pi.cpp:369
+#: src/chartdldr_pi.cpp:378
 msgid "Select all"
 msgstr "Sélectionner tout"
 
-#: src/chartdldr_pi.cpp:370
+#: src/chartdldr_pi.cpp:379
 msgid "Deselect all"
 msgstr "Désélectionner tout"
 
-#: src/chartdldr_pi.cpp:371
+#: src/chartdldr_pi.cpp:380
 msgid "Invert selection"
 msgstr "Inverser la sélection"
 
-#: src/chartdldr_pi.cpp:372
+#: src/chartdldr_pi.cpp:381
 msgid "Select updated"
 msgstr "Sélectionner les mises à jour"
 
-#: src/chartdldr_pi.cpp:373
+#: src/chartdldr_pi.cpp:382
 msgid "Select new"
 msgstr "Sélectionner les nouvelles cartes"
 
-#: src/chartdldr_pi.cpp:459
+#: src/chartdldr_pi.cpp:479
 msgid "New"
 msgstr "Nouveau"
 
-#: src/chartdldr_pi.cpp:467
+#: src/chartdldr_pi.cpp:488
 msgid "Update available"
 msgstr "Mise à jour disponible"
 
-#: src/chartdldr_pi.cpp:473
+#: src/chartdldr_pi.cpp:494
 msgid "Up to date"
 msgstr "A jour"
 
-#: src/chartdldr_pi.cpp:542 src/chartdldr_pi.cpp:905
+#: src/chartdldr_pi.cpp:499 src/chartdldrgui.cpp:167
+#, c-format
+msgid "%u charts total, %u updated, %u new"
+msgstr "%u Nbre de cartes, %u Mises à jour, %u Nouvelle"
+
+#: src/chartdldr_pi.cpp:573 src/chartdldr_pi.cpp:1016
 msgid "(Please update first)"
 msgstr "(Cliquer sur \"Mettre à jour\" d'abord)"
 
-#: src/chartdldr_pi.cpp:547 src/chartdldr_pi.cpp:617
+#: src/chartdldr_pi.cpp:578 src/chartdldr_pi.cpp:648
 msgid "Error, the URL to the chart source data seems wrong."
 msgstr "Erreur, l'URL vers la source de cartes marines semble erronée."
 
-#: src/chartdldr_pi.cpp:547 src/chartdldr_pi.cpp:617 src/chartdldr_pi.cpp:762
+#: src/chartdldr_pi.cpp:578 src/chartdldr_pi.cpp:648 src/chartdldr_pi.cpp:869
 msgid "Error"
 msgstr "Erreur"
 
-#: src/chartdldr_pi.cpp:569
+#: src/chartdldr_pi.cpp:600
 msgid "You have chosen to update all chart catalogs.\nThen download all new and updated charts.\nThis may take a long time."
-msgstr ""
+msgstr "Vous avez choisi :\n"
+"- de mettre à jour tous les catalogues de carte.\n- Puis par vos choix dans les préférences, de télécharger toutes les nouvelles cartes, et de mettre à jour les autres.\n Cela peut prendre un temps très long."
 
-#: src/chartdldr_pi.cpp:574
+#: src/chartdldr_pi.cpp:605
 msgid "You have chosen to update all chart catalogs.\nThen download only new (but not updated) charts.\nThis may take a long time."
-msgstr ""
+msgstr "Vous avez choisi :\n- de mettre à jour tous les catalogues de carte.\n- Puis par vos choix dans les préférences, de télécharger les nouvelles cartes (mais sans mettre à jour les autres cartes).\nCela peut prendre un temps très long."
 
-#: src/chartdldr_pi.cpp:579
+#: src/chartdldr_pi.cpp:610
 msgid "You have chosen to update all chart catalogs.\nThen download only updated (but not new) charts.\nThis may take a long time."
-msgstr ""
+msgstr "Vous avez choisi :\n- de mettre à jour tous les catalogues de carte.\n- Puis par vos choix dans les préférences, de télécharger seulement les mises à jour (mais pas les nouvelles cartes).\nTout cela peut prendre un temps très long."
 
-#: src/chartdldr_pi.cpp:598 src/chartdldr_pi.cpp:788
+#: src/chartdldr_pi.cpp:629 src/chartdldr_pi.cpp:896
 #, c-format
 msgid "%d out of %d charts failed to download.\nCheck the list, verify there is a working Internet connection and repeat the operation if needed."
-msgstr "Echec du téléchargement de %d sur of %d cartes.\n\n- Vérifier la liste,\n- vérifier si la connexion internet fonctionne bien,\n- et recommencez les opérations si nécessaire."
+msgstr "Echec du téléchargement de %d sur %d cartes.\n\n- Vérifiez la liste,\n- Vérifiez si la connexion internet fonctionne bien,\n- Et recommencez les opérations si nécessaire."
 
-#: src/chartdldr_pi.cpp:601 src/chartdldr_pi.cpp:791
+#: src/chartdldr_pi.cpp:632 src/chartdldr_pi.cpp:899
 msgid "You have added/updated some of your charts.\nTo make sure OpenCPN knows about them, go to the 'Chart Files' tab and select the 'Scan Charts and Update Database' option."
 msgstr "Vous avez ajouté/mis à jour certaines cartes.\n\nPour que OpenCPN les utilise \n- Allez dans l'onglet \"Dossier de cartes\",\n- Cochez la case \"Mettre à jour la base de données\"\n- Validez par \"Ok\" ou \"Appliquer\"."
 
-#: src/chartdldr_pi.cpp:633 src/chartdldr_pi.cpp:1419 src/chartdldr_pi.cpp:1432
+#: src/chartdldr_pi.cpp:664 src/chartdldr_pi.cpp:1532 src/chartdldr_pi.cpp:1545
 #, c-format
 msgid "Directory %s can't be created."
 msgstr "Le dossier %s ne peut pas être créé."
 
-#: src/chartdldr_pi.cpp:639
+#: src/chartdldr_pi.cpp:670
 msgid "Downloading file"
 msgstr "Téléchargement du fichier"
 
-#: src/chartdldr_pi.cpp:640
+#: src/chartdldr_pi.cpp:671
 msgid "Reading Headers: "
 msgstr "Lecture des en-têtes : "
 
-#: src/chartdldr_pi.cpp:658
+#: src/chartdldr_pi.cpp:689
 #, c-format
 msgid "Failed to Find New Catalog: %s "
-msgstr ""
+msgstr "Echec de la recherche du nouveau catalogue : %s "
 
-#: src/chartdldr_pi.cpp:664
+#: src/chartdldr_pi.cpp:695
 #, c-format
 msgid "Failed to Download Catalog: %s \nVerify there is a working Internet connection."
-msgstr ""
+msgstr "Echec du téléchargement du catalogue : %s \nVeuillez vérifier que la connexion internet fonctionne correctement."
 
-#: src/chartdldr_pi.cpp:697
+#: src/chartdldr_pi.cpp:804
 #, c-format
 msgid "Downloading file %d of %d"
 msgstr "Téléchargement de %d fichiers sur %d"
 
-#: src/chartdldr_pi.cpp:698
+#: src/chartdldr_pi.cpp:805
 #, c-format
 msgid "Chart: %s"
 msgstr "Carte : %s"
 
-#: src/chartdldr_pi.cpp:730 src/chartdldr_pi.cpp:736
+#: src/chartdldr_pi.cpp:837 src/chartdldr_pi.cpp:843
 msgid "No charts selected for download."
 msgstr "Pas de carte sélectionnée à télécharger."
 
-#: src/chartdldr_pi.cpp:750
+#: src/chartdldr_pi.cpp:857
 #, c-format
 msgid "The selected chart '%s' can't be downloaded automatically, do you want me to open a browser window and download them manually?\n\n After downloading the charts, please extract them to %s"
-msgstr ""
+msgstr "La carte sélectionnée '%s' ne peut être téléchargée automatiquement. Voulez vous ouvrir un navigateur pour la téléchargée manuellement ?\n\nAprès le téléchargement des cartes, extrayez les dans %s"
 
-#: src/chartdldr_pi.cpp:762
+#: src/chartdldr_pi.cpp:869
 #, c-format
 msgid "Error, the URL to the chart (%s) data seems wrong."
 msgstr "Erreur, l'URL vers la carte (%s) semble contenir des données erronées."
 
-#: src/chartdldr_pi.cpp:807 src/chartdldrgui.cpp:20
+#: src/chartdldr_pi.cpp:915 src/chartdldrgui.cpp:20
 msgid "Catalog"
 msgstr "Catalogue"
 
-#: src/chartdldr_pi.cpp:808
+#: src/chartdldr_pi.cpp:916
 msgid "Released"
 msgstr "Publié"
 
-#: src/chartdldr_pi.cpp:809
+#: src/chartdldr_pi.cpp:917
 msgid "Local path"
 msgstr "Chemin local"
 
-#: src/chartdldr_pi.cpp:812
+#: src/chartdldr_pi.cpp:920
 msgid "Title"
 msgstr "Titre"
 
-#: src/chartdldr_pi.cpp:813
+#: src/chartdldr_pi.cpp:921
 msgid "Status"
 msgstr "Statut"
 
-#: src/chartdldr_pi.cpp:814
+#: src/chartdldr_pi.cpp:922
 msgid "Latest"
 msgstr "Date de mise à jour"
 
-#: src/chartdldr_pi.cpp:845
+#: src/chartdldr_pi.cpp:954
 msgid "Do you really want to remove the chart source?\nThe local chart files will not be removed, but you will not be able to update the charts anymore."
 msgstr "Voulez vous réellement retirer cette source de cartes ?\n\nLes cartes présentes sur votre unité de stockage ne seront pas effacées\nMais vous ne pourrez pas les mettre à jour."
 
-#: src/chartdldr_pi.cpp:878 src/chartdldr_pi.cpp:930
+#: src/chartdldr_pi.cpp:988 src/chartdldr_pi.cpp:1041
 #, c-format
 msgid "Path %s seems not to be covered by your configured Chart Directories.\nTo see the charts you have to adjust the configuration on the 'Chart Files' tab."
 msgstr "Le chemin %s ne correspond pas à un dossier de cartes chargé dans OpenCPN.\n\nPour pouvoir utiliser ces cartes, vous devrez ajouter ce chemin dans l'onglet \"Dossier de cartes\"."
 
-#: src/chartdldr_pi.cpp:897
+#: src/chartdldr_pi.cpp:1007
 msgid "Edit Chart Source"
 msgstr "Editer cette source de cartes"
 
-#: src/chartdldr_pi.cpp:1404 src/chartdldr_pi.cpp:1407
+#: src/chartdldr_pi.cpp:1517 src/chartdldr_pi.cpp:1520
 msgid "You must select one of the predefined chart sources or create one of your own.\n"
 msgstr "Vous devez sélectionner une des sources de cartes prédéfinies ou créer une des vôtres.\n"
 
-#: src/chartdldr_pi.cpp:1410
+#: src/chartdldr_pi.cpp:1523
 msgid "The chart source must have a name.\n"
 msgstr "La source doit avoir un nom. \n"
 
-#: src/chartdldr_pi.cpp:1413
+#: src/chartdldr_pi.cpp:1526
 msgid "The chart source must have a valid URL.\n"
 msgstr "La carte doit être valide.\n"
 
-#: src/chartdldr_pi.cpp:1415
+#: src/chartdldr_pi.cpp:1528
 msgid "You must select a local folder to store the charts.\n"
 msgstr "Vous devez sélectionner un dossier local pour y mettre les cartes.\n"
 
-#: src/chartdldr_pi.cpp:1422
+#: src/chartdldr_pi.cpp:1535
 msgid "Chart source definition problem"
 msgstr "Problème de définition de la source des cartes"
 
@@ -273,53 +279,57 @@ msgstr "Télécharger le catalogue courant et mettre à jour les données."
 
 #: src/chartdldrgui.cpp:145
 msgid "Update All"
-msgstr ""
+msgstr "Tout mettre à jour"
 
 #: src/chartdldrgui.cpp:158
 msgid "Charts"
 msgstr "Cartes "
 
-#: src/chartdldrgui.cpp:168
-msgid "Help"
-msgstr ""
-
 #: src/chartdldrgui.cpp:174
+msgid "Help"
+msgstr "Aide"
+
+#: src/chartdldrgui.cpp:180
 msgid "Download selected charts"
 msgstr "Télécharger les cartes sélectionnées"
 
-#: src/chartdldrgui.cpp:177
+#: src/chartdldrgui.cpp:183
 msgid "Show local files"
 msgstr "Montrer le dossier local de cartes"
 
-#: src/chartdldrgui.cpp:232
+#: src/chartdldrgui.cpp:238
 msgid "Default Path to Charts"
 msgstr "Chemin par défaut vers le dossier local de cartes"
 
-#: src/chartdldrgui.cpp:234
+#: src/chartdldrgui.cpp:240
 msgid "Select a root folder for your charts"
 msgstr "Sélectionnez un dossier ROOT pour vos cartes"
 
-#: src/chartdldrgui.cpp:241
+#: src/chartdldrgui.cpp:247
 msgid "Preferences"
 msgstr "Préférences"
 
-#: src/chartdldrgui.cpp:243
+#: src/chartdldrgui.cpp:249
 msgid "After catalog update select for download"
 msgstr "Après avoir choisi et mis à jour un catalogue, sélectionnez pour le téléchargement :"
 
-#: src/chartdldrgui.cpp:247
+#: src/chartdldrgui.cpp:253
 msgid "All updated charts"
 msgstr "Toutes les cartes mises à jour"
 
-#: src/chartdldrgui.cpp:251
+#: src/chartdldrgui.cpp:257
 msgid "All new charts"
 msgstr "Toutes les nouvelles cartes"
 
-#: src/chartdldrgui.h:68
+#: src/chartdldrgui.cpp:263
+msgid "Allow bulk update of all configured chart sources and charts"
+msgstr "Permettre la mise à jour globale des sources de cartes et des cartes"
+
+#: src/chartdldrgui.h:69
 msgid "New chart source"
 msgstr "Nouvelle source de cartes"
 
-#: src/chartdldrgui.h:137
+#: src/chartdldrgui.h:141
 msgid "Chart Downloader Preferences"
 msgstr "Préférences de ChartDownloader"
 
