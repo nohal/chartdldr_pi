@@ -182,7 +182,14 @@ protected:
 	void EditSource( wxCommandEvent& event );
 	void UpdateChartList( wxCommandEvent& event );
 	void DownloadCharts( wxCommandEvent& event );
-	void DoHelp( wxCommandEvent& event ) { wxLaunchDefaultBrowser( _T("file://") + *GetpSharedDataLocation() + _T("chartdldr_pi/doc/index.html") ); }
+	void DoHelp( wxCommandEvent& event )
+        {
+            #ifdef __WXMSW__
+            wxLaunchDefaultBrowser( _T("file:///") + *GetpSharedDataLocation() + _T("plugins/chartdldr_pi/data/doc/index.html") );
+            #else
+            wxLaunchDefaultBrowser( _T("file://") + *GetpSharedDataLocation() + _T("plugins/chartdldr_pi/data/doc/index.html") ); 
+            #endif
+        }
     void UpdateAllCharts( wxCommandEvent& event );
 	void OnShowLocalDir( wxCommandEvent& event );
     void OnPaint( wxPaintEvent& event );
