@@ -53,6 +53,8 @@ extern "C"
 wxCurlFTPFs::wxCurlFTPFs()
 : m_iContentLength(0)
 {
+    m_bIsDir = false;
+    m_bIsFile = false;
 }
 
 wxCurlFTPFs::wxCurlFTPFs(const wxString&	szName			,

@@ -87,6 +87,7 @@ public:
         m_pGauge = NULL;
         m_pLastEvent = NULL;
         m_pThread = NULL;
+        m_nStyle = 0;
     }
 
     bool Create(const wxString &url,
@@ -289,7 +290,7 @@ private:
 class WXDLLIMPEXP_CURL wxCurlConnectionSettingsDialog : public wxDialog
 {
 public:
-    wxCurlConnectionSettingsDialog() { }
+    wxCurlConnectionSettingsDialog() { m_pPanel = NULL; }
 
     wxCurlConnectionSettingsDialog(const wxString& title,
                                    const wxString& message = wxEmptyString,

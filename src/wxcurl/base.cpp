@@ -161,10 +161,11 @@ extern "C"
         size_t iRetVal = 0;
 
         wxCharBuffer* pStr = (wxCharBuffer*) pcharbuf;
-        size_t len = strlen(*pStr);
+        size_t len = 0;
 
         if(pStr)
         {
+            len = strlen(*pStr);
             if(len >= iRealSize)
             {
                 strncpy((char*)ptr, (const char*)(*pStr), iRealSize);
@@ -402,6 +403,7 @@ wxCurlBase::wxCurlBase(const wxString& szURL /*= wxEmptyString*/,
                     int id /*= wxID_ANY*/,
                     long flags /*=wxCURL_DEFAULT_FLAGS*/)
  : m_pCURL(NULL),
+m_bAbortHungTransfer(false),
 m_szBaseURL(wxCURL_STRING2BUF(szURL)),
 m_szCurrFullURL(wxCURL_STRING2BUF(szURL)),
 m_szUsername(wxCURL_STRING2BUF(szUserName)),
@@ -409,10 +411,11 @@ m_szPassword(wxCURL_STRING2BUF(szPassword)),
 m_iHostPort(-1),
 m_iResponseCode(-1),
 m_pHeaders(NULL),
-m_bUseProxy(false), m_iProxyPort(-1), 
+m_bUseProxy(false),
+m_iProxyPort(-1), 
 m_bVerbose(false),
-m_pEvtHandler(pEvtHandler), m_nId(id),
-m_bAbortHungTransfer(false),
+m_pEvtHandler(pEvtHandler),
+m_nId(id),
 m_nFlags(flags)
 {
     m_szDetailedErrorBuffer[0] = '\0';
@@ -502,6 +505,7 @@ bool wxCurlBase::GetInfo(CURLINFO info, ...) const
     res = curl_easy_getinfo(m_pCURL, info, pParam);
 
     DumpErrorIfNeed(res);
+    va_end(arg);
     return (res == CURLE_OK);
 }
 
