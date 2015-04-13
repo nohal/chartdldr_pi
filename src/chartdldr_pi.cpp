@@ -782,7 +782,8 @@ void ChartSource::SaveUpdateData()
     std::map<std::string, time_t>::iterator iter;
     for (iter = m_update_data.begin(); iter != m_update_data.end(); ++iter)
     {
-        outfile << iter->first << " " << iter->second << "\n";
+        if( iter->first.find(" ") == std::string::npos )
+            outfile << iter->first << " " << iter->second << "\n";
     }
     
     outfile.close();
