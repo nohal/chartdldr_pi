@@ -508,7 +508,7 @@ bool ChartSource::ExistsLocaly(wxString chart_number, wxString filename)
       wxString file = tk.GetNextToken().MakeLower();
       if( !m_update_data.empty() )
       {
-          return m_update_data.find(std::string(chart_number.mb_str())) != m_update_data.end() || m_update_data.find(std::string(file.mb_str())) != m_update_data.end();
+          return m_update_data.find(std::string(chart_number.Lower().mb_str())) != m_update_data.end() || m_update_data.find(std::string(file.mb_str())) != m_update_data.end();
       }
       for (size_t i = 0; i < m_localfiles.Count(); i++)
       {
