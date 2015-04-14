@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-12 15:18-0500\n"
-"PO-Revision-Date: 2015-04-12 16:19-0400\n"
+"POT-Creation-Date: 2015-04-13 17:51-0500\n"
+"PO-Revision-Date: 2015-04-13 18:52-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -37,12 +37,12 @@ msgstr "Doplněk Manažer map pro OpenCPN"
 msgid "Chart Downloader PlugIn for OpenCPN\nManages chart downloads and updates from sources supporting\nNOAA Chart Catalog format"
 msgstr "Doplněk Manažer map pro OpenCPN\nUmožňuje stahování a správu map ze zdrojů, které podporují\nNOAA Chart Catalog format"
 
-#: src/chartdldr_pi.cpp:238 src/chartdldr_pi.cpp:601 src/chartdldr_pi.cpp:606
-#: src/chartdldr_pi.cpp:611 src/chartdldr_pi.cpp:630 src/chartdldr_pi.cpp:633
-#: src/chartdldr_pi.cpp:664 src/chartdldr_pi.cpp:690 src/chartdldr_pi.cpp:696
-#: src/chartdldr_pi.cpp:858 src/chartdldr_pi.cpp:897 src/chartdldr_pi.cpp:900
-#: src/chartdldr_pi.cpp:955 src/chartdldr_pi.cpp:989 src/chartdldr_pi.cpp:1042
-#: src/chartdldr_pi.cpp:1545
+#: src/chartdldr_pi.cpp:238 src/chartdldr_pi.cpp:602 src/chartdldr_pi.cpp:607
+#: src/chartdldr_pi.cpp:612 src/chartdldr_pi.cpp:631 src/chartdldr_pi.cpp:634
+#: src/chartdldr_pi.cpp:665 src/chartdldr_pi.cpp:691 src/chartdldr_pi.cpp:697
+#: src/chartdldr_pi.cpp:860 src/chartdldr_pi.cpp:899 src/chartdldr_pi.cpp:902
+#: src/chartdldr_pi.cpp:957 src/chartdldr_pi.cpp:991 src/chartdldr_pi.cpp:1044
+#: src/chartdldr_pi.cpp:1547
 msgid "Chart Downloader"
 msgstr "Manažer map"
 
@@ -66,157 +66,157 @@ msgstr "Vyber složku"
 msgid "Select new"
 msgstr "Vyber složku"
 
-#: src/chartdldr_pi.cpp:479
+#: src/chartdldr_pi.cpp:480
 msgid "New"
 msgstr "Nová"
 
-#: src/chartdldr_pi.cpp:488
+#: src/chartdldr_pi.cpp:489
 msgid "Update available"
 msgstr "Má aktualizaci"
 
-#: src/chartdldr_pi.cpp:494
+#: src/chartdldr_pi.cpp:495
 msgid "Up to date"
 msgstr "Aktuální"
 
-#: src/chartdldr_pi.cpp:499 src/chartdldrgui.cpp:167
+#: src/chartdldr_pi.cpp:500 src/chartdldrgui.cpp:167
 #, c-format
 msgid "%u charts total, %u updated, %u new"
 msgstr "Map celkem: %u, aktualizováno:  %u, nové:  %u"
 
-#: src/chartdldr_pi.cpp:573 src/chartdldr_pi.cpp:1016
+#: src/chartdldr_pi.cpp:574 src/chartdldr_pi.cpp:1018
 msgid "(Please update first)"
 msgstr "(Prosím nejprve aktualizovat)"
 
-#: src/chartdldr_pi.cpp:578 src/chartdldr_pi.cpp:648
+#: src/chartdldr_pi.cpp:579 src/chartdldr_pi.cpp:649
 msgid "Error, the URL to the chart source data seems wrong."
 msgstr "Chyba, URL zdroje map vypadá chybně."
 
-#: src/chartdldr_pi.cpp:578 src/chartdldr_pi.cpp:648 src/chartdldr_pi.cpp:869
+#: src/chartdldr_pi.cpp:579 src/chartdldr_pi.cpp:649 src/chartdldr_pi.cpp:871
 msgid "Error"
 msgstr "Chyba"
 
-#: src/chartdldr_pi.cpp:600
+#: src/chartdldr_pi.cpp:601
 msgid "You have chosen to update all chart catalogs.\nThen download all new and updated charts.\nThis may take a long time."
 msgstr "Rozhodl jsi se aktualizovat všechny katalogy map. \nStáhnou se všechny nové a aktualizované mapy. \nTo může pochopitelně trvat zatraceně dlouhou dobu."
 
-#: src/chartdldr_pi.cpp:605
+#: src/chartdldr_pi.cpp:606
 msgid "You have chosen to update all chart catalogs.\nThen download only new (but not updated) charts.\nThis may take a long time."
 msgstr "Rozhodl jsi se aktualizovat všechny katalogy map. \nStáhnou se všechny nové (ale ne aktualizované) mapy. \nTo může pochopitelně trvat zatraceně dlouhou dobu."
 
-#: src/chartdldr_pi.cpp:610
+#: src/chartdldr_pi.cpp:611
 msgid "You have chosen to update all chart catalogs.\nThen download only updated (but not new) charts.\nThis may take a long time."
 msgstr "Rozhodl jsi se aktualizovat všechny katalogy map. \nStáhnou se všechny atualizované (ale ne nové) mapy. \nTo může pochopitelně trvat zatraceně dlouhou dobu."
 
-#: src/chartdldr_pi.cpp:629 src/chartdldr_pi.cpp:896
+#: src/chartdldr_pi.cpp:630 src/chartdldr_pi.cpp:898
 #, c-format
 msgid "%d out of %d charts failed to download.\nCheck the list, verify there is a working Internet connection and repeat the operation if needed."
 msgstr "%d z %d map se nepodařilo stáhnout. \nZkontroluj seznam, ověř, zda je funkční připojení k Internetu a opakuj operaci, je-li zapotřebí."
 
-#: src/chartdldr_pi.cpp:632 src/chartdldr_pi.cpp:899
+#: src/chartdldr_pi.cpp:633 src/chartdldr_pi.cpp:901
 msgid "You have added/updated some of your charts.\nTo make sure OpenCPN knows about them, go to the 'Chart Files' tab and select the 'Scan Charts and Update Database' option."
 msgstr "Přidals/aktualizovals některé své mapy. \nAby o nich OpenCPN vědělo, přejdi na kartu Mapy - Soubory map a vyber možnost \"Projít mapy a aktualizovat databázi\"."
 
-#: src/chartdldr_pi.cpp:664 src/chartdldr_pi.cpp:1532 src/chartdldr_pi.cpp:1545
+#: src/chartdldr_pi.cpp:665 src/chartdldr_pi.cpp:1534 src/chartdldr_pi.cpp:1547
 #, c-format
 msgid "Directory %s can't be created."
 msgstr "Nelze vytvořit adresář %s."
 
-#: src/chartdldr_pi.cpp:670
+#: src/chartdldr_pi.cpp:671
 msgid "Downloading file"
 msgstr "Stahování..."
 
-#: src/chartdldr_pi.cpp:671
+#: src/chartdldr_pi.cpp:672
 msgid "Reading Headers: "
 msgstr "Čtení hlaviček: "
 
-#: src/chartdldr_pi.cpp:689
+#: src/chartdldr_pi.cpp:690
 #, c-format
 msgid "Failed to Find New Catalog: %s "
 msgstr "Nepodařilo se najít nový katalog: %s "
 
-#: src/chartdldr_pi.cpp:695
+#: src/chartdldr_pi.cpp:696
 #, c-format
 msgid "Failed to Download Catalog: %s \nVerify there is a working Internet connection."
 msgstr "Nepodařilo se stáhnout katalog: %s \nOvěř že je funkční připojení k Internetu."
 
-#: src/chartdldr_pi.cpp:804
+#: src/chartdldr_pi.cpp:806
 #, c-format
 msgid "Downloading file %d of %d"
 msgstr "Stahování souboru %d z %d"
 
-#: src/chartdldr_pi.cpp:805
+#: src/chartdldr_pi.cpp:807
 #, c-format
 msgid "Chart: %s"
 msgstr "Mapa: %s"
 
-#: src/chartdldr_pi.cpp:837 src/chartdldr_pi.cpp:843
+#: src/chartdldr_pi.cpp:839 src/chartdldr_pi.cpp:845
 msgid "No charts selected for download."
 msgstr "Žádné mapy ke stažení."
 
-#: src/chartdldr_pi.cpp:857
+#: src/chartdldr_pi.cpp:859
 #, c-format
 msgid "The selected chart '%s' can't be downloaded automatically, do you want me to open a browser window and download them manually?\n\n After downloading the charts, please extract them to %s"
 msgstr "Vybraná mapa '%s' nelze stáhnout automaticky, chceš otevřít okno prohlížeče a stáhnout ručně? \n\nPo stažení map je prosím rozbal do %s"
 
-#: src/chartdldr_pi.cpp:869
+#: src/chartdldr_pi.cpp:871
 #, c-format
 msgid "Error, the URL to the chart (%s) data seems wrong."
 msgstr "Chyba, URL dat mapy (%s) se zdá špatné."
 
-#: src/chartdldr_pi.cpp:915 src/chartdldrgui.cpp:20
+#: src/chartdldr_pi.cpp:917 src/chartdldrgui.cpp:20
 msgid "Catalog"
 msgstr "Katalog"
 
-#: src/chartdldr_pi.cpp:916
+#: src/chartdldr_pi.cpp:918
 msgid "Released"
 msgstr "Vydáno"
 
-#: src/chartdldr_pi.cpp:917
+#: src/chartdldr_pi.cpp:919
 msgid "Local path"
 msgstr "Místní cesta"
 
-#: src/chartdldr_pi.cpp:920
+#: src/chartdldr_pi.cpp:922
 msgid "Title"
 msgstr "Název"
 
-#: src/chartdldr_pi.cpp:921
+#: src/chartdldr_pi.cpp:923
 msgid "Status"
 msgstr "Stav"
 
-#: src/chartdldr_pi.cpp:922
+#: src/chartdldr_pi.cpp:924
 msgid "Latest"
 msgstr "Nejnovější"
 
-#: src/chartdldr_pi.cpp:954
+#: src/chartdldr_pi.cpp:956
 msgid "Do you really want to remove the chart source?\nThe local chart files will not be removed, but you will not be able to update the charts anymore."
 msgstr "Opravdu chcete odstranit zdroj map? \nLokální soubory mpa nebudou odstraněny, ale už je tu nebudeš moci aktualizovat."
 
-#: src/chartdldr_pi.cpp:988 src/chartdldr_pi.cpp:1041
+#: src/chartdldr_pi.cpp:990 src/chartdldr_pi.cpp:1043
 #, c-format
 msgid "Path %s seems not to be covered by your configured Chart Directories.\nTo see the charts you have to adjust the configuration on the 'Chart Files' tab."
 msgstr "Cesta %s se nezdá být pokryta tvým nastavením adresářu s mapami. \nBudeš muset upravit konfiguraci na kartě Soubory map."
 
-#: src/chartdldr_pi.cpp:1007
+#: src/chartdldr_pi.cpp:1009
 msgid "Edit Chart Source"
 msgstr "Upravit zdroj map"
 
-#: src/chartdldr_pi.cpp:1517 src/chartdldr_pi.cpp:1520
+#: src/chartdldr_pi.cpp:1519 src/chartdldr_pi.cpp:1522
 msgid "You must select one of the predefined chart sources or create one of your own.\n"
 msgstr "Musíš vybrat jeden z předdefinovaných zdrojů nebo vytvořit vlastní.\n"
 
-#: src/chartdldr_pi.cpp:1523
+#: src/chartdldr_pi.cpp:1525
 msgid "The chart source must have a name.\n"
 msgstr "Zdroj map musí mít název.\n"
 
-#: src/chartdldr_pi.cpp:1526
+#: src/chartdldr_pi.cpp:1528
 msgid "The chart source must have a valid URL.\n"
 msgstr "Zdroj map musí mít platnou adresu (URL).\n"
 
-#: src/chartdldr_pi.cpp:1528
+#: src/chartdldr_pi.cpp:1530
 msgid "You must select a local folder to store the charts.\n"
 msgstr "Musíte vybrat místní složku pro ukládání map. \n"
 
-#: src/chartdldr_pi.cpp:1535
+#: src/chartdldr_pi.cpp:1537
 msgid "Chart source definition problem"
 msgstr "Problém definice zdroj map"
 
