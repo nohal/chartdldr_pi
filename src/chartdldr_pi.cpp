@@ -115,7 +115,7 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 //
 //---------------------------------------------------------------------------------------------------------
 
-chartdldr_pi::chartdldr_pi( void *ppimgr ) : opencpn_plugin_112( ppimgr )
+chartdldr_pi::chartdldr_pi( void *ppimgr ) : opencpn_plugin_113( ppimgr )
 {
     // Create the PlugIn icons
     initialize_images();
@@ -635,8 +635,7 @@ void ChartDldrPanelImpl::UpdateAllCharts( wxCommandEvent& event )
         wxMessageBox( wxString::Format( _("%d out of %d charts failed to download.\nCheck the list, verify there is a working Internet connection and repeat the operation if needed."),
                 failed_to_update, attempted_to_update ), _("Chart Downloader"), wxOK | wxICON_ERROR );
     if( attempted_to_update > failed_to_update )
-        wxMessageBox( _("You have added/updated some of your charts.\nTo make sure OpenCPN knows about them, go to the 'Chart Files' tab and select the 'Scan Charts and Update Database' option."),
-                _("Chart Downloader"), wxOK | wxICON_INFORMATION );
+        ForceChartDBUpdate();
     updatingAll = false;
     cancelled = false;
 }
@@ -908,8 +907,7 @@ After downloading the charts, please extract them to %s"), pPlugIn->m_pChartCata
         wxMessageBox( wxString::Format( _("%d out of %d charts failed to download.\nCheck the list, verify there is a working Internet connection and repeat the operation if needed."), failed_downloads,downloading ),
                 _("Chart Downloader"), wxOK | wxICON_ERROR );
     if( (downloading-failed_downloads > 0) && !updatingAll )
-        wxMessageBox( _("You have added/updated some of your charts.\nTo make sure OpenCPN knows about them, go to the 'Chart Files' tab and select the 'Scan Charts and Update Database' option."),
-                _("Chart Downloader"), wxOK | wxICON_INFORMATION );
+        ForceChartDBUpdate();
 }
 
 ChartDldrPanelImpl::~ChartDldrPanelImpl()
@@ -997,8 +995,10 @@ void ChartDldrPanelImpl::AddSource( wxCommandEvent& event )
             }
         }
         if( !covered )
-            wxMessageBox( wxString::Format(_("Path %s seems not to be covered by your configured Chart Directories.\nTo see the charts you have to adjust the configuration on the 'Chart Files' tab."), cs->GetDir().c_str()),
-                         _("Chart Downloader") );
+        {
+            wxString dir = cs->GetDir();
+            AddChartDirectory( dir );
+        }
         SelectCatalog(m_lbChartSources->GetItemCount() - 1);
         pPlugIn->SaveConfig();
     }

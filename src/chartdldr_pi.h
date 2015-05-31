@@ -46,7 +46,7 @@
 #include "version.h"
 
 #define     MY_API_VERSION_MAJOR    1
-#define     MY_API_VERSION_MINOR    12
+#define     MY_API_VERSION_MINOR    13
 
 #define USERDATA "{USERDATA}"
 
@@ -69,7 +69,7 @@ WX_DECLARE_OBJARRAY(wxDateTime, wxArrayOfDateTime);
 //    The PlugIn Class Definition
 //----------------------------------------------------------------------------------------------------------
 
-class chartdldr_pi : public opencpn_plugin_112
+class chartdldr_pi : public opencpn_plugin_113
 {
 public:
     chartdldr_pi( void *ppimgr );
