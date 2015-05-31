@@ -414,6 +414,7 @@ void ChartDldrPanelImpl::SetSource( int id )
     if( id >= 0 && id < (int)pPlugIn->m_chartSources->Count() )
     {
         ChartSource *cs = pPlugIn->m_chartSources->Item(id);
+        cs->LoadUpdateData();
         cs->UpdateLocalFiles();
         pPlugIn->m_pChartSource = cs;
         FillFromFile(cs->GetUrl(), cs->GetDir(), pPlugIn->m_preselect_new, pPlugIn->m_preselect_updated);
