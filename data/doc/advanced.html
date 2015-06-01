@@ -184,15 +184,7 @@
    . All your existing charts for region 2 will be updated to the latest revision.
   </p>
   <p>
-   Once you have downloaded charts go back to
-   <strong>
-    Options &gt; Charts &gt; Chart Files
-   </strong>
-   . Click
-   <strong>
-    Scan Charts and Update Database
-   </strong>
-   checkbox then OK. That will inform OpenCPN about the new charts you have downloaded.
+   Once you have downloaded charts, the plugin sets OpenCPN to scan for new and updated charts and update it's chart database once you close the Toolbox.
   </p>
   <h3 id="existing-users-have-two-options">
    Existing Users have Two Options
@@ -220,15 +212,11 @@
    for each one points to the correct root directory (e.g. BSB_ROOT or ENC_ROOT).
   </p>
   <p>
-   If you decide to add chart catalogs in different directories you must inform OpenCPN about each directory. In the
+   The plugin tries to save you all the work with setting up OpenCPN to see your charts when you configure the catalogs. If you decide to later change the directory structure for your charts, make sure to adjust the respective configuration on
    <strong>
     Options &gt; Charts &gt; Chart Files
    </strong>
-   add each new chart directory using the
-   <strong>
-    Add Directory…
-   </strong>
-   button. You only have to do this once for each new chart directory you create.
+   tab.
   </p>
   <p>
    That’s pretty much all there is to setting up the downloader for existing charts. Next we look at how to keep your chart catalogs up to date.
@@ -242,7 +230,7 @@
    <strong>
     Update All
    </strong>
-   appears on the Chart Downloader ta. This button will update each catalog starting from the first one and then download any updated charts according to the Preferences check boxes. Usually this will be
+   appears on the Chart Downloader tab. This button will update each catalog starting from the first one and then download any updated charts according to the Preferences check boxes. Usually this will be
    <strong>
     All updated charts
    </strong>
@@ -251,16 +239,6 @@
     All new charts
    </strong>
    in Preferences too.
-  </p>
-  <p>
-   <strong>
-    IMPORTANT!!
-   </strong>
-   Every time you update charts you have to go to the Chart Files tab and select
-   <strong>
-    Scan Charts and Update Database
-   </strong>
-   then click OK. If you forget to do this OpenCPN may show an old version of some charts. At some time in the future this extra step may be eliminated but until then it is very important to let OpenCPN know any time you have updated the chart files.
   </p>
   <h3 id="custom-chart-sources">
    Custom Chart Sources
