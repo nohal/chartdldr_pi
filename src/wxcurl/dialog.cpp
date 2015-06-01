@@ -250,6 +250,8 @@ void wxCurlTransferDialog::CreateControls(const wxString &url, const wxString &m
             btn->Add(new wxButton( this, PauseResumeButtonId, _("Pause") ), 0);
         if (HasFlag(wxCTDS_CAN_START))
             btn->Add(new wxButton( this, StartButtonId, _("Start") ), 0, wxLEFT, BORDER);
+            
+        btn->SetMinSize( wxSize( -1, wxButton::GetDefaultSize().GetHeight() + 2 * OUTER_BORDER ) );
 
         main->Add(btn, 0, wxGROW|wxLEFT|wxRIGHT|wxTOP|wxBOTTOM, OUTER_BORDER);
     }
