@@ -50,6 +50,8 @@ bool ChartCatalog::LoadFromFile( wxString path, bool headerOnly )
     bool ret = doc->LoadFile( path.mb_str(), TIXML_ENCODING_UTF8 );
     if (ret)
         ret = LoadFromXml( doc, headerOnly );
+    else
+        charts->Clear();
     doc->Clear();
     wxDELETE(doc);
 
