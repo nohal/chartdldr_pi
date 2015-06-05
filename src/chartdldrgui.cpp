@@ -22,46 +22,46 @@ AddSourceDlg::AddSourceDlg( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_nbChoice = new wxNotebook( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNB_TOP );
 	m_nbChoice->SetMinSize( wxSize( -1,200 ) );
 	
-	m_panel1 = new wxPanel( m_nbChoice, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	wxBoxSizer* bSizer8;
-	bSizer8 = new wxBoxSizer( wxVERTICAL );
+	m_panelPredefined = new wxPanel( m_nbChoice, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxBoxSizer* bSizerPredefTree;
+	bSizerPredefTree = new wxBoxSizer( wxVERTICAL );
 	
-	m_treeCtrl1 = new wxTreeCtrl( m_panel1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE|wxTR_HIDE_ROOT );
-	bSizer8->Add( m_treeCtrl1, 1, wxALL|wxEXPAND, 5 );
+	m_treeCtrlPredefSrcs = new wxTreeCtrl( m_panelPredefined, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE|wxTR_HIDE_ROOT );
+	bSizerPredefTree->Add( m_treeCtrlPredefSrcs, 1, wxALL|wxEXPAND, 5 );
 	
 	
-	m_panel1->SetSizer( bSizer8 );
-	m_panel1->Layout();
-	bSizer8->Fit( m_panel1 );
-	m_nbChoice->AddPage( m_panel1, _("Predefined"), true );
-	m_panel2 = new wxPanel( m_nbChoice, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelPredefined->SetSizer( bSizerPredefTree );
+	m_panelPredefined->Layout();
+	bSizerPredefTree->Fit( m_panelPredefined );
+	m_nbChoice->AddPage( m_panelPredefined, _("Predefined"), false );
+	m_panelCustom = new wxPanel( m_nbChoice, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerSourceSel;
-	fgSizerSourceSel = new wxFlexGridSizer( 3, 2, 0, 0 );
+	fgSizerSourceSel = new wxFlexGridSizer( 0, 2, 0, 0 );
 	fgSizerSourceSel->AddGrowableCol( 1 );
 	fgSizerSourceSel->SetFlexibleDirection( wxBOTH );
 	fgSizerSourceSel->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_stName = new wxStaticText( m_panel2, wxID_ANY, _("Name"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_stName = new wxStaticText( m_panelCustom, wxID_ANY, _("Name"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_stName->Wrap( -1 );
 	fgSizerSourceSel->Add( m_stName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_tSourceName = new wxTextCtrl( m_panel2, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_tSourceName = new wxTextCtrl( m_panelCustom, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	m_tSourceName->SetMaxLength( 0 ); 
 	fgSizerSourceSel->Add( m_tSourceName, 0, wxALL|wxEXPAND, 5 );
 	
-	m_stUrl = new wxStaticText( m_panel2, wxID_ANY, _("URL"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_stUrl = new wxStaticText( m_panelCustom, wxID_ANY, _("URL"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_stUrl->Wrap( -1 );
 	fgSizerSourceSel->Add( m_stUrl, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_tChartSourceUrl = new wxTextCtrl( m_panel2, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( -1,-1 ), 0 );
+	m_tChartSourceUrl = new wxTextCtrl( m_panelCustom, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( -1,-1 ), 0 );
 	m_tChartSourceUrl->SetMaxLength( 0 ); 
 	fgSizerSourceSel->Add( m_tChartSourceUrl, 0, wxALL|wxEXPAND, 5 );
 	
 	
-	m_panel2->SetSizer( fgSizerSourceSel );
-	m_panel2->Layout();
-	fgSizerSourceSel->Fit( m_panel2 );
-	m_nbChoice->AddPage( m_panel2, _("Custom"), false );
+	m_panelCustom->SetSizer( fgSizerSourceSel );
+	m_panelCustom->Layout();
+	fgSizerSourceSel->Fit( m_panelCustom );
+	m_nbChoice->AddPage( m_panelCustom, _("Custom"), true );
 	
 	sbSizerSourceSel->Add( m_nbChoice, 1, wxEXPAND | wxALL, 5 );
 	
@@ -94,65 +94,65 @@ AddSourceDlg::AddSourceDlg( wxWindow* parent, wxWindowID id, const wxString& tit
 	this->Centre( wxBOTH );
 	
 	// Connect Events
-	m_treeCtrl1->Connect( wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler( AddSourceDlg::OnSourceSelected ), NULL, this );
+	m_treeCtrlPredefSrcs->Connect( wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler( AddSourceDlg::OnSourceSelected ), NULL, this );
 	m_sdbSizerBtnsOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AddSourceDlg::OnOkClick ), NULL, this );
 }
 
 AddSourceDlg::~AddSourceDlg()
 {
 	// Disconnect Events
-	m_treeCtrl1->Disconnect( wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler( AddSourceDlg::OnSourceSelected ), NULL, this );
+	m_treeCtrlPredefSrcs->Disconnect( wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler( AddSourceDlg::OnSourceSelected ), NULL, this );
 	m_sdbSizerBtnsOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AddSourceDlg::OnOkClick ), NULL, this );
 	
 }
 
 ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style ) : wxPanel( parent, id, pos, size, style )
 {
-	wxBoxSizer* bSizer1;
-	bSizer1 = new wxBoxSizer( wxVERTICAL );
+	wxBoxSizer* bSizerChartDlg;
+	bSizerChartDlg = new wxBoxSizer( wxVERTICAL );
 	
 	wxStaticBoxSizer* sbSchartsource;
 	sbSchartsource = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Catalogs") ), wxVERTICAL );
 	
-	wxBoxSizer* bSizer4;
-	bSizer4 = new wxBoxSizer( wxHORIZONTAL );
+	wxBoxSizer* bSizerCatalogs;
+	bSizerCatalogs = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_lbChartSources = new wxListCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_NO_SORT_HEADER|wxLC_REPORT|wxLC_SINGLE_SEL );
-	bSizer4->Add( m_lbChartSources, 1, wxALL|wxEXPAND, 5 );
+	bSizerCatalogs->Add( m_lbChartSources, 1, wxALL|wxEXPAND, 5 );
 	
-	wxBoxSizer* bSizer8;
-	bSizer8 = new wxBoxSizer( wxVERTICAL );
+	wxBoxSizer* bSizerCatalogBtns;
+	bSizerCatalogBtns = new wxBoxSizer( wxVERTICAL );
 	
 	m_bAddSource = new wxButton( this, wxID_ANY, _("Add"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT );
 	m_bAddSource->SetToolTip( _("Add a new chart catalog.") );
 	
-	bSizer8->Add( m_bAddSource, 0, wxALL|wxEXPAND, 5 );
+	bSizerCatalogBtns->Add( m_bAddSource, 0, wxALL|wxEXPAND, 5 );
 	
 	m_bDeleteSource = new wxButton( this, wxID_ANY, _("Delete"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_bDeleteSource->SetToolTip( _("Delete the chart catalog. The downloaded charts are not deleted.") );
 	
-	bSizer8->Add( m_bDeleteSource, 0, wxALL|wxEXPAND, 5 );
+	bSizerCatalogBtns->Add( m_bDeleteSource, 0, wxALL|wxEXPAND, 5 );
 	
 	m_bEditSource = new wxButton( this, wxID_ANY, _("Edit..."), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer8->Add( m_bEditSource, 0, wxALL|wxEXPAND, 5 );
+	bSizerCatalogBtns->Add( m_bEditSource, 0, wxALL|wxEXPAND, 5 );
 	
 	m_bUpdateChartList = new wxButton( this, wxID_ANY, _("Update"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_bUpdateChartList->SetDefault(); 
 	m_bUpdateChartList->SetToolTip( _("Download the current chart catalog and update the data.") );
 	
-	bSizer8->Add( m_bUpdateChartList, 0, wxALL|wxEXPAND, 5 );
+	bSizerCatalogBtns->Add( m_bUpdateChartList, 0, wxALL|wxEXPAND, 5 );
 	
 	m_bUpdateAllCharts = new wxButton( this, wxID_ANY, _("Update All"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer8->Add( m_bUpdateAllCharts, 0, wxALIGN_BOTTOM|wxALL|wxEXPAND, 5 );
+	bSizerCatalogBtns->Add( m_bUpdateAllCharts, 0, wxALIGN_BOTTOM|wxALL|wxEXPAND, 5 );
 	
 	
-	bSizer4->Add( bSizer8, 0, wxEXPAND, 5 );
+	bSizerCatalogs->Add( bSizerCatalogBtns, 0, wxEXPAND, 5 );
 	
 	
-	sbSchartsource->Add( bSizer4, 1, wxEXPAND, 0 );
+	sbSchartsource->Add( bSizerCatalogs, 1, wxEXPAND, 0 );
 	
 	
-	bSizer1->Add( sbSchartsource, 0, wxALL|wxEXPAND, 5 );
+	bSizerChartDlg->Add( sbSchartsource, 0, wxALL|wxEXPAND, 5 );
 	
 	wxStaticBoxSizer* sbSCharts;
 	sbSCharts = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Charts") ), wxVERTICAL );
@@ -187,12 +187,12 @@ ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& 
 	sbSCharts->Add( bSizerBtns, 0, wxEXPAND, 5 );
 	
 	
-	bSizer1->Add( sbSCharts, 1, wxALL|wxEXPAND, 5 );
+	bSizerChartDlg->Add( sbSCharts, 1, wxALL|wxEXPAND, 5 );
 	
 	
-	this->SetSizer( bSizer1 );
+	this->SetSizer( bSizerChartDlg );
 	this->Layout();
-	bSizer1->Fit( this );
+	bSizerChartDlg->Fit( this );
 	
 	// Connect Events
 	this->Connect( wxEVT_PAINT, wxPaintEventHandler( ChartDldrPanel::OnPaint ) );
