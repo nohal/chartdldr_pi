@@ -46,8 +46,8 @@ class AddSourceDlg : public wxDialog
 	private:
 	
 	protected:
-		wxPanel* m_panel1;
-		wxPanel* m_panel2;
+		wxPanel* m_panelPredefined;
+		wxPanel* m_panelCustom;
 		wxStaticText* m_stName;
 		wxStaticText* m_stUrl;
 		wxStdDialogButtonSizer* m_sdbSizerBtns;
@@ -61,7 +61,7 @@ class AddSourceDlg : public wxDialog
 	
 	public:
 		wxNotebook* m_nbChoice;
-		wxTreeCtrl* m_treeCtrl1;
+		wxTreeCtrl* m_treeCtrlPredefSrcs;
 		wxTextCtrl* m_tSourceName;
 		wxTextCtrl* m_tChartSourceUrl;
 		wxDirPickerCtrl* m_dpChartDirectory;

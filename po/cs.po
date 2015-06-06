@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-13 17:51-0500\n"
-"PO-Revision-Date: 2015-04-13 18:52-0400\n"
+"PO-Revision-Date: 2015-05-23 05:01-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -34,8 +34,12 @@ msgid "Chart Downloader PlugIn for OpenCPN"
 msgstr "Doplněk Manažer map pro OpenCPN"
 
 #: src/chartdldr_pi.cpp:231
-msgid "Chart Downloader PlugIn for OpenCPN\nManages chart downloads and updates from sources supporting\nNOAA Chart Catalog format"
-msgstr "Doplněk Manažer map pro OpenCPN\nUmožňuje stahování a správu map ze zdrojů, které podporují\nNOAA Chart Catalog format"
+msgid "Chart Downloader PlugIn for OpenCPN\n"
+"Manages chart downloads and updates from sources supporting\n"
+"NOAA Chart Catalog format"
+msgstr "Doplněk Manažer map pro OpenCPN\n"
+"Umožňuje stahování a správu map ze zdrojů, které podporují\n"
+"NOAA Chart Catalog format"
 
 #: src/chartdldr_pi.cpp:238 src/chartdldr_pi.cpp:602 src/chartdldr_pi.cpp:607
 #: src/chartdldr_pi.cpp:612 src/chartdldr_pi.cpp:631 src/chartdldr_pi.cpp:634
@@ -96,25 +100,41 @@ msgid "Error"
 msgstr "Chyba"
 
 #: src/chartdldr_pi.cpp:601
-msgid "You have chosen to update all chart catalogs.\nThen download all new and updated charts.\nThis may take a long time."
-msgstr "Rozhodl jsi se aktualizovat všechny katalogy map. \nStáhnou se všechny nové a aktualizované mapy. \nTo může pochopitelně trvat zatraceně dlouhou dobu."
+msgid "You have chosen to update all chart catalogs.\n"
+"Then download all new and updated charts.\n"
+"This may take a long time."
+msgstr "Rozhodl jsi se aktualizovat všechny katalogy map. \n"
+"Stáhnou se všechny nové a aktualizované mapy. \n"
+"To může pochopitelně trvat zatraceně dlouhou dobu."
 
 #: src/chartdldr_pi.cpp:606
-msgid "You have chosen to update all chart catalogs.\nThen download only new (but not updated) charts.\nThis may take a long time."
-msgstr "Rozhodl jsi se aktualizovat všechny katalogy map. \nStáhnou se všechny nové (ale ne aktualizované) mapy. \nTo může pochopitelně trvat zatraceně dlouhou dobu."
+msgid "You have chosen to update all chart catalogs.\n"
+"Then download only new (but not updated) charts.\n"
+"This may take a long time."
+msgstr "Rozhodl jsi se aktualizovat všechny katalogy map. \n"
+"Stáhnou se všechny nové (ale ne aktualizované) mapy. \n"
+"To může pochopitelně trvat zatraceně dlouhou dobu."
 
 #: src/chartdldr_pi.cpp:611
-msgid "You have chosen to update all chart catalogs.\nThen download only updated (but not new) charts.\nThis may take a long time."
-msgstr "Rozhodl jsi se aktualizovat všechny katalogy map. \nStáhnou se všechny atualizované (ale ne nové) mapy. \nTo může pochopitelně trvat zatraceně dlouhou dobu."
+msgid "You have chosen to update all chart catalogs.\n"
+"Then download only updated (but not new) charts.\n"
+"This may take a long time."
+msgstr "Rozhodl jsi se aktualizovat všechny katalogy map. \n"
+"Stáhnou se všechny atualizované (ale ne nové) mapy. \n"
+"To může pochopitelně trvat zatraceně dlouhou dobu."
 
 #: src/chartdldr_pi.cpp:630 src/chartdldr_pi.cpp:898
 #, c-format
-msgid "%d out of %d charts failed to download.\nCheck the list, verify there is a working Internet connection and repeat the operation if needed."
-msgstr "%d z %d map se nepodařilo stáhnout. \nZkontroluj seznam, ověř, zda je funkční připojení k Internetu a opakuj operaci, je-li zapotřebí."
+msgid "%d out of %d charts failed to download.\n"
+"Check the list, verify there is a working Internet connection and repeat the operation if needed."
+msgstr "%d z %d map se nepodařilo stáhnout. \n"
+"Zkontroluj seznam, ověř, zda je funkční připojení k Internetu a opakuj operaci, je-li zapotřebí."
 
 #: src/chartdldr_pi.cpp:633 src/chartdldr_pi.cpp:901
-msgid "You have added/updated some of your charts.\nTo make sure OpenCPN knows about them, go to the 'Chart Files' tab and select the 'Scan Charts and Update Database' option."
-msgstr "Přidals/aktualizovals některé své mapy. \nAby o nich OpenCPN vědělo, přejdi na kartu Mapy - Soubory map a vyber možnost \"Projít mapy a aktualizovat databázi\"."
+msgid "You have added/updated some of your charts.\n"
+"To make sure OpenCPN knows about them, go to the 'Chart Files' tab and select the 'Scan Charts and Update Database' option."
+msgstr "Přidals/aktualizovals některé své mapy. \n"
+"Aby o nich OpenCPN vědělo, přejdi na kartu Mapy - Soubory map a vyber možnost \"Projít mapy a aktualizovat databázi\"."
 
 #: src/chartdldr_pi.cpp:665 src/chartdldr_pi.cpp:1534 src/chartdldr_pi.cpp:1547
 #, c-format
@@ -136,8 +156,10 @@ msgstr "Nepodařilo se najít nový katalog: %s "
 
 #: src/chartdldr_pi.cpp:696
 #, c-format
-msgid "Failed to Download Catalog: %s \nVerify there is a working Internet connection."
-msgstr "Nepodařilo se stáhnout katalog: %s \nOvěř že je funkční připojení k Internetu."
+msgid "Failed to Download Catalog: %s \n"
+"Verify there is a working Internet connection."
+msgstr "Nepodařilo se stáhnout katalog: %s \n"
+"Ověř že je funkční připojení k Internetu."
 
 #: src/chartdldr_pi.cpp:806
 #, c-format
@@ -155,8 +177,10 @@ msgstr "Žádné mapy ke stažení."
 
 #: src/chartdldr_pi.cpp:859
 #, c-format
-msgid "The selected chart '%s' can't be downloaded automatically, do you want me to open a browser window and download them manually?\n\n After downloading the charts, please extract them to %s"
-msgstr "Vybraná mapa '%s' nelze stáhnout automaticky, chceš otevřít okno prohlížeče a stáhnout ručně? \n\nPo stažení map je prosím rozbal do %s"
+msgid "The selected chart '%s' can't be downloaded automatically, do you want me to open a browser window and download them manually?\n\n"
+" After downloading the charts, please extract them to %s"
+msgstr "Vybraná mapa '%s' nelze stáhnout automaticky, chceš otevřít okno prohlížeče a stáhnout ručně? \n\n"
+"Po stažení map je prosím rozbal do %s"
 
 #: src/chartdldr_pi.cpp:871
 #, c-format
@@ -188,13 +212,17 @@ msgid "Latest"
 msgstr "Nejnovější"
 
 #: src/chartdldr_pi.cpp:956
-msgid "Do you really want to remove the chart source?\nThe local chart files will not be removed, but you will not be able to update the charts anymore."
-msgstr "Opravdu chcete odstranit zdroj map? \nLokální soubory mpa nebudou odstraněny, ale už je tu nebudeš moci aktualizovat."
+msgid "Do you really want to remove the chart source?\n"
+"The local chart files will not be removed, but you will not be able to update the charts anymore."
+msgstr "Opravdu chcete odstranit zdroj map? \n"
+"Lokální soubory mpa nebudou odstraněny, ale už je tu nebudeš moci aktualizovat."
 
 #: src/chartdldr_pi.cpp:990 src/chartdldr_pi.cpp:1043
 #, c-format
-msgid "Path %s seems not to be covered by your configured Chart Directories.\nTo see the charts you have to adjust the configuration on the 'Chart Files' tab."
-msgstr "Cesta %s se nezdá být pokryta tvým nastavením adresářu s mapami. \nBudeš muset upravit konfiguraci na kartě Soubory map."
+msgid "Path %s seems not to be covered by your configured Chart Directories.\n"
+"To see the charts you have to adjust the configuration on the 'Chart Files' tab."
+msgstr "Cesta %s se nezdá být pokryta tvým nastavením adresářu s mapami. \n"
+"Budeš muset upravit konfiguraci na kartě Soubory map."
 
 #: src/chartdldr_pi.cpp:1009
 msgid "Edit Chart Source"

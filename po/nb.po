@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-13 17:51-0500\n"
-"PO-Revision-Date: 2015-04-13 18:52-0400\n"
+"PO-Revision-Date: 2015-05-29 14:06-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Norwegian Bokmal\n"
 "Language: nb_NO\n"
@@ -34,8 +34,12 @@ msgid "Chart Downloader PlugIn for OpenCPN"
 msgstr "Kartnedlaster utvidelse for OpenCPN"
 
 #: src/chartdldr_pi.cpp:231
-msgid "Chart Downloader PlugIn for OpenCPN\nManages chart downloads and updates from sources supporting\nNOAA Chart Catalog format"
-msgstr "Kartnedlaster utvidelse for OpenCPN\nBehandler kartnedlastinger og oppdateringer fra kilder som støtter\nNOAA kartkatalog format"
+msgid "Chart Downloader PlugIn for OpenCPN\n"
+"Manages chart downloads and updates from sources supporting\n"
+"NOAA Chart Catalog format"
+msgstr "Kartnedlaster utvidelse for OpenCPN\n"
+"Behandler kartnedlastinger og oppdateringer fra kilder som støtter\n"
+"NOAA kartkatalog format"
 
 #: src/chartdldr_pi.cpp:238 src/chartdldr_pi.cpp:602 src/chartdldr_pi.cpp:607
 #: src/chartdldr_pi.cpp:612 src/chartdldr_pi.cpp:631 src/chartdldr_pi.cpp:634
@@ -96,25 +100,37 @@ msgid "Error"
 msgstr "Feil"
 
 #: src/chartdldr_pi.cpp:601
-msgid "You have chosen to update all chart catalogs.\nThen download all new and updated charts.\nThis may take a long time."
-msgstr "Du har valgt å oppdatere alle kartkatalogene.\nSå, laste ned alle nye og oppdaterte karter.\nDette kan ta lang tid."
+msgid "You have chosen to update all chart catalogs.\n"
+"Then download all new and updated charts.\n"
+"This may take a long time."
+msgstr "Du har valgt å oppdatere alle kartkatalogene.\n"
+"Så, laste ned alle nye og oppdaterte karter.\n"
+"Dette kan ta lang tid."
 
 #: src/chartdldr_pi.cpp:606
-msgid "You have chosen to update all chart catalogs.\nThen download only new (but not updated) charts.\nThis may take a long time."
+msgid "You have chosen to update all chart catalogs.\n"
+"Then download only new (but not updated) charts.\n"
+"This may take a long time."
 msgstr ""
 
 #: src/chartdldr_pi.cpp:611
-msgid "You have chosen to update all chart catalogs.\nThen download only updated (but not new) charts.\nThis may take a long time."
+msgid "You have chosen to update all chart catalogs.\n"
+"Then download only updated (but not new) charts.\n"
+"This may take a long time."
 msgstr ""
 
 #: src/chartdldr_pi.cpp:630 src/chartdldr_pi.cpp:898
 #, c-format
-msgid "%d out of %d charts failed to download.\nCheck the list, verify there is a working Internet connection and repeat the operation if needed."
-msgstr "%d av %d kart feilet under nedlasting.\nSjekk listen, kontroller at du har en fungerende internett forbindelse og gjenta operasjonen om nødvendig."
+msgid "%d out of %d charts failed to download.\n"
+"Check the list, verify there is a working Internet connection and repeat the operation if needed."
+msgstr "%d av %d kart feilet under nedlasting.\n"
+"Sjekk listen, kontroller at du har en fungerende internett forbindelse og gjenta operasjonen om nødvendig."
 
 #: src/chartdldr_pi.cpp:633 src/chartdldr_pi.cpp:901
-msgid "You have added/updated some of your charts.\nTo make sure OpenCPN knows about them, go to the 'Chart Files' tab and select the 'Scan Charts and Update Database' option."
-msgstr "Du har lagt til/oppdatert noen av dine kart.\nFor å være sikker på at OpenCPN kjenner til dem, gå til 'Karter - Kartfiler' og velg 'Søk gjennom karter og oppdater database'."
+msgid "You have added/updated some of your charts.\n"
+"To make sure OpenCPN knows about them, go to the 'Chart Files' tab and select the 'Scan Charts and Update Database' option."
+msgstr "Du har lagt til/oppdatert noen av dine kart.\n"
+"For å være sikker på at OpenCPN kjenner til dem, gå til 'Karter - Kartfiler' og velg 'Søk gjennom karter og oppdater database'."
 
 #: src/chartdldr_pi.cpp:665 src/chartdldr_pi.cpp:1534 src/chartdldr_pi.cpp:1547
 #, c-format
@@ -136,7 +152,8 @@ msgstr "Kunne ikke finne ny katalog: %s "
 
 #: src/chartdldr_pi.cpp:696
 #, c-format
-msgid "Failed to Download Catalog: %s \nVerify there is a working Internet connection."
+msgid "Failed to Download Catalog: %s \n"
+"Verify there is a working Internet connection."
 msgstr ""
 
 #: src/chartdldr_pi.cpp:806
@@ -155,7 +172,8 @@ msgstr "Ingen kart er valgt for nedlasting."
 
 #: src/chartdldr_pi.cpp:859
 #, c-format
-msgid "The selected chart '%s' can't be downloaded automatically, do you want me to open a browser window and download them manually?\n\n After downloading the charts, please extract them to %s"
+msgid "The selected chart '%s' can't be downloaded automatically, do you want me to open a browser window and download them manually?\n\n"
+" After downloading the charts, please extract them to %s"
 msgstr ""
 
 #: src/chartdldr_pi.cpp:871
@@ -188,12 +206,15 @@ msgid "Latest"
 msgstr "Seneste"
 
 #: src/chartdldr_pi.cpp:956
-msgid "Do you really want to remove the chart source?\nThe local chart files will not be removed, but you will not be able to update the charts anymore."
-msgstr "Vil du virkelig fjerne kartkilden?\nDe lokale kartene vil ikke bli fjernet, men du vil ikke kunne oppdatere kartene lengre."
+msgid "Do you really want to remove the chart source?\n"
+"The local chart files will not be removed, but you will not be able to update the charts anymore."
+msgstr "Vil du virkelig fjerne kartkilden?\n"
+"De lokale kartene vil ikke bli fjernet, men du vil ikke kunne oppdatere kartene lengre."
 
 #: src/chartdldr_pi.cpp:990 src/chartdldr_pi.cpp:1043
 #, c-format
-msgid "Path %s seems not to be covered by your configured Chart Directories.\nTo see the charts you have to adjust the configuration on the 'Chart Files' tab."
+msgid "Path %s seems not to be covered by your configured Chart Directories.\n"
+"To see the charts you have to adjust the configuration on the 'Chart Files' tab."
 msgstr ""
 
 #: src/chartdldr_pi.cpp:1009
