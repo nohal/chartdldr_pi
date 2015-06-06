@@ -28,7 +28,7 @@ Windows Specific Libraries
 Under windows, you must find the file "opencpn.lib" (Visual Studio) or "libopencpn.dll.a" (mingw) which is built in the build directory after compiling opencp
 
 There are also some libraries and an external program needed:
-http://sourceforge.net/projects/opencpnplugins/files/weatherfax_pi/wf_depends.7z/download
+http://sourceforge.net/projects/opencpnplugins/files/opencpn_packaging_data/cURL-vc12.7z/download
 
 On Windows, also the CA certificates bundle must be part of the package. Get it from http://sourceforge.net/projects/opencpnplugins/files/chartdldr_pi/curl-ca-bundle.crt/download and place into the buildwin directory
 
