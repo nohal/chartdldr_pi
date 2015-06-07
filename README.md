@@ -14,7 +14,7 @@ git clone git://github.com/nohal/chartdldr_pi.git
 ```
 mkdir chartdldr_pi/build
 cd chartdldr_pi/build
-cmake ..
+cmake .. # To produce a binary compatible with Windows XP, you must set the respective toolset - use 'cmake -T v120_xp ..'
 cmake --build .
 ```
 Windows note: You must place opencpn.lib into your build directory to be able to link the plugin DLL. You can get this file from your local OpenCPN build, or
