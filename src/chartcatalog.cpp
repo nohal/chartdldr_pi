@@ -151,47 +151,66 @@ bool ChartCatalog::ParseNoaaHeader( TiXmlElement * xmldata )
         wxString s = wxString::FromUTF8(child->Value());
         if( s == _T("title") )
         {
-            title = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                title = wxString::FromUTF8(child->FirstChild()->Value());
         }
         else if( s == _T("date_created") )
         {
-            date_created.ParseDate( wxString::FromUTF8(child->FirstChild()->Value()) );
-            wxASSERT(date_created.IsValid());
+            if( !child->NoChildren() )
+            {
+                date_created.ParseDate( wxString::FromUTF8(child->FirstChild()->Value()) );
+                wxASSERT(date_created.IsValid());
+            }
         }
         else if( s == _T("time_created") )
         {
-            time_created.ParseTime( wxString::FromUTF8(child->FirstChild()->Value()) );
-            wxASSERT(time_created.IsValid());
+            if( !child->NoChildren() )
+            {
+                time_created.ParseTime( wxString::FromUTF8(child->FirstChild()->Value()) );
+                wxASSERT(time_created.IsValid());
+            }
         }
         else if( s == _T("date_valid") )
         {
-            date_valid.ParseDate( wxString::FromUTF8(child->FirstChild()->Value()) );
-            wxASSERT(date_valid.IsValid());
+            if( !child->NoChildren() )
+            {
+                date_valid.ParseDate( wxString::FromUTF8(child->FirstChild()->Value()) );
+                wxASSERT(date_valid.IsValid());
+            }
         }
         else if( s == _T("time_valid") )
         {
-            time_valid.ParseTime( wxString::FromUTF8(child->FirstChild()->Value()) );
-            wxASSERT(time_valid.IsValid());
+            if( !child->NoChildren() )
+            {
+                time_valid.ParseTime( wxString::FromUTF8(child->FirstChild()->Value()) );
+                wxASSERT(time_valid.IsValid());
+            }
         }
         else if( s == _T("dt_valid") )
         {
-            wxStringTokenizer tk( wxString::FromUTF8(child->FirstChild()->Value()), _T("TZ") );
-            dt_valid.ParseDate(tk.GetNextToken());
-            dt_valid.ParseTime(tk.GetNextToken());
-            dt_valid.MakeFromTimezone(wxDateTime::UTC);
-            wxASSERT(dt_valid.IsValid());
+            if( !child->NoChildren() )
+            {
+                wxStringTokenizer tk( wxString::FromUTF8(child->FirstChild()->Value()), _T("TZ") );
+                dt_valid.ParseDate(tk.GetNextToken());
+                dt_valid.ParseTime(tk.GetNextToken());
+                dt_valid.MakeFromTimezone(wxDateTime::UTC);
+                wxASSERT(dt_valid.IsValid());
+            }
         }
         else if( s == _T("ref_spec") )
         {
-            ref_spec = wxString::FromUTF8( child->FirstChild()->Value() );
+            if( !child->NoChildren() )
+                ref_spec = wxString::FromUTF8( child->FirstChild()->Value() );
         }
         else if( s == _T("ref_spec_vers") )
         {
-            ref_spec_vers = wxString::FromUTF8( child->FirstChild()->Value() );
+            if( !child->NoChildren() )
+                ref_spec_vers = wxString::FromUTF8( child->FirstChild()->Value() );
         }
         else if( s == _T("s62AgencyCode") )
         {
-            s62AgencyCode = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                s62AgencyCode = wxString::FromUTF8(child->FirstChild()->Value());
         }
     }
     return true;
@@ -235,14 +254,16 @@ Chart::Chart( TiXmlNode * xmldata )
         wxString s = wxString::FromUTF8(child->Value());
         if( s == _T("title") || s == _T("lname") )
         {
-            title = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                title = wxString::FromUTF8(child->FirstChild()->Value());
         }
         else if( s == _T("coast_guard_districts") )
         {
             TiXmlNode *mychild;
             for( mychild = child->FirstChild(); mychild != 0; mychild = mychild->NextSibling() )
             {
-                coast_guard_districts->Add( wxString::FromUTF8(mychild->FirstChild()->Value()) );
+                if( !mychild->NoChildren() )
+                    coast_guard_districts->Add( wxString::FromUTF8(mychild->FirstChild()->Value()) );
             }
         }
         else if( s == _T("states") )
@@ -250,7 +271,8 @@ Chart::Chart( TiXmlNode * xmldata )
             TiXmlNode *mychild;
             for ( mychild = child->FirstChild(); mychild != 0; mychild = mychild->NextSibling())
             {
-                states->Add( wxString::FromUTF8(mychild->FirstChild()->Value()) );
+                if( !mychild->NoChildren() )
+                    states->Add( wxString::FromUTF8(mychild->FirstChild()->Value()) );
             }
         }
         else if( s == _T("regions") )
@@ -258,7 +280,8 @@ Chart::Chart( TiXmlNode * xmldata )
             TiXmlNode *mychild;
             for( mychild = child->FirstChild(); mychild != 0; mychild = mychild->NextSibling() )
             {
-                regions->Add( wxString::FromUTF8(mychild->FirstChild()->Value()) );
+                if( !mychild->NoChildren() )
+                    regions->Add( wxString::FromUTF8(mychild->FirstChild()->Value()) );
             }
         }
         else if( s == _T("zipfile_location") )
@@ -268,22 +291,24 @@ Chart::Chart( TiXmlNode * xmldata )
         }
         else if( s == _T("zipfile_datetime") )
         {
-            if( zipfile_datetime.ParseFormat(wxString::FromUTF8(child->FirstChild()->Value()), _T("%Y%m%d_%H%M%S")) )
-                zipfile_datetime.MakeFromTimezone(wxDateTime::UTC);
+            if( !child->NoChildren() )
+                if( zipfile_datetime.ParseFormat(wxString::FromUTF8(child->FirstChild()->Value()), _T("%Y%m%d_%H%M%S")) )
+                    zipfile_datetime.MakeFromTimezone(wxDateTime::UTC);
         }
         else if( s == _T("zipfile_datetime_iso8601") )
         {
-            wxStringTokenizer tk(wxString::FromUTF8(child->FirstChild()->Value()), _T("TZ"));
-            zipfile_datetime_iso8601.ParseDate(tk.GetNextToken());
-            zipfile_datetime_iso8601.ParseTime(tk.GetNextToken());
-            zipfile_datetime_iso8601.MakeFromTimezone(wxDateTime::UTC);
+            if( !child->NoChildren() )
+            {
+                wxStringTokenizer tk(wxString::FromUTF8(child->FirstChild()->Value()), _T("TZ"));
+                zipfile_datetime_iso8601.ParseDate(tk.GetNextToken());
+                zipfile_datetime_iso8601.ParseTime(tk.GetNextToken());
+                zipfile_datetime_iso8601.MakeFromTimezone(wxDateTime::UTC);
+            }
         }
         else if( s == _T("zipfile_size") )
         {
-            if( child->FirstChild() )
+            if( !child->NoChildren() )
                 zipfile_size = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
-            else
-                zipfile_size = 0;
         }
         else if( s == _T("nm") )
         {
@@ -303,15 +328,18 @@ Chart::Chart( TiXmlNode * xmldata )
         }
         else if( s == _T("target_filename") )
         {
-            target_filename = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                target_filename = wxString::FromUTF8(child->FirstChild()->Value());
         }
         else if( s == _T("reference_file") )
         {
-            reference_file = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                reference_file = wxString::FromUTF8(child->FirstChild()->Value());
         }
         else if( s == _T("manual_download_url") )
         {
-            manual_download_url = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                manual_download_url = wxString::FromUTF8(child->FirstChild()->Value());
         }
     }
 }
@@ -348,39 +376,48 @@ RasterChart::RasterChart( TiXmlNode * xmldata ) : Chart( xmldata )
         wxString s = wxString::FromUTF8(child->Value());
         if( s == _T("number") )
         {
-            number = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                number = wxString::FromUTF8(child->FirstChild()->Value());
         }
         else if( s == _T("source_edition") )
         {
-            source_edition = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
+            if( !child->NoChildren() )
+                source_edition = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
         }
         else if( s == _T("raster_edition") )
         {
-            raster_edition = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
+            if( !child->NoChildren() )
+                raster_edition = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
         }
         else if( s == _T("ntm_edition") )
         {
-            ntm_edition = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
+            if( !child->NoChildren() )
+                ntm_edition = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
         }
         else if( s == _T("source_date") )
         {
-            source_date = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                source_date = wxString::FromUTF8(child->FirstChild()->Value());
         }
         else if( s == _T("ntm_date") )
         {
-            ntm_date = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                ntm_date = wxString::FromUTF8(child->FirstChild()->Value());
         }
         else if( s == _T("source_edition_last_correction") )
         {
-            source_edition_last_correction = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                source_edition_last_correction = wxString::FromUTF8(child->FirstChild()->Value());
         }
         else if( s == _T("raster_edition_last_correction") )
         {
-            raster_edition_last_correction = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                raster_edition_last_correction = wxString::FromUTF8(child->FirstChild()->Value());
         }
         else if( s == _T("ntm_edition_last_correction") )
         {
-            ntm_edition_last_correction = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                ntm_edition_last_correction = wxString::FromUTF8(child->FirstChild()->Value());
         }
     }
 }
@@ -401,36 +438,46 @@ EncCell::EncCell( TiXmlNode * xmldata ) : Chart( xmldata )
         wxString s = wxString::FromUTF8(child->Value());
         if( s == _T("name") )
         {
-            name = wxString::FromUTF8(child->FirstChild()->Value());
-            number = name;
+            if( !child->NoChildren() )
+            {
+                name = wxString::FromUTF8(child->FirstChild()->Value());
+                number = name;
+            }
         }
         else if( s == _T("src_chart") )
         {
-            src_chart = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                src_chart = wxString::FromUTF8(child->FirstChild()->Value());
         }
         else if( s == _T("cscale") )
         {
-            cscale = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
+            if( !child->NoChildren() )
+                cscale = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
         }
         else if( s == _T("status") )
         {
-            status = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                status = wxString::FromUTF8(child->FirstChild()->Value());
         }
         else if( s == _T("edtn") )
         {
-            edtn = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
+            if( !child->NoChildren() )
+                edtn = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
         }
         else if( s == _T("updn") )
         {
-            updn = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
+            if( !child->NoChildren() )
+                updn = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
         }
         else if( s == _T("uadt") )
         {
-            uadt.ParseDateTime(wxString::FromUTF8(child->FirstChild()->Value()));
+            if( !child->NoChildren() )
+                uadt.ParseDateTime(wxString::FromUTF8(child->FirstChild()->Value()));
         }
         else if( s == _T("isdt") )
         {
-            isdt.ParseDateTime(wxString::FromUTF8(child->FirstChild()->Value()));
+            if( !child->NoChildren() )
+                isdt.ParseDateTime(wxString::FromUTF8(child->FirstChild()->Value()));
         }
     }
 }
@@ -452,8 +499,11 @@ IEncCell::IEncCell( TiXmlNode * xmldata ) : Chart( xmldata )
         wxString s = wxString::FromUTF8(child->Value());
         if( s == _T("name") )
         {
-            name = wxString::FromUTF8(child->FirstChild()->Value());
-			zipfile_location = wxString::Format(_T("%s.zip"), name.c_str());
+            if( !child->NoChildren() )
+            {
+                name = wxString::FromUTF8(child->FirstChild()->Value());
+                zipfile_location = wxString::Format(_T("%s.zip"), name.c_str());
+            }
         }
         else if( s == _T("location") )
         {
@@ -473,7 +523,8 @@ IEncCell::IEncCell( TiXmlNode * xmldata ) : Chart( xmldata )
         }
         else if( s == _T("edition") )
         {
-            edition = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                edition = wxString::FromUTF8(child->FirstChild()->Value());
         }
         else if( s == _T("shp_file") )
         {
@@ -527,11 +578,13 @@ ChartFile::ChartFile( TiXmlNode * xmldata )
         wxString s = wxString::FromUTF8(child->Value());
         if( s == _T("location") )
         {
-            location = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                location = wxString::FromUTF8(child->FirstChild()->Value());
         }
         else if( s == _T("date_posted") )
         {
-            date_posted.ParseDate(wxString::FromUTF8(child->FirstChild()->Value()));
+            if( !child->NoChildren() )
+                date_posted.ParseDate(wxString::FromUTF8(child->FirstChild()->Value()));
         }
         else if( s == _T("time_posted") )
         {
@@ -562,19 +615,23 @@ Area::Area( TiXmlNode * xmldata )
         wxString s = wxString::FromUTF8(child->Value());
         if( s == _T("north") )
         {
-            north = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
+            if( !child->NoChildren() )
+                north = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
         }
         else if( s == _T("south") )
         {
-            south = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
+            if( !child->NoChildren() )
+                south = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
         }
         else if( s == _T("east") )
         {
-            east = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
+            if( !child->NoChildren() )
+                east = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
         }
         else if( s == _T("west") )
         {
-            west = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
+            if( !child->NoChildren() )
+                west = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
         }
     }
 }
@@ -589,11 +646,13 @@ RiverMiles::RiverMiles( TiXmlNode * xmldata )
         wxString s = wxString::FromUTF8(child->Value());
         if( s == _T("begin") )
         {
-            begin = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
+            if( !child->NoChildren() )
+                begin = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
         }
         else if( s == _T("end") )
         {
-            end = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
+            if( !child->NoChildren() )
+                end = wxAtof(wxString::FromUTF8(child->FirstChild()->Value()));
         }
     }
 }
@@ -608,11 +667,13 @@ Location::Location( TiXmlNode * xmldata )
         wxString s = wxString::FromUTF8(child->Value());
         if( s == _T("from") )
         {
-            from = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                from = wxString::FromUTF8(child->FirstChild()->Value());
         }
         else if( s == _T("to") )
         {
-            to = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                to = wxString::FromUTF8(child->FirstChild()->Value());
         }
     }
 }
@@ -629,15 +690,18 @@ NoticeToMariners::NoticeToMariners( TiXmlNode * xmldata )
         wxString s = wxString::FromUTF8(child->Value());
         if( s == _T("nm_agency") || s == _T("lnm_agency") )
         {
-            agency = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                agency = wxString::FromUTF8(child->FirstChild()->Value());
         }
         else if( s == _T("doc") )
         {
-            doc = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                doc = wxString::FromUTF8(child->FirstChild()->Value());
         }
         else if( s == _T("date") )
         {
-            date.ParseDate(wxString::FromUTF8(child->FirstChild()->Value()));
+            if( !child->NoChildren() )
+                date.ParseDate(wxString::FromUTF8(child->FirstChild()->Value()));
         }
     }
 }
@@ -652,7 +716,8 @@ Panel::Panel( TiXmlNode * xmldata )
         wxString s = wxString::FromUTF8(child->Value());
         if( s == _T("panel_no") )
         {
-            panel_no = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
+            if( !child->NoChildren() )
+                panel_no = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
         }
         else if( s == _T("vertex") )
         {
@@ -678,15 +743,18 @@ RncPanel::RncPanel( TiXmlNode * xmldata ) : Panel( xmldata )
         wxString s = wxString::FromUTF8(child->Value());
         if( s == _T("panel_title") )
         {
-            panel_title = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                panel_title = wxString::FromUTF8(child->FirstChild()->Value());
         }
         else if( s == _T("file_name") )
         {
-            file_name = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                file_name = wxString::FromUTF8(child->FirstChild()->Value());
         }
         else if( s == _T("scale") )
         {
-            scale = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
+            if( !child->NoChildren() )
+                scale = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
         }
     }
 }
@@ -700,7 +768,8 @@ EncPanel::EncPanel( TiXmlNode * xmldata ) : Panel( xmldata )
         wxString s = wxString::FromUTF8(child->Value());
         if( s == _T("type") )
         {
-            type = wxString::FromUTF8(child->FirstChild()->Value());
+            if( !child->NoChildren() )
+                type = wxString::FromUTF8(child->FirstChild()->Value());
         }
     }
 }
@@ -716,11 +785,13 @@ Vertex::Vertex( TiXmlNode * xmldata )
         wxString s = wxString::FromUTF8(child->Value());
         if( s == _T("lat") )
         {
-            wxString::FromUTF8(child->FirstChild()->Value()).ToDouble(&lat);
+            if( !child->NoChildren() )
+                wxString::FromUTF8(child->FirstChild()->Value()).ToDouble(&lat);
         }
         else if( s == _T("long") )
         {
-            wxString::FromUTF8(child->FirstChild()->Value()).ToDouble(&lon);
+            if( !child->NoChildren() )
+                wxString::FromUTF8(child->FirstChild()->Value()).ToDouble(&lon);
         }
     }
 }
