@@ -167,6 +167,7 @@ public:			// utilities
 protected:		// event handlers
 
     void OnMouseEvent(wxMouseEvent& event);
+    void OnActivateEvent(wxListEvent& event);
 
 protected:		// internal utilities
 

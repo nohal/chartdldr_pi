@@ -33,6 +33,7 @@
 IMPLEMENT_CLASS(wxCheckedListCtrl, wxListCtrl)
 BEGIN_EVENT_TABLE(wxCheckedListCtrl, wxListCtrl)
     EVT_LEFT_DOWN(wxCheckedListCtrl::OnMouseEvent)
+    EVT_LIST_ITEM_ACTIVATED(wxID_ANY, wxCheckedListCtrl::OnActivateEvent)
 END_EVENT_TABLE()
 
 DEFINE_EVENT_TYPE(wxEVT_COMMAND_LIST_ITEM_CHECKED);
@@ -394,6 +395,33 @@ void wxCheckedListCtrl::OnMouseEvent(wxMouseEvent& event)
 	}
 
 	event.Skip(); 
+}
+
+void wxCheckedListCtrl::OnActivateEvent(wxListEvent& event)
+{
+    long item = event.GetItem().GetId();
+    if (item == wxNOT_FOUND || !IsEnabled(item))
+    {
+        // skip this item
+        event.Skip();
+        return;
+    }
+
+    wxListEvent ev(wxEVT_NULL, GetId());
+    ev.m_itemIndex = item;
+
+    // send the check event
+    if (IsChecked(item))
+    {
+        ev.SetEventType(wxEVT_COMMAND_LIST_ITEM_UNCHECKED);
+        Check(item, FALSE);
+        AddPendingEvent(ev);
+    } else {
+        ev.SetEventType(wxEVT_COMMAND_LIST_ITEM_CHECKED);
+        Check(item, TRUE);
+        AddPendingEvent(ev);
+    }
+    event.Skip();
 }
 
 #endif		// wxUSE_CHECKEDLISTCTRL
