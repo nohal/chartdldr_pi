@@ -276,7 +276,10 @@ Chart::Chart(TiXmlNode * xmldata)
             }
             else if (s == _T("zipfile_size"))
             {
-                  zipfile_size = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
+                  if( child->FirstChild() )
+                      zipfile_size = wxAtoi(wxString::FromUTF8(child->FirstChild()->Value()));
+                  else
+                      zipfile_size = 0;
             }
             else if (s == _T("nm"))
             {
