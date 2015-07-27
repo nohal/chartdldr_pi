@@ -41,10 +41,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 /// Class AddSourceDlg
 ///////////////////////////////////////////////////////////////////////////////
-class AddSourceDlg : public wxDialog 
+class AddSourceDlg : public wxDialog
 {
 	private:
-	
+
 	protected:
 		wxPanel* m_panelPredefined;
 		wxPanel* m_panelCustom;
@@ -53,31 +53,31 @@ class AddSourceDlg : public wxDialog
 		wxStdDialogButtonSizer* m_sdbSizerBtns;
 		wxButton* m_sdbSizerBtnsOK;
 		wxButton* m_sdbSizerBtnsCancel;
-		
+
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnSourceSelected( wxTreeEvent& event ) { event.Skip(); }
 		virtual void OnOkClick( wxCommandEvent& event ) { event.Skip(); }
-		
-	
+
+
 	public:
 		wxNotebook* m_nbChoice;
 		wxTreeCtrl* m_treeCtrlPredefSrcs;
 		wxTextCtrl* m_tSourceName;
 		wxTextCtrl* m_tChartSourceUrl;
 		wxDirPickerCtrl* m_dpChartDirectory;
-		
-		AddSourceDlg( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("New chart source"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE ); 
+
+		AddSourceDlg( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("New chart source"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
 		~AddSourceDlg();
-	
+
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class ChartDldrPanel
 ///////////////////////////////////////////////////////////////////////////////
-class ChartDldrPanel : public wxPanel 
+class ChartDldrPanel : public wxPanel
 {
 	private:
-	
+
 	protected:
 		wxListCtrl* m_lbChartSources;
 		wxButton* m_bAddSource;
@@ -89,7 +89,7 @@ class ChartDldrPanel : public wxPanel
 		wxButton* m_bHelp;
 		wxButton* m_bDnldCharts;
 		wxButton* m_bShowLocal;
-		
+
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnPaint( wxPaintEvent& event ) { event.Skip(); }
 		virtual void OnLeftDClick( wxMouseEvent& event ) { event.Skip(); }
@@ -101,25 +101,25 @@ class ChartDldrPanel : public wxPanel
 		virtual void UpdateAllCharts( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnContextMenu( wxMouseEvent& event ) { event.Skip(); }
 		virtual void DoHelp( wxCommandEvent& event ) { event.Skip(); }
-		virtual void DownloadCharts( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnDownloadCharts( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnShowLocalDir( wxCommandEvent& event ) { event.Skip(); }
-		
-	
+
+
 	public:
 		wxCheckedListCtrl *m_clCharts;
-		
-		ChartDldrPanel( wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxTAB_TRAVERSAL ); 
+
+		ChartDldrPanel( wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxTAB_TRAVERSAL );
 		~ChartDldrPanel();
-	
+        ChartDldrPanel() { }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class ChartDldrPrefsDlg
 ///////////////////////////////////////////////////////////////////////////////
-class ChartDldrPrefsDlg : public wxDialog 
+class ChartDldrPrefsDlg : public wxDialog
 {
 	private:
-	
+
 	protected:
 		wxDirPickerCtrl* m_dpDefaultDir;
 		wxStaticText* m_stPreselect;
@@ -130,17 +130,17 @@ class ChartDldrPrefsDlg : public wxDialog
 		wxStdDialogButtonSizer* m_sdbSizerBtns;
 		wxButton* m_sdbSizerBtnsOK;
 		wxButton* m_sdbSizerBtnsCancel;
-		
+
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnCancelClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnOkClick( wxCommandEvent& event ) { event.Skip(); }
-		
-	
+
+
 	public:
-		
-		ChartDldrPrefsDlg( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Chart Downloader Preferences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 462,331 ), long style = wxDEFAULT_DIALOG_STYLE ); 
+
+		ChartDldrPrefsDlg( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Chart Downloader Preferences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 462,331 ), long style = wxDEFAULT_DIALOG_STYLE );
 		~ChartDldrPrefsDlg();
-	
+
 };
 
 #endif //__CHARTDLDRGUI_H__

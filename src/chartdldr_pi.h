@@ -120,7 +120,7 @@ private:
 
     wxString        m_schartdldr_sources;
     int             m_selected_source;
-    
+
     ChartDldrPanelImpl *m_dldrpanel;
     wxString        m_base_chart_dir;
 };
@@ -138,7 +138,7 @@ public:
     bool            ExistsLocaly(   wxString chart_number, wxString filename );
     bool            IsNewerThanLocal( wxString chart_number, wxString filename, wxDateTime validDate );
     void            UpdateLocalFiles() { GetLocalFiles(); }
-    
+
     bool            UpdateDataExists();
     void            LoadUpdateData();
     void            SaveUpdateData();
@@ -165,6 +165,7 @@ private:
 	int             updatingAll;
     int             failed_downloads;
     bool            cancelled;
+    bool            m_bulkdownload;
     chartdldr_pi   *pPlugIn;
     bool            m_populated;
 
@@ -172,6 +173,17 @@ private:
     int             GetSelectedCatalog();
     void            AppendCatalog(ChartSource *cs);
     void            DoEditSource();
+    wxCurlDownloadThread *m_pThread;
+    // returns true if the error can be ignored
+    bool            HandleCurlThreadError(wxCurlThreadError err, wxCurlBaseThread *p,
+                               const wxString &url = wxEmptyString);
+    void            OnEndPerform(wxCurlEndPerformEvent &ev);
+    void            OnDownload(wxCurlDownloadEvent &ev);
+    bool            m_bTransferComplete;
+    bool            m_bTransferSuccess;
+    wxString        m_totalsize;
+    wxString        m_transferredsize;
+    void            DisableForDownload( bool enabled );
 
 protected:
     // Handlers for ChartDldrPanel events.
@@ -181,20 +193,21 @@ protected:
 	void            DeleteSource( wxCommandEvent& event );
 	void            EditSource( wxCommandEvent& event );
 	void            UpdateChartList( wxCommandEvent& event );
-	void            DownloadCharts( wxCommandEvent& event );
+	void            OnDownloadCharts( wxCommandEvent& event );
+	void            DownloadCharts( );
 	void            DoHelp( wxCommandEvent& event )
       {
           #ifdef __WXMSW__
           wxLaunchDefaultBrowser( _T("file:///") + *GetpSharedDataLocation() + _T("plugins/chartdldr_pi/data/doc/index.html") );
           #else
-          wxLaunchDefaultBrowser( _T("file://") + *GetpSharedDataLocation() + _T("plugins/chartdldr_pi/data/doc/index.html") ); 
+          wxLaunchDefaultBrowser( _T("file://") + *GetpSharedDataLocation() + _T("plugins/chartdldr_pi/data/doc/index.html") );
           #endif
       }
     void            UpdateAllCharts( wxCommandEvent& event );
 	void            OnShowLocalDir( wxCommandEvent& event );
     void            OnPaint( wxPaintEvent& event );
     void            OnLeftDClick( wxMouseEvent& event );
-    
+
     void            CleanForm();
     void            FillFromFile( wxString url, wxString dir, bool selnew = false, bool selupd = false );
 
@@ -202,9 +215,14 @@ protected:
     void            SetBulkUpdate( bool bulk_update );
 
 public:
+    ChartDldrPanelImpl() { }
     ~ChartDldrPanelImpl();
     ChartDldrPanelImpl( chartdldr_pi* plugin, wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
     void            SelectCatalog( int item );
+
+private:
+    DECLARE_DYNAMIC_CLASS( ChartDldrPanelImpl )
+    DECLARE_EVENT_TABLE()
 };
 
 class ChartDldrGuiAddSourceDlg : public AddSourceDlg
@@ -224,7 +242,7 @@ public:
 	~ChartDldrGuiAddSourceDlg();
 	void            SetBasePath( const wxString path ) { m_base_path = path; }
     void            SetSourceEdit( ChartSource* cs );
-    
+
 private:
     bool            ValidateUrl(const wxString Url, bool catalog_xml = true);
     wxString        FixPath(wxString path);
