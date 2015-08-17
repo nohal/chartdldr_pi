@@ -44,19 +44,6 @@ SET(SRC_CHARTDLDR
             src/chartcatalog.cpp
             src/chartcatalog.h
 
-            src/wxcurl/base.cpp
-            src/wxcurl/dav.cpp
-            src/wxcurl/davtool.cpp
-            src/wxcurl/dialog.cpp
-            src/wxcurl/ftp.cpp
-            src/wxcurl/ftpparse.cpp
-            src/wxcurl/ftptool.cpp
-            src/wxcurl/http.cpp
-            src/wxcurl/panel.cpp
-            src/wxcurl/telnet.cpp
-            src/wxcurl/thread.cpp
-            src/wxcurl/utils.cpp
-
             src/unrar/rar.cpp
             src/unrar/strlist.cpp
             src/unrar/strfn.cpp
@@ -107,6 +94,30 @@ SET(SRC_CHARTDLDR
             src/unrar/qopen.cpp
         )
 
+SET(SRC_CURL
+            src/wxcurl/base.cpp
+            src/wxcurl/dav.cpp
+            src/wxcurl/davtool.cpp
+            src/wxcurl/dialog.cpp
+            src/wxcurl/ftp.cpp
+            src/wxcurl/ftpparse.cpp
+            src/wxcurl/ftptool.cpp
+            src/wxcurl/http.cpp
+            src/wxcurl/panel.cpp
+            src/wxcurl/telnet.cpp
+            src/wxcurl/thread.cpp
+            src/wxcurl/utils.cpp
+        )
+
+IF(NOT QT_ANDROID)
+    add_definitions ( -DUSE_CURL )
+    SET (SRC_CHARTDLDR ${SRC_CHARTDLDR} ${SRC_CURL})
+    INCLUDE_DIRECTORIES(src/wxcurl/)
+ENDIF(NOT QT_ANDROID)
+
+
+
+
 IF(UNIX)
  INCLUDE("cmake/FindTinyXML.cmake")
  FIND_PACKAGE(TinyXML QUIET)
@@ -115,12 +126,12 @@ ENDIF(UNIX)
 INCLUDE_DIRECTORIES(src/unrar/)
 
 IF(TINYXML_FOUND)
- message (STATUS "Building with system tinyxml")
+ message (STATUS "Chartdldr_pi building with system tinyxml")
  INCLUDE_DIRECTORIES(${TINYXML_INCLUDE_DIR})
  ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_CHARTDLDR})
  TARGET_LINK_LIBRARIES(${PACKAGE_NAME} ${TINYXML_LIBRARIES})
 ELSE(TINYXML_FOUND)
- message (STATUS "Building with embedded tinyxml")
+ message (STATUS "Chartdldr_pi building with embedded tinyxml")
  INCLUDE_DIRECTORIES(src/tinyxml/)
  SET(SRC_LTINYXML
             src/tinyxml/tinyxml.cpp
@@ -131,6 +142,14 @@ ELSE(TINYXML_FOUND)
 ENDIF(TINYXML_FOUND)
 ADD_DEFINITIONS(-DTIXML_USE_STL)
 
+TARGET_LINK_LIBRARIES( ${PACKAGE_NAME} ${wxWidgets_LIBRARIES} )
+
+IF (QT_ANDROID )
+    TARGET_LINK_LIBRARIES( ${PACKAGE_NAME} ${OCPN_Core_LIBRARIES} )
+    TARGET_LINK_LIBRARIES( ${PACKAGE_NAME} "-lgnustl_shared")
+ENDIF(QT_ANDROID)
+
+TARGET_LINK_LIBRARIES( ${PACKAGE_NAME} "-lz" )
 
 INCLUDE("cmake/PluginInstall.cmake")
 INCLUDE("cmake/PluginCurl.cmake")
