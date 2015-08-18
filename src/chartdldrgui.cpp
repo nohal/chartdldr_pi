@@ -84,37 +84,37 @@ void AddSourceDlg::applyStyle()
     QScroller::ungrabGesture(m_treeCtrlPredefSrcs->GetHandle());
     #endif
 }
-    
+
 AddSourceDlg::AddSourceDlg( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxSize( 500,-1 ), wxDefaultSize );
 
 	wxBoxSizer* bSizerMain = new wxBoxSizer( wxVERTICAL );
         this->SetSizer( bSizerMain );
-        
+
 	wxStaticBoxSizer* sbSizerSourceSel = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Catalog") ), wxVERTICAL );
         bSizerMain->Add( sbSizerSourceSel, 1, wxALL|wxEXPAND, 5 );
-        
+
 	m_nbChoice = new wxNotebook( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNB_TOP );
         sbSizerSourceSel->Add( m_nbChoice, 1, wxEXPAND | wxALL, 5 );
         m_nbChoice->SetMinSize( wxSize( -1,150 ) );
 
-        
+
 	m_panelPredefined = new wxPanel( m_nbChoice, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
         m_nbChoice->AddPage( m_panelPredefined, _("Predefined"), false );
-        
-        
+
+
 	wxBoxSizer* bSizerPredefTree = new wxBoxSizer( wxVERTICAL );
 
         m_treeCtrlPredefSrcs = new wxTreeCtrl( m_panelPredefined, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE|wxTR_HIDE_ROOT );
 	bSizerPredefTree->Add( m_treeCtrlPredefSrcs, 1, wxALL|wxEXPAND, 5 );
 
-        
+
 	m_panelPredefined->SetSizer( bSizerPredefTree );
         m_panelPredefined->Layout();
         bSizerPredefTree->Fit( m_treeCtrlPredefSrcs/*m_panelPredefined*/ );
-        
-        
+
+
 	m_panelCustom = new wxPanel( m_nbChoice, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerSourceSel;
 	fgSizerSourceSel = new wxFlexGridSizer( 0, 2, 0, 0 );
@@ -150,14 +150,14 @@ AddSourceDlg::AddSourceDlg( wxWindow* parent, wxWindowID id, const wxString& tit
 
         wxBoxSizer *dirbox = new wxBoxSizer(wxHORIZONTAL);
         sbSizerChartDir->Add(dirbox);
-        
+
         m_tcChartDirectory = new wxTextCtrl(this, wxID_ANY,_T(""), wxDefaultPosition,
                                             wxSize(200, -1));
         dirbox->Add( m_tcChartDirectory, 3, wxALL|wxEXPAND, 5 );
-        
+
         m_buttonChartDirectory = new wxButton(this, wxID_ANY,_("Select a folder"));
         dirbox->Add( m_buttonChartDirectory, 1, wxALL|wxEXPAND, 5 );
-        
+
 
 	bSizerMain->Add( sbSizerChartDir, 0, wxALL|wxEXPAND, 5 );
 
@@ -172,8 +172,8 @@ AddSourceDlg::AddSourceDlg( wxWindow* parent, wxWindowID id, const wxString& tit
 
 
 	this->Layout();
-        
-        
+
+
 	// Connect Events
 	m_treeCtrlPredefSrcs->Connect( wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler( AddSourceDlg::OnSourceSelected ), NULL, this );
 	m_sdbSizerBtnsOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AddSourceDlg::OnOkClick ), NULL, this );
@@ -188,14 +188,14 @@ AddSourceDlg::~AddSourceDlg()
 	m_sdbSizerBtnsOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AddSourceDlg::OnOkClick ), NULL, this );
         m_sdbSizerBtnsCancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AddSourceDlg::OnCancelClick ), NULL, this );
         m_buttonChartDirectory->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AddSourceDlg::OnDirSelClick ), NULL, this );
-        
+
 }
 
 void AddSourceDlg::OnDirSelClick( wxCommandEvent& event )
 {
     wxString dir_spec;
     int response = PlatformDirSelectorDialog( this, &dir_spec, _("Choose Chart File Directory"), m_tcChartDirectory->GetValue());
-    
+
     if( response == wxID_OK ) {
         m_tcChartDirectory->SetValue(dir_spec);
     }
@@ -206,15 +206,15 @@ ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& 
 {
 
         int border_size = 2;
-        
+
         //   Main Sizer
         wxBoxSizer* mainSizer = new wxBoxSizer( wxVERTICAL );
         SetSizer( mainSizer );
-        
-        
+
+
         wxFlexGridSizer *groupsSizer = new wxFlexGridSizer( 5, 2, border_size, border_size );
         mainSizer->Add(groupsSizer, 1, wxEXPAND);
-        
+
         groupsSizer->AddGrowableCol( 0 );
         groupsSizer->AddGrowableRow( 1, 1 );
         groupsSizer->AddGrowableRow( 3, 1 );
@@ -276,8 +276,8 @@ ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& 
         groupsSizer->Add( nbSizer, 0, wxALL | wxEXPAND, border_size );
 
 	m_clCharts = new wxCheckedListCtrl(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL);
-        
-        
+
+
         m_clCharts->SetMinSize( wxSize( 100,100 ) );
         nbSizer->Add( m_clCharts, 1, wxEXPAND );
 
@@ -297,12 +297,12 @@ ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& 
         bSizerBtns->Add( m_bShowLocal, 0, wxALL, 5 );
        // m_bShowLocal->Hide();
 
-        
+
 
 	m_stCatalogInfo = new wxStaticText( this, wxID_ANY, _("%u charts total, %u updated, %u new"), wxDefaultPosition, wxDefaultSize, 0 );
 	groupsSizer->Add( m_stCatalogInfo, 1, wxEXPAND| wxALL, 5 );
         mainSizer->Add( m_stCatalogInfo, 0, wxEXPAND| wxALL, 5 );
-        
+
 
         this->Layout();
 
@@ -366,7 +366,7 @@ ChartDldrPanel::ChartDldrPanel( wxWindow* parent, wxWindowID id, const wxPoint& 
         bSizerCatalogBtns->Add( m_bUpdateAllCharts, 0, wxALIGN_BOTTOM|wxALL|wxEXPAND, 5 );
 
 
-        bSizerCatalogs->Add( bSizerCatalogBtns, 1, wxEXPAND, 5 );
+        bSizerCatalogs->Add( bSizerCatalogBtns, 0, wxEXPAND, 5 );
 
 
         sbSchartsource->Add( bSizerCatalogs, 1, wxEXPAND, 0 );
@@ -462,21 +462,21 @@ ChartDldrPrefsDlg::ChartDldrPrefsDlg( wxWindow* parent, wxWindowID id, const wxS
 //	m_dpDefaultDir = new wxDirPickerCtrl( this, wxID_ANY, wxEmptyString, _("Select a root folder for your charts"), wxDefaultPosition, wxDefaultSize, wxDIRP_USE_TEXTCTRL );
 //	sbSizerPaths->Add( m_dpDefaultDir, 0, wxALL|wxEXPAND, 5 );
 
-        
+
         m_tcDefaultDir = new wxTextCtrl(this, wxID_ANY,_T(""), wxDefaultPosition, wxSize(-1, -1), wxHSCROLL );
         sbSizerPaths->Add( m_tcDefaultDir, 3, wxALL|wxEXPAND, 5 );
-        
+
         m_buttonChartDirectory = new wxButton(this, wxID_ANY,_("Select a folder"));
         sbSizerPaths->Add( m_buttonChartDirectory, 1, wxALIGN_RIGHT|wxALL, 5 );
-        
-        
+
+
 	bSizerPrefsMain->Add( sbSizerPaths, 0, wxALL|wxEXPAND, 5 );
 
 	wxStaticBoxSizer* sbSizerBehavior;
 	sbSizerBehavior = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Preferences") ), wxVERTICAL );
 
         sbSizerBehavior->SetMinSize(-1, 200);
-        
+
 	m_stPreselect = new wxStaticText( this, wxID_ANY, _("After catalog update select for download"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_stPreselect->Wrap( -1 );
 	sbSizerBehavior->Add( m_stPreselect, 0, wxALL, 5 );
@@ -516,14 +516,14 @@ ChartDldrPrefsDlg::ChartDldrPrefsDlg( wxWindow* parent, wxWindowID id, const wxS
 	m_sdbSizerBtnsCancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDlg::OnCancelClick ), NULL, this );
 	m_sdbSizerBtnsOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDlg::OnOkClick ), NULL, this );
         m_buttonChartDirectory->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDlg::OnDirSelClick ), NULL, this );
-        
+
 }
 
 void ChartDldrPrefsDlg::OnDirSelClick( wxCommandEvent& event )
 {
     wxString dir_spec;
     int response = PlatformDirSelectorDialog( this, &dir_spec, _("Choose Chart File Directory"), m_tcDefaultDir->GetValue());
-    
+
     if( response == wxID_OK ) {
         m_tcDefaultDir->SetValue(dir_spec);
     }
@@ -536,5 +536,5 @@ ChartDldrPrefsDlg::~ChartDldrPrefsDlg()
 	m_sdbSizerBtnsCancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDlg::OnCancelClick ), NULL, this );
 	m_sdbSizerBtnsOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDlg::OnOkClick ), NULL, this );
         m_buttonChartDirectory->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChartDldrPrefsDlg::OnDirSelClick ), NULL, this );
-        
+
 }
