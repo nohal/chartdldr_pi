@@ -19,7 +19,7 @@ configure_file(cmake/version.h.in ${PROJECT_SOURCE_DIR}/src/version.h)
 SET(PACKAGE_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}" )
 
 #SET(CMAKE_BUILD_TYPE Debug)
-#SET(CMAKE_VERBOSE_MAKEFILE ON)
+SET(CMAKE_VERBOSE_MAKEFILE ON)
 
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include ${PROJECT_SOURCE_DIR}/src)
 
@@ -69,7 +69,7 @@ STRING( REGEX REPLACE "/usr/local" "\\\\;C:/MinGW/msys/1.0/usr/local" wxWidgets_
 ENDIF(MSYS)
 
 #  QT_ANDROID is a cross-build, so the native FIND_PACKAGE(OpenGL) is not useful.
-#  
+#
 IF (NOT QT_ANDROID )
 FIND_PACKAGE(OpenGL)
 IF(OPENGL_GLU_FOUND)
@@ -89,7 +89,7 @@ ENDIF(NOT QT_ANDROID)
 # On Android, PlugIns need a specific linkage set....
 IF (QT_ANDROID )
   # These libraries are needed to create PlugIns on Android.
-  
+
   SET(OCPN_Core_LIBRARIES
         # Presently, Android Plugins are built in the core tree, so the variables {wxQT_BASE}, etc.
         # flow to this module from above.  If we want to build Android plugins out-of-core, this will need improvement.
@@ -111,7 +111,7 @@ IF (QT_ANDROID )
         ${Qt_Base}/android_armv7/lib/libQt5Widgets.so
         ${Qt_Base}/android_armv7/lib/libQt5Gui.so
         ${Qt_Base}/android_armv7/lib/libQt5AndroidExtras.so
-        
+
         #${NDK_Base}/sources/cxx-stl/gnu-libstdc++/4.8/libs/armeabi-v7a/libgnustl_shared.so
         )
 

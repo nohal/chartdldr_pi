@@ -38,7 +38,7 @@
 #include <wx/fileconf.h>
 #include <wx/tokenzr.h>
 #include <wx/event.h>
-#include "wx/curl/dialog.h"
+
 #include <wx/imaglist.h>
 
 #include <map>
@@ -173,12 +173,7 @@ private:
     int             GetSelectedCatalog();
     void            AppendCatalog(ChartSource *cs);
     void            DoEditSource();
-    wxCurlDownloadThread *m_pThread;
-    // returns true if the error can be ignored
-    bool            HandleCurlThreadError(wxCurlThreadError err, wxCurlBaseThread *p,
-                               const wxString &url = wxEmptyString);
-    void            OnEndPerform(wxCurlEndPerformEvent &ev);
-    void            OnDownload(wxCurlDownloadEvent &ev);
+
     bool            m_bTransferComplete;
     bool            m_bTransferSuccess;
     wxString        m_totalsize;
@@ -219,7 +214,8 @@ public:
     ~ChartDldrPanelImpl();
     ChartDldrPanelImpl( chartdldr_pi* plugin, wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
     void            SelectCatalog( int item );
-
+    void            onDLEvent(OCPN_downloadEvent &ev);
+    
 private:
     DECLARE_DYNAMIC_CLASS( ChartDldrPanelImpl )
     DECLARE_EVENT_TABLE()
@@ -231,6 +227,8 @@ protected:
     void            OnChangeType( wxCommandEvent& event );
 	void            OnSourceSelected( wxTreeEvent& event );
 	void            OnOkClick( wxCommandEvent& event );
+        void            OnCancelClick( wxCommandEvent& event );
+        
     bool            LoadSources();
     bool            LoadSections( const wxTreeItemId &root, TiXmlNode *node );
     bool            LoadSection( const wxTreeItemId &root, TiXmlNode *node );
@@ -259,7 +257,7 @@ protected:
 public:
     ChartDldrPrefsDlgImpl( wxWindow* parent );
 	~ChartDldrPrefsDlgImpl();
-	wxString        GetPath() { return m_dpDefaultDir->GetPath(); }
+	wxString        GetPath() { return m_tcDefaultDir->GetValue(); }
 	void            SetPath( const wxString path );
 	void            GetPreferences( bool &preselect_new, bool &preselect_updated, bool &bulk_update );
 	void            SetPreferences( bool preselect_new, bool preselect_updated, bool bulk_update );
