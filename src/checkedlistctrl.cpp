@@ -51,13 +51,21 @@ bool wxCheckedListCtrl::Create(wxWindow* parent, wxWindowID id, const wxPoint& p
 	if (!wxListCtrl::Create(parent, id, pt, sz, style, validator, name))
 		return FALSE;
 
+    int img_size = 32;    
+    m_imageList.Create(img_size, img_size, TRUE);
     SetImageList(&m_imageList, wxIMAGE_LIST_SMALL);
 
 	// the add order must respect the wxCLC_XXX_IMGIDX defines in the headers !
-    m_imageList.Add(wxIcon(unchecked_xpm));
-    m_imageList.Add(wxIcon(checked_xpm));
-    m_imageList.Add(wxIcon(unchecked_dis_xpm));
-    m_imageList.Add(wxIcon(checked_dis_xpm));
+    
+    {wxImage i(unchecked_xpm);     wxBitmap bmp = wxBitmap(i.Scale(img_size, img_size)); m_imageList.Add(bmp);}
+    {wxImage i(checked_xpm);       wxBitmap bmp = wxBitmap(i.Scale(img_size, img_size)); m_imageList.Add(bmp);}
+    {wxImage i(unchecked_dis_xpm); wxBitmap bmp = wxBitmap(i.Scale(img_size, img_size)); m_imageList.Add(bmp);}
+    {wxImage i(checked_dis_xpm);   wxBitmap bmp = wxBitmap(i.Scale(img_size, img_size)); m_imageList.Add(bmp);}
+    
+//    m_imageList.Add(wxIcon(unchecked_xpm));
+//    m_imageList.Add(wxIcon(checked_xpm));
+//    m_imageList.Add(wxIcon(unchecked_dis_xpm));
+//    m_imageList.Add(wxIcon(checked_dis_xpm));
 
 	return TRUE;
 }
@@ -146,8 +154,8 @@ bool wxCheckedListCtrl::GetItem(wxListItem& info) const
 	}
 
 	// check that state & image are synch
-#ifdef __WXDEBUG__
-
+//#ifdef __WXDEBUG__
+#if 0
 	wxASSERT_MSG((int)m_stateList.GetCount() == (int)GetItemCount(),
 					wxT("Something wrong ! See InsertItem()"));
 

@@ -34,6 +34,9 @@
 #include "checkedlistctrl.h"
 #include <wx/checkbox.h>
 #include <wx/statline.h>
+#include <wx/dcmemory.h>
+
+#include "ocpn_plugin.h"
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -57,15 +60,20 @@ class AddSourceDlg : public wxDialog
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnSourceSelected( wxTreeEvent& event ) { event.Skip(); }
 		virtual void OnOkClick( wxCommandEvent& event ) { event.Skip(); }
-
-
+		virtual void OnCancelClick( wxCommandEvent& event ) { event.Skip(); }
+                void OnDirSelClick( wxCommandEvent& event );
+                void applyStyle();
+                
 	public:
 		wxNotebook* m_nbChoice;
 		wxTreeCtrl* m_treeCtrlPredefSrcs;
 		wxTextCtrl* m_tSourceName;
 		wxTextCtrl* m_tChartSourceUrl;
-		wxDirPickerCtrl* m_dpChartDirectory;
-
+		//wxDirPickerCtrl* m_dpChartDirectory;
+                wxTextCtrl *m_tcChartDirectory;
+                wxButton *m_buttonChartDirectory;
+                wxScrolledWindow *m_sourceswin;
+                
 		AddSourceDlg( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("New chart source"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
 		~AddSourceDlg();
 
@@ -121,7 +129,7 @@ class ChartDldrPrefsDlg : public wxDialog
 	private:
 
 	protected:
-		wxDirPickerCtrl* m_dpDefaultDir;
+		//wxDirPickerCtrl* m_dpDefaultDir;
 		wxStaticText* m_stPreselect;
 		wxCheckBox* m_cbSelectUpdated;
 		wxCheckBox* m_cbSelectNew;
@@ -130,7 +138,12 @@ class ChartDldrPrefsDlg : public wxDialog
 		wxStdDialogButtonSizer* m_sdbSizerBtns;
 		wxButton* m_sdbSizerBtnsOK;
 		wxButton* m_sdbSizerBtnsCancel;
-
+                wxButton* m_buttonChartDirectory;
+                wxTextCtrl* m_tcDefaultDir;
+                
+                void OnDirSelClick( wxCommandEvent& event );
+                
+                
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnCancelClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnOkClick( wxCommandEvent& event ) { event.Skip(); }
