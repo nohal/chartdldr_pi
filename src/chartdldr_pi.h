@@ -215,6 +215,7 @@ public:
     ChartDldrPanelImpl( chartdldr_pi* plugin, wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
     void            SelectCatalog( int item );
     void            onDLEvent(OCPN_downloadEvent &ev);
+    void            CancelDownload() { Disconnect(wxEVT_DOWNLOAD_EVENT, (wxObjectEventFunction)(wxEventFunction)&ChartDldrPanelImpl::onDLEvent); cancelled = true; }
     
 private:
     DECLARE_DYNAMIC_CLASS( ChartDldrPanelImpl )
@@ -227,7 +228,7 @@ protected:
     void            OnChangeType( wxCommandEvent& event );
 	void            OnSourceSelected( wxTreeEvent& event );
 	void            OnOkClick( wxCommandEvent& event );
-        void            OnCancelClick( wxCommandEvent& event );
+    void            OnCancelClick( wxCommandEvent& event );
         
     bool            LoadSources();
     bool            LoadSections( const wxTreeItemId &root, TiXmlNode *node );
