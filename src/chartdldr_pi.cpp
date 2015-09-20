@@ -566,7 +566,7 @@ void ChartDldrPanelImpl::FillFromFile( wxString url, wxString dir, bool selnew, 
             }
             m_clCharts->SetItem(x, 2, pPlugIn->m_pChartCatalog->charts->Item(i).GetUpdateDatetime().Format(_T("%Y-%m-%d %H:%M")));
         }
-        m_stCatalogInfo->SetLabel( wxString::Format( _("%u charts total, %u updated, %u new"), pPlugIn->m_pChartCatalog->charts->Count(), updated_charts, new_charts ) );
+        m_stCatalogInfo->SetLabel( wxString::Format( _("%lu charts total, %lu updated, %lu new"), pPlugIn->m_pChartCatalog->charts->Count(), updated_charts, new_charts ) );
         m_stCatalogInfo->Show( true );
     }
 }
