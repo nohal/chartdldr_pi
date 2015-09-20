@@ -766,7 +766,12 @@ void ChartDldrPanelImpl::UpdateChartList( wxCommandEvent& event )
     else
         tfn = fn;
     
+#ifdef __OCPN__ANDROID__
     wxString file_URI = _T("file://") + tfn.GetFullPath();
+#else
+    wxString file_URI = tfn.GetFullPath();
+#endif    
+
     _OCPN_DLStatus ret = OCPN_downloadFile( cs->GetUrl(), file_URI,
                                  _("Downloading file"),
                                  _("Reading Headers: ") + url.BuildURI(), wxNullBitmap, this,
@@ -1006,7 +1011,11 @@ After downloading the charts, please extract them to %s"), pPlugIn->m_pChartCata
                 wxString title = pPlugIn->m_pChartCatalog->charts->Item(i).GetChartTitle();
 
                 //  Ready to start download
+#ifdef __OCPN__ANDROID__
                 wxString file_path = _T("file://") + fn.GetFullPath();
+#else
+                wxString file_path = fn.GetFullPath();
+#endif
                 
                 long handle;
                 OCPN_downloadFileBackground( url.BuildURI(), file_path, this, &handle);
