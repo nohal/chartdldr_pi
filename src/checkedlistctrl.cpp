@@ -19,6 +19,7 @@
 
 // includes
 #include "checkedlistctrl.h"
+#include <wx/image.h>
 #include <wx/icon.h>
 
 
