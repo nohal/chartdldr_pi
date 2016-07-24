@@ -1,6 +1,14 @@
 Chart downloader plugin Plugin for OpenCPN
 ==========================================
 
+# This plugin is now included in the main OpenCPN source tree. The code archived here is not maintained anymore, please use https://github.com/OpenCPN/OpenCPN to get the latest code and file bugs.
+
+
+
+
+
+
+
 Compiling
 =========
 You have to be able to compile OpenCPN itself - Get the info at http://opencpn.org/ocpn/developers_manual
