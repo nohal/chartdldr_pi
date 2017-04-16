@@ -1,0 +1,98 @@
+ <!DOCTYPE html>
+<html>
+
+<head>
+<style>
+  body {background-color:lightgray}
+  h1   {color:Blue}
+  p    {color:grey; 
+     font-size: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: normal;
+} 
+</style>
+</head>
+
+<body>
+<h1>User Documentation for New OpenCPN user</h1>
+
+<p>Requirements: To use this plugin you must have OpenCPN running and a good internet connection that is active. Since you will be downloading megabytes of charts it is best to have a good connection. Poor or interrupted internet connections will create more trouble messages. </p> 
+ 
+<p>Download the Plugiin: You will find the plugin available for download here where you will find instructions for your OS.After downloading and installing the plugin, restart OpenCPN and select Options > Charts > Chart Downloader Tab, which is the plugin. There will be no icon.  </p>
+<p> </p>
+ <p> </p>
+<img src="1-Chart-Downloader-Tab.png" alt="Chart Downloader Tab"  width="550" >
+<h4>1-Chart Downloader Tab</h4>
+<p>Overview: This screen has two sections. </p>
+<p>The top section is for Chart Catalogs which are retrieved from sources on the internet using the "Add" button.
+Once the "Add" button settings for source Catalog and destination directory have been accepted the Catalog will appear in the upper window. Selection of "Update" button will prompt the new Catalog to query for a current List of Charts (xml file) which will appear in the lower window.</p>
+<p>The bottom section has the "List of Charts" for the highlighted "Chart Catalog" in the upper window. Specific charts can be selected for "Download" by checking the boxes or right moust click in the bottom window area and selecting an appropriate action.</p>
+<p>Let's step through this to see how it works.</p>
+ <p>.</p>
+
+<img src="2-Add-New-Predefined-Chart-Source.png" alt="Add New Predefined Chart Source"  width="550">
+<h4>2 Add New Predefined Chart Source</h4>
+<p>Select "Add" button, then select a "Predefined" Catalog from the Catalog dropdown menu.You may scroll to the bottom and observe, but for learning purposes, pick thee first one "US RNC Region 02". Hit enter to select. </p>
+<p>.</p>
+
+ <img src="3-OK-Predefined-Chart-Directory-Set-Automatically.png" alt="OK Predefined Chart Directory Set Automatically"  width="550" >
+<h4>3 OK Predefined Chart Directory Set Automatically</h4>
+<p>Since the "Predefined" radio button is selected, the Name and URL and destination chart directory are predetermined. Just continue with "OK". Note that a "..Charts/RNC/US_Region 02" directory is created. For Windows users, the predefined Chart directory will be under ProgramData/OpenCpn adjacent to other Opencpn data.</p>
+ <p>.</p>
+
+ <img src="4-OK-Predefined-Chart-Dir-Set-Automatically-frame.png" alt="OK Predefined Chart Directory Set Automatically"  width="550" >
+<h4>4 OK Predefined Chart Directory Set Automatically</h4>
+<p>This is a closer view of the menu for better inspection.</p>
+ <p>.</p>
+
+ <img src="5-Catalog-Entered.png" alt="Catalog Entered"  width="550" >
+<h4>5 Catalog Entered</h4>
+<p>Here the "RNC_Catalog_02_Region.." has been entered into the top window. The catalog "Add" date is shown, and by pulling out the Options window you can see the full destination pathname.  Next you must highlight the Catalog, so that "Update" button becomes active.</p>
+<p>.</p>
+
+<img src="6-Chart-List-Updated-Charts-checked.png" alt="Chart List Updated Charts checked" width="550"  >
+<h4>6 Chart List Updated and Charts checked</h4>
+<p>When the "Update" Button to the right of the upper window is selected, the Chart List below will be freshly populated. window. Select the top three charts for "Newport", "Approaches to New York" and "Cape Sable". Hit "Download Selected Charts" Now several download windows may pop up as these charts are downloaded. </p>
+
+ <p>.</p>
+
+ <img src="7-Downloading-Charts.png" alt="Downloading Charts" width="550">
+<h4>7 Downloading Charts</h4>
+<p>Downloading...multiple charts can take quite awhile.</p>
+<p>.</p> 
+
+<img src="8-Downloading-Charts.png" alt="Downloading Charts" width="550">  
+<h4>8 Downloading Charts</h4>
+<p>Downloading can be as simple as that with Chartdldr, however you will find that there is more to learn about downloading and using charts, because you need to setup Directory pointers to your chart folders and to define Chart Groups and add folders to the groups. This is described in the OpenCPN manual more completely.</p>
+
+<p>.</p>
+
+<img src="9-Three-charts-downloaded-with-show-local-files.png" alt="Three charts downloaded with show local files"  width="550" >
+<h4>9 Three charts downloaded with "Show local files" Menu</h4>
+<p>Here the first three charts are shown "Up to Date" and the button "Show Local Files" has been pressed to cause the Destination Folder to open in a separate window.</p>
+<p>Right Mouse Click in Chart Window will open a selector window with choices for "Select all","Select none", "Select new", "Select update", "Invert selection". The user can use these tools as appropriate.</p>
+<p>We have downloaded three "US_RNC_Region_02" (raster) charts by "Adding" the Region 02 Catalog to the top window, "Updating" it to show the List of Charts below, then selecting some charts and "Downloading". Now we are going to do the same thing for US_ENC_Region_02 Charts (Vector charts) again, "Adding" a new Catalog, using "Predefined" radio button.</p>
+<p>.</p>
+
+<img src="10-ENC-Add-New-Predefined-Chart-Source.png" alt="ENC Add New Predefined Chart Source" width="550"  > 
+<h4>10 ENC Add New Predefined Chart Source</h4>
+<p>Hit "Add" in the upper window area, select US_ENC_Region_02 from the dropdown Catalog menu. Again the Name, URL and Chart Directory are Predefined. You just need to hit "OK". Then highlight "US_ENC_Region_02" and hit "Update" and the new charts in that catalog appear in the lower window.</p>
+<p>.</p> 
+
+<img src="11-ENC-Chart-List-Updated-Charts-checked.png" alt="ENC Chart List Updated Charts checked" width="550"  >
+<h4>11 ENC Chart List Updated Charts checked</h4>
+<p>Now select several charts with your mouse or by using right click. Then select "Download selected Charts" and the Chartdownloader will start progressively downloading. If there is a chart which fails, uncheck it, download and theen try downloading the problem chart. </p>
+ <p>.</p>
+
+ <img src="12-Download-Selected-Charts.png" alt="Download Selected Charts" width="550"  >
+<h4>12 Download Selected Charts</h4>
+<p>Downloading .... If there is a chart which fails, uncheck it, restart download and then try downloading the problem chart.</p>
+ <p>.</p>
+
+<img src="13-Add-New-Custom-Catalog.png" alt="Add New Custom Catalog"  width="550" >
+<h4>13 Add New Custom Catalog</h4>
+<p> "Add" new "Custom" (radio button) Chart Catalog. Note that the Name, URL and Chart directory are completed manually. The browse window for selection of the destination directory is shown. The rest of the custom operation is very similar to "predefined" operation, however note that the URL and Destination directories have to be selected very carefully.</p>
+<p>.</p>
+
+</body>
+</html> 
